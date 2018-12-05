@@ -1,6 +1,1 @@
-testttt
-
-
-as
-df
-sfs
+print("hello world")
