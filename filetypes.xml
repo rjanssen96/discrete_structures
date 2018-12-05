@@ -1,0 +1,14 @@
+<application>
+  <component name="FileTypeManager" version="17">
+    <ignoreFiles list="*$py.class;*.hprof;*.pyc;*.pyo;*.rbc;*.yarb;*~;.DS_Store;.git;.hg;.svn;CVS;RCS;SCCS;__pycache__;_svn;rcs;vssver.scc;vssver2.scc;" />
+    <extensionMap>
+      <mapping ext="php" type="PHP" />
+      <mapping pattern="ifcfg-eth0" type="PLAIN_TEXT" />
+      <mapping pattern="kickstarter commands" type="PLAIN_TEXT" />
+      <mapping ext="ps1" type="PLAIN_TEXT" />
+      <mapping pattern="playground" type="Python" />
+      <mapping pattern="opdrachten hfst 3" type="Python" />
+      <mapping ext="" type="XML" />
+    </extensionMap>
+  </component>
+</application>
