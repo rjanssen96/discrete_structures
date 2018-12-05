@@ -1,0 +1,25 @@
+<application>
+  <component name="PyTestFrameworkService">
+    <option name="SDK_TO_PYTEST">
+      <map>
+        <entry key="/Library/Frameworks/Python.framework/Versions/3.5/bin/python3.5" value="false" />
+        <entry key="ssh://root@10.10.10.5:22/usr/bin/python" value="false" />
+        <entry key="ssh://root@172.16.1.60:22/usr/bin/python" value="false" />
+        <entry key="ssh://root@192.168.2.253:22/bin/python3" value="false" />
+        <entry key="ssh://root@192.168.2.253:22/usr/bin/python" value="false" />
+      </map>
+    </option>
+    <option name="SDK_TO_NOSETEST">
+      <map>
+        <entry key="ssh://root@10.10.10.5:22/usr/bin/python" value="false" />
+        <entry key="ssh://root@172.16.1.60:22/usr/bin/python" value="false" />
+        <entry key="ssh://root@192.168.2.253:22/bin/python3" value="false" />
+        <entry key="ssh://root@192.168.2.253:22/usr/bin/python" value="false" />
+      </map>
+    </option>
+  </component>
+  <component name="StepicUpdateSettings">
+    <option name="lastTimeChecked" value="1511356339540" />
+    <option name="LAST_TIME_CHECKED" value="1511356339540" />
+  </component>
+</application>
