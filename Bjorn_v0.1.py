@@ -1,4 +1,4 @@
-# import synpy
+# import synpy #
 
 
 # (Step 2) Obtaining char equation with degree 1
