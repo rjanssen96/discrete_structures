@@ -1,11 +1,20 @@
+import os
+import glob
+
 global homogeneous
-index = ""
+global path
+#
+#pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9].txt")
+pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass07.txt")
+path = glob.glob(pathstring)
 
 def find_n(s,ch):
     return [i for i, ltr in enumerate(s) if ltr == ch]
 
 def find_type(homogeneous):
-    with open("C:/Users/RikvB/PycharmProjects/discrete_structures/input_files/comass03.txt", "r") as f:
+    print("path = " + str(path))
+    print("pathstring = " + str(pathstring))
+    with open(str(pathstring), "r") as f:
         for i in range(3):
             line = f.readline()
         print("line = " + line)
