@@ -129,6 +129,14 @@ def analyze_recurrence_equation(equation):
     # Sorry, but you will have to implement the treatment of F(n) yourself!
     return associated, f_n_list
 
+"""This functions checks what the coefficients are for each eaquation, this is only for homogeneous equations."""
+def det_coefficients(equation):
+    print("We are going to find the coefficients for: {}".format(equation))
+    """Search for patterns which contain *s"""
+    file_writer.write_coefficients_to_file(filename, coefficients=)
+
+
+    def write_coefficents_to_file(filename, coefficients):
 path = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9].txt")
 for filename in glob.glob(path):
     print("File: " + filename)
@@ -147,7 +155,8 @@ for filename in glob.glob(path):
     init_conditions = det_init_conditions(
         [lines[index] for index in range(1, tmp)])  # Determine initial conditions with all but the first line as input
     associated, f_n_list = analyze_recurrence_equation(lines[0])
-    #
+
+    det_coefficients(equation=lines)
     # # Print debugging information:
     # debug_print(filename)
     # debug_print("Initial conditions:")

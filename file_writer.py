@@ -18,7 +18,7 @@ def write_output_to_file(filename, equation):
     # debug_print("Wrote {0} characters to file {1}.".format(str(nr_written_chars), filename))
 
 """This file writes the coefficients (given by file_reader.py) to a file"""
-def write_coefficents_to_file(filename, coefficients):
+def write_coefficients_to_file(filename, coefficients):
     print(filename, coefficients)
     coef_filename = str(filename).strip('.txt') #Remove .txt from the filename
     coef_file = open((coef_filename + "_coefficents.txt"), 'w') #Add _init.txt to the filename
@@ -38,6 +38,9 @@ def reformat_equation(equation):
         equation = equation.replace("sqrt", "", 1)
         pos_sqrt = equation.find("sqrt(")
     return equation
+
+#This functions writes homogeneous files to the homogeneous folder and nonhomogeneous to the nonhomogeneous folder
+def write_type_file():
 
 #This function reformats the equation to its original form and writes it to a file.
 def write_dir_files(final_equation, filename):
