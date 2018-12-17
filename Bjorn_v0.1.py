@@ -13,15 +13,34 @@ def char_equation_1(first_term_in):
 
 
 # (Step 2) Obtaining char equation with degree 2
-def char_equation_2(first_term_in, second_term_in):
-    equation = first_term_in + second_term_in
-    return equation
+def char_equation_2(coeffs):
+    #print("The coeffs are:")
+    #print(coeffs)
+    total_equation = "r^" + str(len(coeffs))
+    #print(total_equation)
+    i = 0
+    next_power = len(coeffs)-1
+    for x in range(len(coeffs)):
+        next_coeff = coeffs[i]
+        if next_coeff >= 0:
+            next_coeff = "-" + str(next_coeff)
+        elif next_coeff < 0:
+            next_coeff = next_coeff * -1
+            next_coeff = "+" + str(next_coeff)
+        else:
+            print("Smth went wrong in char_equation_2")
 
+        # Finds out if the next power is 0, if so, then just add the coeff and not r^0 cuz r^0 = 1 = coeff
+        if next_power != 0:
+            total_equation = total_equation + str(next_coeff) + "r^" + str(next_power)
+        elif next_power == 0:
+            total_equation = total_equation + str(next_coeff)
+        #print(total_equation)
+        i = i + 1
+        next_power = next_power - 1
 
-# (Step 2) Obtaining char equation with degree 3 or higher
-def char_equation_3p():
-    equation = "33"
-    return equation
+    total_equation = total_equation + "=0"
+    return total_equation
 
 
 # (Step 3) Obtain the root of degree 1 equations
@@ -50,28 +69,38 @@ def find_specific_solution_1(alpha_1_in, root_1_in):
 
 
 # Step 0: Read .txt and obtain initial terms (list?), degree and each C_1*A_n-1
-degree = 1
+degree = 2
 initial_terms = [3, 5, 6]  # List of all initial terms
-coefficients = [2, 5, 6]
-parts = ["A_n-1", "A_n-2", "A_n-3"]  # If terms come from read.txt function, then comment this line
+coefficients = [2, 5, 6, 8]
+parts = ["*s(n-1)", "*s(n-2)", "*s(n-3)", "*s(n-4)"]  # If terms come from read.txt function, then comment this line
 
 # Step 1: Rewriting the sequence
 if degree == 1:
-    sequence = "A_n = " + str(coefficients[0]) + str(parts[0])
+    sequence = "s(n)=" + str(coefficients[0]) + str(parts[0])
+    print("Step 1: The rewritten sequence is: \n" + str(sequence) + "\n")
+elif degree >= 2:
+    sequence = "s(n)="
+    i = 0
+    for x in coefficients:
+        if coefficients[i] >= 0 and i == 0:
+            sequence = sequence + str(coefficients[i]) + str(parts[i])
+        # add a + for the positive coefficients
+        elif coefficients[i] >= 0:
+            sequence = sequence + "+" + str(coefficients[i]) + str(parts[i])
+        elif coefficients[i] < 0:
+            sequence = sequence + str(coefficients[i]) + str(parts[i])
+        else:
+            print("wrong sequence step 1")
+        i = i + 1
     print("Step 1: The rewritten sequence is: \n" + str(sequence) + "\n")
 
 # Step 2: Obtaining the characteristic equation
 if degree == 1:
     characteristic_equation = char_equation_1(coefficients[0])
     print("Step 2:  The characteristic equation is: \n" + str(characteristic_equation) + "\n")
-elif degree == 2:
-    first_term = str(coefficients[0]) + str(parts[0])
-    second_term = str(coefficients[1]) + str(parts[1])
-    characteristic_equation = char_equation_2(first_term, second_term)
-    print("Step 2:  The characteristic equation is: \n" + str(characteristic_equation) + "\n")
-elif degree >= 3:
-    characteristic_equation = char_equation_3p()
-    print("Step 2:  The characteristic equation is: \n" + str(characteristic_equation) + "\n")
+elif degree >= 2:
+    characteristic_equation = char_equation_2(coefficients)
+    print("Step 2: The characteristic equation is: \n" + str(characteristic_equation) + "\n")
 else:
     print("Step 2: Wrong degree value or incorrect characteristic equation" + "\n")
     characteristic_equation = ""
