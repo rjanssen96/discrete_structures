@@ -1,9 +1,10 @@
+global homogeneous
 index = ""
 
 def find_n(s,ch):
     return [i for i, ltr in enumerate(s) if ltr == ch]
 
-def find_type():
+def find_type(homogeneous):
     with open("C:/Users/RikvB/PycharmProjects/discrete_structures/input_files/comass03.txt", "r") as f:
         for i in range(3):
             line = f.readline()
@@ -26,7 +27,13 @@ def find_type():
     for k in s_pos:
         if line[k] == "s":
             print("CORRECT " + str(k))
+            homogeneous = True
+            continue
         else:
             print("NOPE " + str(k))
+            homogeneous = False
+            break
+    return homogeneous
 
-find_type()
+homogeneous = find_type(homogeneous=False)
+print(homogeneous)
