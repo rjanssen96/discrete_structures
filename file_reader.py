@@ -1,7 +1,12 @@
 import os
 import glob # Library for filename pattern-matching
 import file_writer
+import re
+import sympy
+from sympy import Poly
 import numpy
+from sympy.abc import s, n
+
 
 """First checks if debug printing is allowed.
    Then checks the type of the input of the function.
@@ -59,8 +64,14 @@ def det_init_conditions(lines):
         y_value = line[start_index_y:]
         conditions[x_value] = y_value
 
-    print("The conditions are: {}".format(conditions))
-    file_writer.write_init_terms(filename=filename, conditions=conditions)
+    print("The conditions are: {}".format(conditions)) #This line can be removed.
+
+    conditions_list = []
+    for key in sorted(conditions.keys()): #Sort the initial terms in the dictionary
+        init_value = str(conditions.get(key)[0])  #Get the values of the inital terms
+        print("Added:\tInitial term number: {}\t value: {} to list.".format(key, init_value))
+        conditions_list.append(init_value)  # Add the values of the initial terms to a list
+    file_writer.write_init_terms(filename=filename, conditions=conditions_list)
     return conditions
 
 
@@ -131,12 +142,49 @@ def analyze_recurrence_equation(equation):
 
 """This functions checks what the coefficients are for each eaquation, this is only for homogeneous equations."""
 def det_coefficients(equation):
-    print("We are going to find the coefficients for: {}".format(equation))
-    """Search for patterns which contain *s"""
-    file_writer.write_coefficients_to_file(filename, coefficients=)
+    print("We are going to find the coefficients for: {}".format(str(equation)))
+    # print("We have te find coefficients in the following lines: {} \n".format(lines))
+    expression = re.compile("((-?\(-?\d+/\d+\)|-?\d+|\d?-?\(-?\d+/\d+\)|-?\d+|\d?)\*s(\(n-\d+\)))")
+    results = expression.findall(str(equation))
+    if results == None:
+        print("No coefficients found!\n")
+        print(equation)
+    else:
+        print("We found the following coefficients:\n")
+        print(results)
+        coeff_dict = {}
+        coeff_sorted_list = []
+        polynomial_sorted_list = []
+        for item in results:
+            # print(item)
+            print("coefficient: {} \t macht: {} \t position: {}".format(item[0], item[1], item[2]))
+            stripped_position = item[2].strip("(n").strip(")")
+            print("\n new: \ncoefficient: {} \t macht: {} \t position: {}".format(item[0], item[1], stripped_position))
+            coeff_dict[stripped_position] = item[0],item[1]
+
+        for key in sorted(coeff_dict.keys()):
+            print(coeff_dict)
+            print(coeff_dict.get(key)[0])
+            polynomial = str(coeff_dict.get(key)[0]) #*s(n-2) from the ordered dictionary.
+
+            pos_s_bracket = polynomial.find("*s(")  # Position of "*s("
+            start_index_nr = pos_s_bracket + 0  # First index of x-value, when changing the 0 to 1. The * will be excluded!
+            pos_bracket_equal = polynomial.find(")", pos_s_bracket)  # Position of ")="
+            end_index_nr = pos_bracket_equal + 1 #includes the ) back in the polynomial
+            # x_value = str(polynomial[start_index_nr:pos_bracket_equal]) #Assign the characters between *s( and ) to the x_value variable
+            x_value = str(polynomial[start_index_nr:end_index_nr]) #Assign the characters between *s( and ) to the x_value variable
+
+            print("The polynomial is: {}".format(x_value))
+            coeff_sorted_list.append(key) #Add the coefficients in order to the list
+            polynomial_sorted_list.append(x_value)#Add *s(n-2) to a list in the sequence of the coefficients
+            # print(coeff_sorted_dict)
+            print(key)
+
+        file_writer.write_coefficients_to_file(filename=filename, coefficients=coeff_sorted_list, polynomials=polynomial_sorted_list)
+        print(coeff_sorted_list)
 
 
-    def write_coefficents_to_file(filename, coefficients):
+    # def write_coefficents_to_file(filename, coefficients):
 path = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9].txt")
 for filename in glob.glob(path):
     print("File: " + filename)
