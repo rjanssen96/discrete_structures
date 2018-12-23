@@ -5,7 +5,7 @@ global homogeneous
 global path
 
 #pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9].txt")
-pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass33.txt")
+pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass03.txt")
 path = glob.glob(pathstring)
 
 def find_n(s,ch):
@@ -42,6 +42,16 @@ def find_type(homogeneous):
             print("NOPE " + str(k))
             homogeneous = False
             break
+
+    pluscount = line.count("+")
+    print(pluscount)
+    end = line.split("+")[pluscount]
+    print("end = " + end)
+    if end.find("s(n") == -1:
+        homogeneous = False
+    else:
+        homogeneous = True
+
     return homogeneous
 
 homogeneous = find_type(homogeneous=False)
