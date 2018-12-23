@@ -33,7 +33,6 @@ def char_equation_2(coeffs):
             total_equation = total_equation + str(next_coeff) + "*r**" + str(next_power)
         elif next_power == 0:
             total_equation = total_equation + str(next_coeff)
-        #print(total_equation)
         i = i + 1
         next_power = next_power - 1
 
