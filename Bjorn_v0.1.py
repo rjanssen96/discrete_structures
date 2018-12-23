@@ -138,10 +138,10 @@ def find_alpha_values(my_initial_terms, all_r_and_m):
     return matrix_result
 
 
-# (Step 5.2) Obtain the specific solution
-def find_specific_solution_1(alpha_1_in, root_1_in):
-    solution = "A_n = " + str(alpha_1_in) + " * " + str(root_1_in) + "^n"
-    return solution
+# # (Step 5.2) Obtain the specific solution
+# def find_specific_solution_1(alpha_1_in, root_1_in):
+#     solution = "A_n = " + str(alpha_1_in) + " * " + str(root_1_in) + "^n"
+#     return solution
 
 
 """"
@@ -152,6 +152,11 @@ Print except errors to a file with the name: commas(nr) errors / output?
 """
 
 # Step 0: Read .txt and obtain initial terms (list?), degree and each C_1*A_n-1
+"""
+IMPORTANT:
+if a_1 and a_3 are the used terms, then list needs 3 coeffs, one for a_2 as well, which is 0!!!
+if there's no coeff in front of a_x then 1 needs to be written as a coeff in the list
+"""
 degree = 2
 initial_terms = [1, 1]  # List of all initial terms
 coefficients = [1, 1]  # if n+1 in s():=, then make every n -1 (so one add a -1 to the n's)
