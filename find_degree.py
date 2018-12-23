@@ -19,7 +19,7 @@ def find_degree(pathstring, degree):
             print(line)
             amount = str(line.count('n-'))
             print("amount = " + str(amount))
-            num = 15
+            num = 15 #hardcoded 15 which is getting looped over untill it hits 0
 
             while j < num:
                 string = "(n-" + str(num) + ")"
