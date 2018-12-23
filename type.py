@@ -3,9 +3,9 @@ import glob
 
 global homogeneous
 global path
-#
+
 #pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9].txt")
-pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass07.txt")
+pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass33.txt")
 path = glob.glob(pathstring)
 
 def find_n(s,ch):
