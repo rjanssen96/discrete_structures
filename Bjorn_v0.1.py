@@ -1,4 +1,5 @@
 from sympy import *
+from math import sqrt  # for testing our specific solutions initial terms
 init_printing(use_unicode=False, wrap_line=False)
 
 
@@ -152,8 +153,8 @@ Print except errors to a file with the name: commas(nr) errors / output?
 
 # Step 0: Read .txt and obtain initial terms (list?), degree and each C_1*A_n-1
 degree = 2
-initial_terms = [1, 6]  # List of all initial terms
-coefficients = [6, -9]  # if n+1 in s():=, then make every n -1 (so one add a -1 to the n's)
+initial_terms = [1, 1]  # List of all initial terms
+coefficients = [1, 1]  # if n+1 in s():=, then make every n -1 (so one add a -1 to the n's)
 parts = ["*s(n-1)", "*s(n-2)", "*s(n-3)"]  # If terms come from read.txt function, then comment this line
 # fill in all parts and coeffs, if n-2 and n-4 only, then still fill in 0*n-3, etc.
 
@@ -225,7 +226,36 @@ try:
     for x in range(0, len(outcome)):
         specific_solution = specific_solution.replace("Alpha_" + str(x + 1), "(" + str(outcome.get(x)) + ")")
     specific_solution = specific_solution.replace("**", "^")
+    specific_solution = specific_solution.replace("s(n)=", "sdir := n -> ")
+    specific_solution = specific_solution.replace(")(", ")*(")
+    specific_solution = specific_solution + ";"
     print("\nStep 5.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n")
 except:
     print("5.2 doesnt work, shocker dude")
 
+"""
+TEST
+TEST
+TEST
+COMMA VS MY ALG
+"""
+
+# outcomes = []
+#
+# for n in range(0, 20):
+#     outcomes.append(1/10*(5-5**(1/2))*(1/2-1/2*5**(1/2))**n+1/10*(1/2*5**(1/2)+1/2)**n*(5+5**(1/2)))
+#
+# print(outcomes)
+#
+# outcomes = []
+#
+# # My answer
+# my_formula = 5
+#
+# for n in range(0, 20):
+#     outcomes.append((-sqrt(5)/10 + 1/2)*(-sqrt(5)/2 + 1/2)**n+(sqrt(5)/10 + 1/2)*(1/2 + sqrt(5)/2)**n)
+#
+# print(outcomes)
+#
+# # allowed diversion
+# print(1/1000)
