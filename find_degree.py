@@ -12,13 +12,10 @@ degree = 0
 def find_degree(pathstring, degree):
     file = open(pathstring, 'r')
     j = 0
-    #degree = 0
 
     for i, line in enumerate(file):
         if i == 2:
             print(line)
-            amount = str(line.count('n-'))
-            print("amount = " + str(amount))
             num = 15 #hardcoded 15 which is getting looped over untill it hits 0
 
             while j < num:
