@@ -44,10 +44,15 @@ def find_type(homogeneous):
             break
 
     pluscount = line.count("+")
-    print(pluscount)
-    end = line.split("+")[pluscount]
-    print("end = " + end)
-    if end.find("s(n") == -1:
+    minuscount = line.count("-")
+    print("pluscount = " + str(pluscount))
+    print("minuscount = " + str(minuscount))
+    plusend = line.split("+")[pluscount]
+    minusend = line.split("-")[minuscount]
+
+    print("end = " + minusend + " " + plusend)
+
+    if plusend.find("s(n") == -1 and minusend.find("s(n") == -1:
         homogeneous = False
     else:
         homogeneous = True
