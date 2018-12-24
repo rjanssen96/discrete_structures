@@ -2,7 +2,7 @@ from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 
 
-# (Step 5.1) solving every systems with no matter the used theorem (cuz theorem 4 also contains theorem 3)
+# (Step 7.1) solving for alphas of non_homog systems
 def find_alpha_values(my_initial_terms, all_r_and_m, parti_sol_in):
     """
     SECTION 0: NEEDED INFORMATION
@@ -52,3 +52,17 @@ def find_alpha_values(my_initial_terms, all_r_and_m, parti_sol_in):
     matrix_result = solve_linear_system(system, *solve_variable)
 
     return matrix_result
+
+
+# Step 7.2 get specific solution
+def get_specific_solution(setup_spec_sol, outcome):
+    specific_solution = setup_spec_sol
+    for x in range(0, len(outcome)):
+        specific_solution = specific_solution.replace("Alpha_" + str(x + 1), "(" + str(outcome.get(x)) + ")")
+    specific_solution = specific_solution.replace("**", "^")
+    specific_solution = specific_solution.replace("s(n)=", "sdir := n -> ")
+    specific_solution = specific_solution.replace(")(", ")*(")
+    specific_solution = specific_solution + ";"
+
+    return specific_solution
+

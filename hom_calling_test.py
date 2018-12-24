@@ -50,22 +50,12 @@ def solve_homog_relation():
 
     # Step 2: Obtaining the characteristic equation
     try:
-        # if degree == 1:
-        #     characteristic_equation = char_equation_1(coefficients[0])
-        #     print("Step 2:  The characteristic equation is: \n" + str(characteristic_equation) + "=0" + "\n")
-        # elif degree >= 2:
-        #     characteristic_equation = char_equation_2(coefficients)
-        #     print("Step 2: The characteristic equation is: \n" + str(characteristic_equation) + "=0" + "\n")
-        # else:
-        #     print("Step 2: Wrong degree value or incorrect characteristic equation" + "\n")
-        #     characteristic_equation = ""
         characteristic_equation = char_equation_2(coefficients)
         print("Step 2: The characteristic equation is: \n" + str(characteristic_equation) + "=0" + "\n")
     except:
         print("2 doesnt work, shocker dude")
 
     # Step 3: Obtain the roots
-    # if degree >= 1:  # find out how to obtain the multiplicity, find root() or search in list for doubles an m=2 for every
     try:
         r = symbols('r')
         r_and_m_found = roots(characteristic_equation, r)  # returns root:multiplicity
@@ -76,11 +66,9 @@ def solve_homog_relation():
         print("3 doesnt work, shocker dude")
 
     # Step 4: Obtain general solution
-    # if degree >= 1:  # multiplicity is important!!! Also build this to support more then 2 roots
     try:
         general_solution = find_general_solution_2(r_and_m_found)
         general_solution = general_solution.replace("s(n)=+", "s(n)=")
-        # general_solution = "Sup Nerd!"
         print("Step 4:  The general solution of this equation is: \n" + str(general_solution) + "\n")
     except:
         print("4 doesnt work, shocker dude")
@@ -95,13 +83,7 @@ def solve_homog_relation():
 
     # Step 5.2: Obtain specific solution
     try:
-        specific_solution = general_solution
-        for x in range(0, len(outcome)):
-            specific_solution = specific_solution.replace("Alpha_" + str(x + 1), "(" + str(outcome.get(x)) + ")")
-        specific_solution = specific_solution.replace("**", "^")
-        specific_solution = specific_solution.replace("s(n)=", "sdir := n -> ")
-        specific_solution = specific_solution.replace(")(", ")*(")
-        specific_solution = specific_solution + ";"
+        specific_solution = gimme_specific_solution(general_solution, outcome)
         print("\nStep 5.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n")
     except Exception as error:
         print("5.2 doesnt work, shocker dude: ERROR: {}".format(error))

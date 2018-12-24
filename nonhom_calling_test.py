@@ -27,48 +27,58 @@ def solve_nonhom_relations():
     try:
         characteristic_equation = char_equation_2(homogeneous_coeffs)
         print("Step 2: The characteristic equation is: \n" + str(characteristic_equation) + "=0" + "\n")
-    except:
-        print("2 doesnt work, shocker dude")
+    except Exception as error:
+        print("2 doesnt work, shocker dude: ERROR: {}".format(error))
 
     # Step 3: Obtain the roots  of the associated homog part
-    # if degree >= 1:  # find out how to obtain the multiplicity, find root() or search in list for doubles an m=2 for every
     try:
         r = symbols('r')
         r_and_m_found = roots(characteristic_equation, r)  # returns root:multiplicity
         print("Step 3: The roots of this equation are:")
         print(r_and_m_found)  # root:multiplicity
         print()
-    except:
-        print("3 doesnt work, shocker dude")
+    except Exception as error:
+        print("3 doesnt work, shocker dude: ERROR: {}".format(error))
 
     # Step 4: Obtain general solution of the associated homog part
-    # if degree >= 1:  # multiplicity is important!!! Also build this to support more then 2 roots
     try:
         general_solution = find_general_solution_2(r_and_m_found)
         general_solution = general_solution.replace("s(n)=+", "s(n)=")
         # general_solution = "Sup Nerd!"
         print("Step 4: The general solution of this equation is: \n" + str(general_solution) + "\n")
-    except:
-        print("4 doesnt work, shocker dude")
+    except Exception as error:
+        print("4 doesnt work, shocker dude: ERROR: {}".format(error))
 
     # Step 5: Obtain the particular solution of the non-homog part
     try:
         particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
         print("Step 5: The particular solution of the non-homog part is: \n" + "s(n)=" + str(particular_solution) + "\n")
-    except:
-        print("5 doesnt work, shocker dude")
+    except Exception as error:
+        print("5 doesnt work, shocker dude: ERROR: {}".format(error))
 
     # Step 6: Obtain the solution a_n = a_n(p) + a_n(h)
-    general_solution = general_solution.replace("s(n)=", "")
-    print("Step 6: a_n = a_n(p) + a_n(h):\n" + "s(n):=" + particular_solution + "+" + general_solution + "\n")
+    try:
+        general_solution = general_solution.replace("s(n)=", "")
+        setup_spec_sol = "s(n)=" + particular_solution + "+" + general_solution  # for step 7.2
+        print("Step 6: a_n = a_n(p) + a_n(h):\n" + "s(n)=" + particular_solution + "+" + general_solution + "\n")
+    except Exception as error:
+        print("6 doesnt work, shocker dude: ERROR: {}".format(error))
 
-    # Step 7: Obtain the alpha values with a_n(p) + a_n(h)
+    # Step 7.1: Obtain the alpha values with a_n(p) + a_n(h)
     try:
         outcome = find_alpha_values(initial_terms, r_and_m_found, particular_solution)
-        print("Step 5.1: The value of the Alphas:")
+        print("Step 7.1: The value of the Alphas:")
         print(outcome)
-    except:
-        print("5.1 doesnt work, shocker dude")
+    except Exception as error:
+        print("7.1 doesnt work, shocker dude: ERROR: {}".format(error))
+
+    # Step 7.2: Obtain specific solution
+    try:
+        # specific_solution = setup_spec_sol
+        specific_solution = get_specific_solution(setup_spec_sol, outcome)
+        print("\nStep 7.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n")
+    except Exception as error:
+        print("7.2 doesnt work, shocker dude: ERROR: {}".format(error))
 
 
 solve_nonhom_relations()

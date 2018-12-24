@@ -46,3 +46,16 @@ def find_alpha_values(my_initial_terms, all_r_and_m):
     matrix_result = solve_linear_system(system, *solve_variable)
 
     return matrix_result
+
+
+# step 5.2 specific solution
+def gimme_specific_solution(general_solution, outcome):
+    specific_solution = general_solution
+    for x in range(0, len(outcome)):
+        specific_solution = specific_solution.replace("Alpha_" + str(x + 1), "(" + str(outcome.get(x)) + ")")
+    specific_solution = specific_solution.replace("**", "^")
+    specific_solution = specific_solution.replace("s(n)=", "sdir := n -> ")
+    specific_solution = specific_solution.replace(")(", ")*(")
+    specific_solution = specific_solution + ";"
+
+    return specific_solution
