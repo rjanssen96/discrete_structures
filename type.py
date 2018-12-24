@@ -38,6 +38,7 @@ def find_type(homogeneous):
             print("CORRECT " + str(k))
             homogeneous = True
             continue
+
         else:
             print("NOPE " + str(k))
             homogeneous = False

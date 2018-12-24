@@ -4,7 +4,7 @@ import file_writer
 import re
 import sympy
 from sympy import Poly
-# import numpy
+import numpy
 from sympy.abc import s, n
 
 
