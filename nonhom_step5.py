@@ -3,7 +3,7 @@
 
 def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples):
     # print("Have a nice day!!!")
-    smile = fn_parts
+    # smile = fn_parts
     s_root_check = False
     particular_sol = "("
 

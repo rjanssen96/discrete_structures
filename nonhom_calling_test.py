@@ -1,9 +1,11 @@
 from sympy import *
+from sympy.parsing.sympy_parser import parse_expr
 
 # from hom_step1 import *
 from hom_step2 import *
 from hom_step4 import *
 from nonhom_step5 import *
+from nonhom_step7 import *
 
 
 def solve_nonhom_relations():
@@ -11,6 +13,7 @@ def solve_nonhom_relations():
     homogeneous_part = ""
     # fn_part = "3**2"  # Needs to be in the right order, so biggest power to lowest power
     # fn_parts = [0, 3]  # every elemts in this list is the next b in fn, so bn**0, bn**1, bn**2
+
     # all powers from max up to and including 0
     fn_parts = {3:1, 2:0, 1:0, 0:0}  # power:coeff, so n^2 = 2:1, cuz power=2 ^ coeff=1. SORTED FROM HIGH TO LOW
     fn_part_sn = 2  # the s in s**n, if no s**n part in fn, then put 1 here
@@ -49,20 +52,23 @@ def solve_nonhom_relations():
         print("4 doesnt work, shocker dude")
 
     # Step 5: Obtain the particular solution of the non-homog part
-    # try:
-    #     # smth smth big spin
-    #     particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
-    #     print("Step 5: The particular solution of the non-homog part is: \n" + str(particular_solution) + "\n")
-    # except:
-    #     print("5 doesnt work, shocker dude")
-    particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
-    print("Step 5: The particular solution of the non-homog part is: \n" + str(particular_solution) + "\n")
+    try:
+        particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
+        print("Step 5: The particular solution of the non-homog part is: \n" + "s(n)=" + str(particular_solution) + "\n")
+    except:
+        print("5 doesnt work, shocker dude")
 
     # Step 6: Obtain the solution a_n = a_n(p) + a_n(h)
     general_solution = general_solution.replace("s(n)=", "")
     print("Step 6: a_n = a_n(p) + a_n(h):\n" + "s(n):=" + particular_solution + "+" + general_solution + "\n")
 
-    # Step 7: Obtain the alpha values and the particular solution
+    # Step 7: Obtain the alpha values with a_n(p) + a_n(h)
+    try:
+        outcome = find_alpha_values(initial_terms, r_and_m_found, particular_solution)
+        print("Step 5.1: The value of the Alphas:")
+        print(outcome)
+    except:
+        print("5.1 doesnt work, shocker dude")
 
 
 solve_nonhom_relations()
