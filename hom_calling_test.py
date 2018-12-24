@@ -79,6 +79,7 @@ def solve_homog_relation():
     # if degree >= 1:  # multiplicity is important!!! Also build this to support more then 2 roots
     try:
         general_solution = find_general_solution_2(r_and_m_found)
+        general_solution = general_solution.replace("s(n)=+", "s(n)=")
         # general_solution = "Sup Nerd!"
         print("Step 4:  The general solution of this equation is: \n" + str(general_solution) + "\n")
     except:

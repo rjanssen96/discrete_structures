@@ -17,10 +17,11 @@ def find_general_solution_2(all_r_and_m_test):
             i = 0  # power of the n in every root section counter, resets for every root
             test_general_sol = test_general_sol + "("
             for y in range(0, all_r_and_m_test[x]):  # for the length of the multiplicity excluding the boundaries
-                if y == 0:  # to prevent one to many +
-                    test_general_sol = test_general_sol + "Alpha_" + str(a) + "*n**" + str(i)
-                else:
-                    test_general_sol = test_general_sol + "+Alpha_" + str(a) + "*n**" + str(i)
+                print(y)
+                # if y == 0:  # to prevent one to many +
+                #     test_general_sol = test_general_sol + "Alpha_" + str(a) + "*n**" + str(i)
+                # elif y > 0:
+                test_general_sol = test_general_sol + "+Alpha_" + str(a) + "*n**" + str(i)
                 i = i + 1  # power counter
                 a = a + 1  # alpha counter
             # prevents one to many * at the end
