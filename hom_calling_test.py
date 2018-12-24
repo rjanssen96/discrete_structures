@@ -68,9 +68,9 @@ def solve_homog_relation():
     # if degree >= 1:  # find out how to obtain the multiplicity, find root() or search in list for doubles an m=2 for every
     try:
         r = symbols('r')
-        new_findings = roots(characteristic_equation, r)  # returns root:multiplicity
+        r_and_m_found = roots(characteristic_equation, r)  # returns root:multiplicity
         print("Step 3:  The roots of this equation are:")
-        print(new_findings)  # root:multiplicity
+        print(r_and_m_found)  # root:multiplicity
         print()
     except:
         print("3 doesnt work, shocker dude")
@@ -78,7 +78,7 @@ def solve_homog_relation():
     # Step 4: Obtain general solution
     # if degree >= 1:  # multiplicity is important!!! Also build this to support more then 2 roots
     try:
-        general_solution = find_general_solution_2(new_findings)
+        general_solution = find_general_solution_2(r_and_m_found)
         # general_solution = "Sup Nerd!"
         print("Step 4:  The general solution of this equation is: \n" + str(general_solution) + "\n")
     except:
@@ -86,7 +86,7 @@ def solve_homog_relation():
 
     # Step 5.1: Obtain alpha values
     try:
-        outcome = find_alpha_values(initial_terms, new_findings)
+        outcome = find_alpha_values(initial_terms, r_and_m_found)
         print("Step 5.1: The value of the Alphas:")
         print(outcome)
     except:
