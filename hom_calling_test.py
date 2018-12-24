@@ -102,8 +102,8 @@ def solve_homog_relation():
         specific_solution = specific_solution.replace(")(", ")*(")
         specific_solution = specific_solution + ";"
         print("\nStep 5.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n")
-    except:
-        print("5.2 doesnt work, shocker dude")
+    except Exception as error:
+        print("5.2 doesnt work, shocker dude: ERROR: {}".format(error))
 
 
 solve_homog_relation()
