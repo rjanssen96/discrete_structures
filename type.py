@@ -5,13 +5,14 @@ global homogeneous
 global path
 
 #pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9].txt")
-pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass33.txt")
-path = glob.glob(pathstring)
+#pathstring = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass33.txt")
+#path = glob.glob(pathstring)
 
 def find_n(s,ch):
     return [i for i, ltr in enumerate(s) if ltr == ch]
 
-def find_type(homogeneous):
+def find_type(homogeneous, path):
+    pathstring = str(path)
     print("path = " + str(path))
     print("pathstring = " + str(pathstring))
     with open(str(pathstring), "r") as f:
@@ -61,5 +62,5 @@ def find_type(homogeneous):
 
     return homogeneous
 
-homogeneous = find_type(homogeneous=False)
+homogeneous = find_type(homogeneous=False, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass33.txt")
 print(homogeneous)
