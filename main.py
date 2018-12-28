@@ -2,7 +2,7 @@
 import os
 import function_type
 import file_reader
-import find_degree
+
 def banner():
     path = os.path.dirname(os.path.realpath(__file__))
     print("This program is written by ...\n")
