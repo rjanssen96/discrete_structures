@@ -22,20 +22,24 @@ def find_type(homogeneous, path):
 
     index = find_n(line, "n")
     print(index)
-    s_pos = []
+    bracket_pos = []
+    minus_pos = []
     count = 0
 
     for j in index:
         print("number = " + str(j))
-        print("number -2 = " + str(j-2))
-        s_pos.append(count)
-        s_pos[count] = j - 2
+        print("number -1 = " + str(j-1))
+        print("number +1 = " + str(j+1))
+        bracket_pos.append(count)
+        bracket_pos[count] = j - 1
+        minus_pos.append(count)
+        minus_pos[count] = j + 1
         count = count+1
     print(index)
-    print(s_pos)
+    print(bracket_pos)
 
-    for k in s_pos:
-        if line[k] == "s":
+    for k in bracket_pos:
+        if line[k] == "(":
             print("CORRECT " + str(k))
             homogeneous = True
             continue
@@ -45,22 +49,7 @@ def find_type(homogeneous, path):
             homogeneous = False
             break
 
-    pluscount = line.count("+")
-    minuscount = line.count("-")
-    print("pluscount = " + str(pluscount))
-    print("minuscount = " + str(minuscount))
-    plusend = line.split("+")[pluscount]
-    minusend = line.split("-")[minuscount]
-
-    print("minusend = " + minusend)
-    print("plususend = " + plusend)
-
-    if plusend.find("s(n") == -1 and minusend.find("s(n") == -1:
-        homogeneous = False
-    else:
-        homogeneous = True
-
     return homogeneous
 
-homogeneous = find_type(homogeneous=False, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest.txt")
+homogeneous = find_type(homogeneous=False, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass16.txt")
 print(homogeneous)
