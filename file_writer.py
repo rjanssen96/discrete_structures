@@ -20,8 +20,15 @@ def write_output_to_file(filename, equation):
 def write_coefficients_to_file(filename, coefficients, polynomials):
     print("We will write the following data to the file {} \nCoefficients: {} \nPolynomials: {}".format(filename, coefficients,polynomials))
     coef_filename = str(filename).strip('.txt') #Remove .txt from the filename
-    coef_file = open((coef_filename + "_coefficents.txt"), 'w') #Add _init.txt to the filename
+    coef_file = open((coef_filename + "_coefficients.txt"), 'w') #Add _coefficients.txt to the filename
     coef_file.write("{},{}".format(coefficients,polynomials)) #Write the ordered sets to the file
+    coef_file.close()
+
+def write_degree_to_file(filename, degree):
+    print("We will write the following data to the file {} \nDegree: {}\n".format(filename,degree))
+    coef_filename = str(filename).strip('.txt')  # Remove .txt from the filename
+    coef_file = open((coef_filename + "_degree.txt"), 'w')  # Add _degree.txt to the filename
+    coef_file.write("{}".format(degree))  # Write the ordered sets to the file
     coef_file.close()
 
 """Reformats the for Python needed syntax of equations back to specified output format:

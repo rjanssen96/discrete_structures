@@ -2,6 +2,7 @@
 import os
 import function_type
 import file_reader
+import find_degree
 def banner():
     path = os.path.dirname(os.path.realpath(__file__))
     print("This program is written by ...\n")
@@ -37,6 +38,9 @@ def menu():
     #This function is the main menu for the program.
     banner()
     read_files()
+
+    #For loop to find all commass files, then find the degree of all these files.
+    # find_degree.find_degree(pathstring=)
     #Determine if the function is an homogeneous or a non-homogeneous function
     try:
         if function_type.type() == "homogeneous":
