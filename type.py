@@ -29,17 +29,31 @@ def find_type(homogeneous, path):
         newline = line
         num = int(num)
         totalcount = line.count("(n-")
-        loopcount = 1
-        while loopcount < totalcount:
-            split = line.split("(n-")[loopcount].split(")")[0]
-            newnum = int(split) + num
-            print("newnum = " + str(newnum))
-            oldstring = ("(n-"+split+")")
-            newstring = ("(n-"+str(newnum)+")")
-            print((oldstring))
-            print(newstring)
-            newline = newline.replace(oldstring, newstring)
-            loopcount = loopcount+1
+        if num < 0:
+            loopcount = 1
+            while loopcount < totalcount:
+                split = line.split("(n-")[loopcount].split(")")[0]
+                newnum = int(split) + num
+                print("newnum = " + str(newnum))
+                oldstring = ("(n-"+split+")")
+                newstring = ("(n-"+str(newnum)+")")
+                print((oldstring))
+                print(newstring)
+                newline = newline.replace(oldstring, newstring)
+                loopcount = loopcount+1
+        else:
+            loopcount = 1
+            while loopcount < totalcount:
+                split = line.split("(n-")[totalcount].split(")")[0]
+                newnum = int(split) + num
+                print("newnum = " + str(newnum))
+                oldstring = ("(n-"+split+")")
+                newstring = ("(n-"+str(newnum)+")")
+                print((oldstring))
+                print(newstring)
+                newline = newline.replace(oldstring, newstring)
+                totalcount = totalcount-1
+
         print("oldline = " + line)
         newline = newline.replace("s(n)" + str(num), "s(n)")
         print("newline = " + newline)
