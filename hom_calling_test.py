@@ -5,6 +5,7 @@ from hom_step2 import *
 # from hom_step3 import *
 from hom_step4 import *
 from hom_step5 import *
+from find_degree import find_degree
 
 
 """"
@@ -22,7 +23,7 @@ def solve_homog_relation():
     if a_1 and a_3 are the used terms, then list needs 3 coeffs, one for a_2 as well, which is 0!!!
     if there's no coeff in front of a_x then 1 needs to be written as a coeff in the list
     """
-    degree = 2
+    degree = find_degree(pathstring=pathstring, degree=0)
     initial_terms = [1, 1]  # List of all initial terms
     coefficients = [1, 1]  # if n+1 in s():=, then make every n -1 (so one add a -1 to the n's)
     parts = ["*s(n-1)", "*s(n-2)", "*s(n-3)"]  # If terms come from read.txt function, then comment this line

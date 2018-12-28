@@ -13,14 +13,13 @@ def find_n(s,ch):
 
 def find_type(homogeneous, path):
     pathstring = str(path)
+    newline = ""
     print("path = " + str(path))
     print("pathstring = " + str(pathstring))
     with open(str(pathstring), "r") as f:
         for i in range(3):
             line = f.readline()
         print("line = " + line)
-
-    index = find_n(line, "n")
 
     eq = line.split("=", 1)[0]
     num = eq.split(")",1)[1]
@@ -62,15 +61,17 @@ def find_type(homogeneous, path):
     print(eq)
     print("num = " + str(num))
 
+    if newline == "":
+        newline = line
+
+    index = find_n(newline, "n")
+
     print(index)
     bracket_pos = []
     minus_pos = []
     count = 0
 
     for j in index:
-        #print("number = " + str(j))
-        #print("number -1 = " + str(j-1))
-        #print("number +1 = " + str(j+1))
         bracket_pos.append(count)
         bracket_pos[count] = j - 1
         minus_pos.append(count)
@@ -80,7 +81,7 @@ def find_type(homogeneous, path):
     print(bracket_pos)
 
     for k in bracket_pos:
-        if line[k] == "(":
+        if newline[k] == "(":
             print("CORRECT " + str(k))
             homogeneous = True
             continue
@@ -92,5 +93,5 @@ def find_type(homogeneous, path):
 
     return homogeneous
 
-homogeneous = find_type(homogeneous=False, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/riktestcomass.txt")
+homogeneous = find_type(homogeneous=False, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass16.txt")
 print(homogeneous)
