@@ -248,18 +248,15 @@ def find_type(homogeneous, path):
 
     for k in bracket_pos:
         if line[k] == "(":
-            print("CORRECT " + str(k))
+            print(color.MAGENTA + "CORRECT " + str(k))
             homogeneous = True
-            file_writer.move_files_based_on_type(filename=pathstring, homogeneous=True)
             continue
 
         else:
             print("NOPE " + str(k))
             homogeneous = False
-            file_writer.move_files_based_on_type(filename=pathstring, homogeneous=False)
             break
-
-    return homogeneous
+    file_writer.move_files_based_on_type(filename=pathstring, homogeneous=homogeneous)
 
 
 def read_files():

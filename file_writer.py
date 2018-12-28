@@ -113,11 +113,17 @@ def move_to_step(filename, homogeneous, step):
         step1_coef_file = step1_coef_file.replace(".txt", "_coefficients.txt")
         copyfile(orinial_coef_file, step1_coef_file)
 
-        """Move the associated equation file to the given step folder."""
+        """Move the associated init file to the given step folder."""
         step1_init_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder,step))
         orinial_init_file = str(filename).replace(".txt", "_init.txt")
         step1_init_file = step1_init_file.replace(".txt", "_init.txt")
         copyfile(orinial_init_file, step1_init_file)
+
+        """Move the associated equation file to the given step folder."""
+        step1_equation_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+        orinial_equation_file = str(filename).replace(".txt", "_equation.txt")
+        step1_equation_file = step1_equation_file.replace(".txt", "_equation.txt")
+        copyfile(orinial_equation_file, step1_equation_file)
 
     except IOError:
         print(color.RED + "File missing {}\n".format(filename), color.RESET)

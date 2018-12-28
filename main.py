@@ -73,6 +73,7 @@ def menu():
                     file_writer.move_to_step(filename=hom_comass_file, homogeneous=True, step="step1")
                     #Remove all the moved files
                     try:
+                        print("")
                         file_remover.remove_file(filename=hom_comass_file)
                     except Exception:
                         continue
