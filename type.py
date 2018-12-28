@@ -26,17 +26,25 @@ def find_type(homogeneous, path):
     num = eq.split(")",1)[1]
 
     if num != " ":
+        newline = line
         num = int(num)
-        loopcount = 15
-
-        while loopcount > 0:
-
-
-
-        print("HOERA")
+        totalcount = line.count("(n-")
+        loopcount = 1
+        while loopcount < totalcount:
+            split = line.split("(n-")[loopcount].split(")")[0]
+            newnum = int(split) + num
+            print("newnum = " + str(newnum))
+            oldstring = ("(n-"+split+")")
+            newstring = ("(n-"+str(newnum)+")")
+            print((oldstring))
+            print(newstring)
+            newline = newline.replace(oldstring, newstring)
+            loopcount = loopcount+1
+        print("oldline = " + line)
+        newline = newline.replace("s(n)" + str(num), "s(n)")
+        print("newline = " + newline)
     else:
         print("AWH")
-
     print(eq)
     print("num = " + str(num))
 
