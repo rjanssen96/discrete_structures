@@ -1,10 +1,11 @@
 #This programs triggers all the other scripts.
 import os
 import function_type
-import file_reader, file_writer
+import file_reader, file_writer, file_remover
 import glob
 import hom_step1, hom_step2, hom_step3, hom_step4, hom_step5
 from colorama import Fore as color
+import time
 
 def banner():
     path = os.path.dirname(os.path.realpath(__file__))
@@ -69,17 +70,22 @@ def menu():
                     """Determine the degree and write it to /output_files/homogeneous/step1/"""
                     degree = hom_step1.find_degree(filename=hom_comass_file)
                     file_writer.write_degree_to_file(filename=hom_comass_file, degree=degree, homogeneous=True)
-                    file_writer.move_to_step1(filename=hom_comass_file, homogeneous=True)
+                    file_writer.move_to_step(filename=hom_comass_file, homogeneous=True, step="step1")
+                    #Remove all the moved files
+                    try:
+                        file_remover.remove_file(filename=hom_comass_file)
+                    except Exception:
+                        continue
                 except Exception as error:
-                    print(color.RED + "Error when determing the degree, file moved to error folder {}\n".format(error), color.RESET)
+                    print(color.RED + "Error when determine the degree, file moved to error folder {}\n".format(error), color.RESET)
 
 
                 """Step 2"""
-                file = open(hom_comass_file, 'r')
-                lines = file.readlines()
-                equation = lines[0].strip("")
-                if degree == 1:
-                    hom_step2.char_equation_1(first_term_in=equation)
+                # file = open(hom_comass_file, 'r')
+                # lines = file.readlines()
+                # equation = lines[0].strip("")
+                # if degree == 1:
+                #     hom_step2.char_equation_1(first_term_in=equation)
 
             # #Determine if the function is an homogeneous or a non-homogeneous function
             # try:
@@ -105,8 +111,13 @@ def menu():
             print("This number is unknown.\n")
             exit()
 
-    except IOError:
-        print("Only integers allowed!\n")
+    except IOError as error:
+        print(color.RED + "Cannot find file: {}\n".format(error), color.RESET)
+        time.sleep(2)
+        menu()
+    except ValueError:
+        print(color.RED + "Only integers allowed!\n", color.RESET)
+        time.sleep(2)
         menu()
 
 menu()

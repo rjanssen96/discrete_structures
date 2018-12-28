@@ -32,17 +32,14 @@ def write_coefficients_to_file(filename, coefficients, polynomials):
 def write_degree_to_file(filename, degree, homogeneous):
     print("We will write the following data to the file {} \nDegree: {}\n".format(filename,degree))
     """The if statements determine the correct folder for the files"""
+    folder = locate_folder(homogeneous=homogeneous)
     try:
-        if homogeneous == True:
-            folder = "homogeneous"
-        elif homogeneous == False:
-            folder = "nonhomogeneous"
+        coef_filename = str(str(filename).strip('.txt')).replace("/{}/".format(folder), "/{}/step1/".format(folder))  # Remove .txt from the filename
+        coef_file = open((coef_filename + "_degree.txt"), 'w')  # Add _degree.txt to the filename
+        coef_file.write("{}".format(degree))  # Write the ordered sets to the file
+        coef_file.close()
     except Exception as error:
-        print("ERROR, add the homogeneous parameter to the function call. {}\n".format(error))
-    coef_filename = str(str(filename).strip('.txt')).replace("/{}/".format(folder), "/{}/step1/".format(folder))  # Remove .txt from the filename
-    coef_file = open((coef_filename + "_degree.txt"), 'w')  # Add _degree.txt to the filename
-    coef_file.write("{}".format(degree))  # Write the ordered sets to the file
-    coef_file.close()
+        print("Cannot write the degree to a file.\nERROR: {}".format(error))
 
 def write_equation(filename, equation):
     try:
@@ -103,21 +100,29 @@ def move_files_based_on_type(filename, homogeneous):
     copyfile(equation_file, equation_file_type)
 
 """Move homogeneous files to step 1."""
-def move_to_step1(filename, homogeneous):
+def move_to_step(filename, homogeneous, step):
     folder = locate_folder(homogeneous=homogeneous)
     try:
-        """Move the comass file to the step 1 folder."""
-        step1_folder = str(filename).replace("/{}/".format(folder), "/{}/step1/".format(folder))
-        copyfile(filename, step1_folder)
+        """Move the comass file to the given step folder."""
+        step1_comass_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+        copyfile(filename, step1_comass_file)
 
-        """Move the associated degree file to the step 1 folder."""
-        # step1_folder = str(filename).replace("/homogeneous/", "/homogeneous/step1/")
-        # copyfile(filename, step1_folder)
+        """Move the associated coefficients file to given step folder."""
+        step1_coef_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder,step))
+        orinial_coef_file = str(filename).replace(".txt", "_coefficients.txt")
+        step1_coef_file = step1_coef_file.replace(".txt", "_coefficients.txt")
+        copyfile(orinial_coef_file, step1_coef_file)
+
+        """Move the associated equation file to the given step folder."""
+        step1_init_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder,step))
+        orinial_init_file = str(filename).replace(".txt", "_init.txt")
+        step1_init_file = step1_init_file.replace(".txt", "_init.txt")
+        copyfile(orinial_init_file, step1_init_file)
 
     except IOError:
         print(color.RED + "File missing {}\n".format(filename), color.RESET)
     except Exception as error:
-        print(color.RED + "General error when moving file from {} folder to step 1: \n{}".format(folder, error), color.RESET)
+        print(color.RED + "General error when moving file from {} folder to {}: \n{}".format(folder, error, step), color.RESET)
 
 
 """Move nonhomogeneous files to the nonhomogeneous folder."""
@@ -164,14 +169,7 @@ def error_in_file(filename, homogeneous, step, error):
     error_folder = str(filename).replace("/{}/".format(folder),"/{}/error/".format(folder))
     copyfile(filename, error_folder)
 
-"""This function removes a file"""
-def remove_file(filename):
-    try:
-        os.remove(filename)
-    except IOError:
-        print("Cannot remove file, because it cannot be found\nFILE:{}".format(filename))
-    except Exception as error:
-        print("Error when removing file: {}\nERROR:{}".format(filename, error))
+
 
 """Reformats the for Python needed syntax of equations back to specified output format:
     - "**" is transformed back to "^";
