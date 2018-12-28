@@ -2,6 +2,7 @@ import os
 import glob # Library for filename pattern-matching
 import file_writer
 import re
+from colorama import Fore as color
 import sympy
 from sympy import Poly
 import numpy
@@ -64,7 +65,7 @@ def det_init_conditions(lines):
         y_value = line[start_index_y:]
         conditions[x_value] = y_value
 
-    print("The conditions are: {}".format(conditions)) #This line can be removed.
+    print("The conditions are: {}\n".format(conditions)) #This line can be removed.
 
     conditions_list = []
     for key in sorted(conditions.keys()): #Sort the initial terms in the dictionary
@@ -147,7 +148,7 @@ def det_coefficients(equation):
     expression = re.compile("((-?\(-?\d+/\d+\)|-?\d+|\d?-?\(-?\d+/\d+\)|-?\d+|\d?)\*s(\(n-\d+\)))")
     results = expression.findall(str(equation))
     if results == None:
-        print("No coefficients found!\n")
+        print(color.RED + "No coefficients found!\n", color.RESET)
         print(equation)
     else:
         print("We found the following coefficients:\n")
@@ -157,9 +158,9 @@ def det_coefficients(equation):
         polynomial_sorted_list = []
         for item in results:
             # print(item)
-            print("coefficient: {} \t macht: {} \t position: {}".format(item[0], item[1], item[2]))
+            print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], item[2]))
             stripped_position = item[2].strip("(n").strip(")")
-            print("\n new: \ncoefficient: {} \t macht: {} \t position: {}".format(item[0], item[1], stripped_position))
+            print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], stripped_position))
             coeff_dict[stripped_position] = item[0],item[1]
 
         for key in sorted(coeff_dict.keys()):
@@ -174,7 +175,7 @@ def det_coefficients(equation):
             # x_value = str(polynomial[start_index_nr:pos_bracket_equal]) #Assign the characters between *s( and ) to the x_value variable
             x_value = str(polynomial[start_index_nr:end_index_nr]) #Assign the characters between *s( and ) to the x_value variable
 
-            print("The polynomial is: {}".format(x_value))
+            print("The polynomial is: {}\n".format(x_value))
             coeff_sorted_list.append(key) #Add the coefficients in order to the list
             polynomial_sorted_list.append(x_value)#Add *s(n-2) to a list in the sequence of the coefficients
             # print(coeff_sorted_dict)
@@ -183,36 +184,7 @@ def det_coefficients(equation):
         file_writer.write_coefficients_to_file(filename=filename, coefficients=coeff_sorted_list, polynomials=polynomial_sorted_list)
         print(coeff_sorted_list)
 
-def find_degree(filename):
-    file = open(filename, 'r')
-    degree = 0
-    j = 0
 
-    for i, line in enumerate(file):
-        if i == 2:
-            print(line)
-            num = 15  # hardcoded 15 which is getting looped over untill it hits 0
-
-            while j < num:
-                string = "(n-" + str(num) + ")"
-                print("string =" + string)
-                print("FOUND = " + str(line.find(string)))
-                if line.find(string) is not -1:
-                    if num > degree:
-                        degree = num
-                        num = num - 1
-                    else:
-                        num = num - 1
-                    print(string)
-                    num = int(num) - 1
-                else:
-                    num = num - 1
-            print("degree = " + str(degree))
-            break
-        else:
-            continue
-    #Write degree to file using file_writer.py
-    file_writer.write_degree_to_file(filename=filename, degree=degree)
 
 #These two function determ if the equation is homogeneous or not.
 # Then moves the homogeneous equations to the homogeneous folder and the nonhomogeneous to the nonhomogeneous folder.
@@ -263,9 +235,10 @@ def find_type(homogeneous, path):
     print("plususend = " + plusend)
 
     if plusend.find("s(n") == -1 and minusend.find("s(n") == -1:
-        file_writer.move_homogeneous_files(filename=pathstring)
+        file_writer.move_files_based_on_type(filename=pathstring, homogeneous=False)
         homogeneous = False
     else:
+        file_writer.move_files_based_on_type(filename=pathstring, homogeneous=True)
         homogeneous = True
 
     return homogeneous
@@ -283,6 +256,8 @@ def read_files():
         lines = fix_syntax(lines)
         print("Len lines: " + str(len(lines)))
         print(lines)
+        """Write the equation to a file"""
+        file_writer.write_equation(equation=lines[0], filename=filename)
         # debug_print(lines)
         # # The following quick fix was done because some input files had two newlines at their end and the list "lines" thus may contain one empty line "" at the end
         tmp = len(lines)
@@ -293,8 +268,16 @@ def read_files():
         associated, f_n_list = analyze_recurrence_equation(lines[0])
 
         det_coefficients(equation=lines)
-        find_degree(filename=filename)
-        find_type(path=filename, homogeneous=False)
+
+        # find_degree(filename=filename)
+        try:
+            find_type(path=filename, homogeneous=False)
+        except Exception as error:
+            """Replace the filename with the error name."""
+            error_name = str(filename).replace("commass", "ERROR_commass")
+            os.rename(filename, error_name)
+            print(color.RED + "Cannot determine the equation type, ERROR: {}\nFile renamed to: {}\n".format(error, error_name), color.RESET)
+
         # # Print debugging information:
         # debug_print(filename)
         # debug_print("Initial conditions:")
