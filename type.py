@@ -21,15 +21,34 @@ def find_type(homogeneous, path):
         print("line = " + line)
 
     index = find_n(line, "n")
+
+    eq = line.split("=", 1)[0]
+    num = eq.split(")",1)[1]
+
+    if num != " ":
+        num = int(num)
+        loopcount = 15
+
+        while loopcount > 0:
+
+
+
+        print("HOERA")
+    else:
+        print("AWH")
+
+    print(eq)
+    print("num = " + str(num))
+
     print(index)
     bracket_pos = []
     minus_pos = []
     count = 0
 
     for j in index:
-        print("number = " + str(j))
-        print("number -1 = " + str(j-1))
-        print("number +1 = " + str(j+1))
+        #print("number = " + str(j))
+        #print("number -1 = " + str(j-1))
+        #print("number +1 = " + str(j+1))
         bracket_pos.append(count)
         bracket_pos[count] = j - 1
         minus_pos.append(count)
@@ -51,5 +70,5 @@ def find_type(homogeneous, path):
 
     return homogeneous
 
-homogeneous = find_type(homogeneous=False, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass16.txt")
+homogeneous = find_type(homogeneous=False, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/riktestcomass.txt")
 print(homogeneous)
