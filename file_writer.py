@@ -66,49 +66,48 @@ def locate_folder(homogeneous):
     except Exception as error:
         print("ERROR, add the homogeneous parameter to the function call. {}\n".format(error))
 
+    return folder
 
-def move_homogeneous_files(filename):
+def move_files_based_on_type(filename, homogeneous):
+    folder = locate_folder(homogeneous=homogeneous)
     #find commass files for that homogeneous equation
     commass_file = filename
-    commass_file_homogeneous = str(filename).replace("/input_files", "/output_files/homogeneous/")
+    commass_file_homogeneous = str(filename).replace("/input_files", "/output_files/{}/".format(folder))
     print("We move the homogeneous file: {}\nTo: {}\n".format(commass_file, commass_file_homogeneous))
 
     """The strip statement removes .txt from the input file, which is the comass[0-9][0-9].txt file.
     Then adds the different variations to the filenames to locate these other files."""
     coefficients_file = str(filename).strip('.txt') + "_coefficients.txt"
-    coefficients_file_homogeneous = str(str(filename).strip('.txt') +"_coefficients.txt").replace("/input_files", "/output_files/homogeneous/")
-    print("We move the homogeneous file: {}\nTo: {}\n".format(coefficients_file, coefficients_file_homogeneous))
+    coefficients_file_type = str(str(filename).strip('.txt') +"_coefficients.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    print("We move the {} file: {}\nTo: {}\n".format(folder, coefficients_file, coefficients_file_type))
 
 
     initial_file = str(filename).strip('.txt') + "_init.txt"
-    initial_file_homogeneous = str(str(filename).strip('.txt') +"_init.txt").replace("/input_files", "/output_files/homogeneous/")
-    print("We move the homogeneous file: {}\nTo: {}\n".format(initial_file, initial_file_homogeneous))
+    initial_file_type = str(str(filename).strip('.txt') +"_init.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    print("We move the {} file: {}\nTo: {}\n".format(folder, initial_file, initial_file_type))
 
 
     degree_file = str(filename).strip('.txt') + "_degree.txt"
-    degree_file_homogeneous = str(str(filename).strip('.txt') +"_degree.txt").replace("/input_files", "/output_files/homogeneous/")
-    print("We move the homogeneous file: {}\nTo: {}\n".format(degree_file, degree_file_homogeneous))
+    degree_file_type = str(str(filename).strip('.txt') +"_degree.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    print("We move the {} file: {}\nTo: {}\n".format(folder, degree_file, degree_file_type))
 
     equation_file = str(filename).strip('.txt') + "_equation.txt"
-    equation_file_homogeneous = str(str(filename).strip('.txt') +"_equation.txt").replace("/input_files", "/output_files/homogeneous/")
-    print("We move the homogeneous file: {}\nTo: {}\n".format(equation_file, equation_file_homogeneous))
+    equation_file_type = str(str(filename).strip('.txt') +"_equation.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    print("We move the {} file: {}\nTo: {}\n".format(folder, equation_file, equation_file_type))
 
     #Copy the files to the homogeneous folder
     copyfile(commass_file, commass_file_homogeneous)
-    copyfile(coefficients_file, coefficients_file_homogeneous)
-    copyfile(initial_file, initial_file_homogeneous)
-    copyfile(degree_file, degree_file_homogeneous)
-    copyfile(equation_file, equation_file_homogeneous)
+    copyfile(coefficients_file, coefficients_file_type)
+    copyfile(initial_file, initial_file_type)
+    copyfile(degree_file, degree_file_type)
+    copyfile(equation_file, equation_file_type)
 
 """Move homogeneous files to step 1."""
 def move_to_step1(filename, homogeneous):
-    if homogeneous == True:
-        folder = "homogeneous"
-    elif homogeneous == False:
-        folder = "nonhomogeneous"
+    folder = locate_folder(homogeneous=homogeneous)
     try:
         """Move the comass file to the step 1 folder."""
-        step1_folder = str(filename).replace("/homogeneous/", "/homogeneous/step1/")
+        step1_folder = str(filename).replace("/{}/".format(folder), "/{}/step1/".format(folder))
         copyfile(filename, step1_folder)
 
         """Move the associated degree file to the step 1 folder."""
@@ -116,9 +115,9 @@ def move_to_step1(filename, homogeneous):
         # copyfile(filename, step1_folder)
 
     except IOError:
-        print("File missing {}\n".format(filename))
+        print(color.RED + "File missing {}\n".format(filename), color.RESET)
     except Exception as error:
-        print("General error when moving file from homogeneous folder to step 1: \n{}".format(error))
+        print(color.RED + "General error when moving file from {} folder to step 1: \n{}".format(folder, error), color.RESET)
 
 
 """Move nonhomogeneous files to the nonhomogeneous folder."""
@@ -162,7 +161,7 @@ def error_in_file(filename, homogeneous, step, error):
     error_file.write("""Error: {}""".format(error))
     error_file.close()
     """Specify the error folder"""
-    error_folder = str(filename).replace("/{}/".format(folder),"/homogeneous/error/")
+    error_folder = str(filename).replace("/{}/".format(folder),"/{}/error/".format(folder))
     copyfile(filename, error_folder)
 
 """This function removes a file"""

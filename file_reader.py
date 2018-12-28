@@ -235,10 +235,10 @@ def find_type(homogeneous, path):
     print("plususend = " + plusend)
 
     if plusend.find("s(n") == -1 and minusend.find("s(n") == -1:
-        file_writer.move_homogeneous_files(filename=pathstring)
+        file_writer.move_files_based_on_type(filename=pathstring, homogeneous=False)
         homogeneous = False
     else:
-        file_writer.move_nonhomogeneous_files(filename=pathstring)
+        file_writer.move_files_based_on_type(filename=pathstring, homogeneous=True)
         homogeneous = True
 
     return homogeneous
