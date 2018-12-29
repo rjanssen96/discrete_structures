@@ -31,7 +31,7 @@ def solve_nonhom_relations():
 
     degree = 2
     initial_terms = [1, 4]
-    homogeneous_coeffs = [8]  # coeffs of the associated homogeneous relation
+    homogeneous_coeffs = [8, 2]  # coeffs of the associated homogeneous relation
 
     # Step 2: Obtaining the characteristic equation  of the associated homog part
     try:
