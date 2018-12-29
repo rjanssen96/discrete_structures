@@ -1,6 +1,16 @@
 from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 
+"""
+smth is from with finding the particular solution
+how can we implement it so that 10^(n-1) etc will be used correctly as well?
+
+part sol depends on the form?
+Sometimes theorem can be used, but not always!!
+
+The current code below always uses the theorem
+"""
+
 # from hom_step1 import *
 from hom_step2 import *
 from hom_step4 import *
@@ -15,13 +25,13 @@ def solve_nonhom_relations():
     # fn_parts = [0, 3]  # every elemts in this list is the next b in fn, so bn**0, bn**1, bn**2
 
     # all powers from max up to and including 0
-    fn_parts = {3:1, 2:0, 1:0, 0:0}  # power:coeff, so n^2 = 2:1, cuz power=2 ^ coeff=1. SORTED FROM HIGH TO LOW
-    fn_part_sn = 2  # the s in s**n, if no s**n part in fn, then put 1 here
+    fn_parts = {1:1, 0:0}  # power:coeff, so n^2 = 2:1, cuz power=2 ^ coeff=1. SORTED FROM HIGH TO LOW 2:1, 1:3, 0:2
+    fn_part_sn = 3  # the s in s**n, if no s**n part in fn, then put 1 here
     highest_power_fn_part = next(iter(fn_parts))  # represents the "t" in the particular solution of non-hom part (step 5)
 
     degree = 2
-    initial_terms = [4, 5]
-    homogeneous_coeffs = [2, 3]
+    initial_terms = [1, 4]
+    homogeneous_coeffs = [8]  # coeffs of the associated homogeneous relation
 
     # Step 2: Obtaining the characteristic equation  of the associated homog part
     try:
@@ -82,3 +92,34 @@ def solve_nonhom_relations():
 
 
 solve_nonhom_relations()
+
+
+# Testing specific solutions:
+my_spec_sol = "((1)*(n)^(3)+(0)*(n)^(2)+(0)*(n)^(1)+(0)*(n)^(0))*(1)^(n)+(+(3/4)+(-9/8)*n)*(2)^n+(+(-3/4)+(3/8)*n)*(-2)^n"
+my_spec_sol = my_spec_sol.replace("^", "**")
+my_answer_list = []
+
+for x in range(0, 20):
+    my_new_spec_sol = my_spec_sol.replace("n", str(x))
+    my_new_spec_sol = parse_expr(my_new_spec_sol)
+    my_answer_list.append(my_new_spec_sol)
+
+print(my_answer_list)
+
+comma_spec_sol = "161/162*(-1)^(n+1)*2^n-47*2^(n-1)+1/648*(417*(-1)^n*n+3321*n)*2^n+1/9*n^3+16/9*n^2+32/3*n+1984/81"
+comma_spec_sol = comma_spec_sol.replace("^", "**")
+comma_answer_list = []
+
+for x in range(0, 20):
+    comma_new_spec_sol = comma_spec_sol.replace("n", str(x))
+    comma_new_spec_sol = parse_expr(comma_new_spec_sol)
+    comma_answer_list.append(comma_new_spec_sol)
+
+print(comma_answer_list)
+
+# tested with:
+# assignment 3, (correct)
+# commas16, (first 4 terms are correct, then its different... first 4 are initial terms)
+# commas33 (watch out for this one, put n-5 as a string in the coeff list),
+# commas36 doesnt work cuz key of dict will be str(n-4) :-/
+
