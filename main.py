@@ -3,6 +3,7 @@ import os
 import function_type
 import file_reader, file_writer, file_remover
 import glob
+import hom_calling_test, nonhom_calling_test
 import hom_step1, hom_step2, hom_step3, hom_step4, hom_step5
 from colorama import Fore as color
 import time
@@ -48,8 +49,8 @@ def menu():
         2) Solve manually equations (NOT READY).\n
         3) Clear cache (remove all files except the input files).\n
         4) Exit the program.\n""")
-        choice = int(input("Enter your choice: "))
-
+        # choice = int(input("Enter your choice: "))
+        choice = 1
         if choice == 1:
 
             read_files()
@@ -65,20 +66,47 @@ def menu():
             for hom_comass_file in glob.glob(hom_comass_path):
                 print(color.GREEN + "\nHomogeneous file {} found!\n".format(hom_comass_file), color.RESET)
 
-                """Step 1"""
+                """The automatic mode uses the hom_calling_test.py file.
+                THIS IS THE HOMOGENEOUS PART!"""
+
+                """Move the files from the root folder, to the automatic folder."""
+                file_writer.move_to_step(filename=hom_comass_file, homogeneous=True, step="automatic")
+                degree = file_reader.read_lists_from_files(file_type="degree", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
+                coefficients = file_reader.read_lists_from_files(file_type="coefficients", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
+                initial_terms = file_reader.read_lists_from_files(file_type="init", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
+                parts = file_reader.read_lists_from_files(file_type="parts", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
+
+                print(color.MAGENTA,
+                      "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}".format(degree,
+                                                                                                         initial_terms,
+                                                                                                         coefficients,
+                                                                                                         parts),
+                      color.RESET)
+
                 try:
-                    """Determine the degree and write it to /output_files/homogeneous/step1/"""
-                    degree = hom_step1.find_degree(filename=hom_comass_file)
-                    file_writer.write_degree_to_file(filename=hom_comass_file, degree=degree, homogeneous=True)
-                    file_writer.move_to_step(filename=hom_comass_file, homogeneous=True, step="step1")
-                    #Remove all the moved files
-                    try:
-                        print("")
-                        file_remover.remove_file(filename=hom_comass_file)
-                    except Exception:
-                        continue
+                    hom_calling_test.solve_homog_relation(degree=degree, initial=initial_terms, parts=parts, coefficients=coefficients, filename=hom_comass_file)
+
                 except Exception as error:
-                    print(color.RED + "Error when determine the degree, file moved to error folder {}\n".format(error), color.RESET)
+                    print(color.RED + "Error in hom_calling_test, try manually!\nERROR: {}".format(error), color.RESET)
+                    try:
+                        file_writer.error_in_file(filename=hom_comass_file, homogeneous=True, step=None, error=error, automatic=True)
+                        print(color.LIGHTGREEN_EX + "Error file created!\n", color.RESET)
+                    except Exception as error:
+                        print(color.RED + "Can not create error file for: {}\nERROR: {}".format(hom_comass_file, error))
+
+                # try:
+                #     """Determine the degree and write it to /output_files/homogeneous/step1/"""
+                #     degree = hom_step1.find_degree(filename=hom_comass_file)
+                #     file_writer.write_degree_to_file(filename=hom_comass_file, degree=degree, homogeneous=True)
+                #     file_writer.move_to_step(filename=hom_comass_file, homogeneous=True, step="step1")
+                #     #Remove all the moved files
+                #     try:
+                #         print("")
+                #         file_remover.remove_file(filename=hom_comass_file)
+                #     except Exception:
+                #         continue
+                # except Exception as error:
+                #     print(color.RED + "Error when determine the degree, file moved to error folder {}\n".format(error), color.RESET)
 
 
                 """Step 2"""

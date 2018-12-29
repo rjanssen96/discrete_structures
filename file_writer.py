@@ -21,13 +21,18 @@ def write_output_to_file(filename, equation):
         nr_written_chars = output_file.write("sdir := n -> {0};\n".format(equation))
     # debug_print("Wrote {0} characters to file {1}.".format(str(nr_written_chars), filename))
 
-"""This file writes the coefficients (given by file_reader.py) to a file"""
+"""This file writes the coefficients (given by file_reader.py) to a file and the coefficients parts to a separate file."""
 def write_coefficients_to_file(filename, coefficients, polynomials):
     print("We will write the following data to the file {} \nCoefficients: {} \nPolynomials: {}\n".format(filename, coefficients,polynomials))
     coef_filename = str(filename).strip('.txt') #Remove .txt from the filename
     coef_file = open((coef_filename + "_coefficients.txt"), 'w') #Add _coefficients.txt to the filename
-    coef_file.write("{},{}".format(coefficients,polynomials)) #Write the ordered sets to the file
+    coef_file.write("{}".format(coefficients)) #Write the ordered sets to the file
     coef_file.close()
+
+    parts_filename = str(filename).strip('.txt')  # Remove .txt from the filename
+    parts_file = open((parts_filename + "_parts.txt"), 'w')  # Add _coefficients.txt to the filename
+    parts_file.write("{}".format(polynomials)) # Write the ordered sets to the file
+    parts_file.close()
 
 def write_degree_to_file(filename, degree, homogeneous):
     print("We will write the following data to the file {} \nDegree: {}\n".format(filename,degree))
@@ -92,12 +97,17 @@ def move_files_based_on_type(filename, homogeneous):
     equation_file_type = str(str(filename).strip('.txt') +"_equation.txt").replace("/input_files", "/output_files/{}/".format(folder))
     print("We move the {} file: {}\nTo: {}\n".format(folder, equation_file, equation_file_type))
 
+    parts_file = str(filename).strip('.txt') + "_parts.txt"
+    parts_file_type = str(str(filename).strip('.txt') + "_parts.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    print("We move the {} file: {}\nTo: {}\n".format(folder, parts_file, parts_file_type))
+
     #Copy the files to the homogeneous folder
     copyfile(commass_file, commass_file_homogeneous)
     copyfile(coefficients_file, coefficients_file_type)
     copyfile(initial_file, initial_file_type)
     copyfile(degree_file, degree_file_type)
     copyfile(equation_file, equation_file_type)
+    copyfile(parts_file, parts_file_type)
 
 """Move homogeneous files to step 1."""
 def move_to_step(filename, homogeneous, step):
@@ -124,6 +134,18 @@ def move_to_step(filename, homogeneous, step):
         orinial_equation_file = str(filename).replace(".txt", "_equation.txt")
         step1_equation_file = step1_equation_file.replace(".txt", "_equation.txt")
         copyfile(orinial_equation_file, step1_equation_file)
+
+        """Move the associated degree file to the given step folder."""
+        step1_degree_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+        orinial_degree_file = str(filename).replace(".txt", "_degree.txt")
+        step1_degree_file = step1_degree_file.replace(".txt", "_degree.txt")
+        copyfile(orinial_degree_file, step1_degree_file)
+
+        """Move the associated equation file to the given step folder."""
+        step1_parts_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+        orinial_parts_file = str(filename).replace(".txt", "_parts.txt")
+        step1_parts_file = step1_parts_file.replace(".txt", "_parts.txt")
+        copyfile(orinial_parts_file, step1_parts_file)
 
     except IOError:
         print(color.RED + "File missing {}\n".format(filename), color.RESET)
@@ -165,10 +187,13 @@ def move_nonhomogeneous_files(filename):
 
 
 """This function moves the error files to the error folder and adds the error to the file."""
-def error_in_file(filename, homogeneous, step, error):
+def error_in_file(filename, homogeneous, step, error, automatic):
     folder = locate_folder(homogeneous=homogeneous)
     error_file = open(filename, 'a')
-    error_file.write("""Error in step: {}""".format(step))
+    if step != None:
+        error_file.write("""Error in step: {}\n""".format(step))
+    if automatic == True:
+        error_file.write("""Error during automatic solving.\n""")
     error_file.write("""Error: {}""".format(error))
     error_file.close()
     """Specify the error folder"""

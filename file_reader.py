@@ -258,6 +258,77 @@ def find_type(homogeneous, path):
             break
     file_writer.move_files_based_on_type(filename=pathstring, homogeneous=homogeneous)
 
+def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
+    """the folder will be the map where the files are located. If homogeneous is True and automatic is also true, the files will be
+    in /output_files/homogeneous/automatic/"""
+    if homogeneous == True and automatic == True:
+        filename = str(filename).replace("output_files/homogeneous/", "/output_files/homogeneous/automatic/")
+    elif homogeneous == False and automatic == True:
+        filename = str(filename).replace("output_files/nonhomogeneous/", "/output_files/nonhomogeneous/automatic/")
+    elif homogeneous == True and automatic == False:
+        if step == None:
+            print(color.RED + "Error: you must specify a step to read files manually!", color.RESET)
+        else:
+            filename = str(filename).replace("output_files/homogeneous/", "/output_files/homogeneous/{}/".format(step))
+    elif homogeneous == False and automatic == False:
+        if step == None:
+            print(color.RED + "Error: you must specify a step to read files manually!", color.RESET)
+        else:
+            filename = str(filename).replace("output_files/nonhomogeneous/", "/output_files/nonhomogeneous/{}/".format(step))
+
+    # print(color.RED + "The requested folder is: {}\n".format(folder), color.RESET)
+
+    error_banner = """File name is the name of the file,\n
+    if file_type = comass, the comass[0-9][0-9].txt will be the file type.\n
+    if file type = coefficients, the comass[0-9][0-9]_coefficients.txt will be the file type.\n
+    if file type = degree, the comass[0-9][0-9]_degree.txt will be the file type.\n
+    if file type = equation, the comass[0-9][0-9]_equation.txt will be the file type.\n
+    if file type = init, the comass[0-9][0-9]_init.txt will be the file type.\n
+    if file type = parts, the comass[0-9][0-9]_parts.txt will be the file type.\n"""
+    try:
+        if file_type == "comass":
+            filename = str(filename)
+        elif file_type == "coefficients":
+            filename = str(filename).replace(".txt", "_coefficients.txt")
+        elif file_type == "degree":
+            filename = str(filename).replace(".txt", "_degree.txt")
+        elif file_type == "equation":
+            filename = str(filename).replace(".txt", "_equation.txt")
+        elif file_type == "init":
+            filename = str(filename).replace(".txt", "_init.txt")
+        elif file_type == "parts":
+            filename = str(filename).replace(".txt", "_parts.txt")
+    except Exception:
+        print(color.RED + "Wrong file_type specified!\n{}".format(error_banner))
+
+    try:
+        file = open(filename, 'r')
+        readed_list = str(str(str(str(file.readline()).strip("[")).strip("]").strip("'")))
+        readed_list = readed_list.strip("'")
+        readed_list = readed_list.split("""', '""")
+        print(color.BLUE + "The line is: {}\nThe type is: {}\n".format(readed_list, type(readed_list)))
+        file.close()
+    except Exception as error:
+        print(color.RED +"Error during opening requested file!\nERROR: {}".format(error), color.RESET)
+
+
+    """Convert degree, coefficients and initial terms from strings to integers"""
+    try:
+        if file_type == ("coefficients" or "degree" or "init"):
+            integer_list = []
+            for string in readed_list:
+                try:
+                    integer_list = integer_list.append(int(string))
+                except Exception:
+                    """This exepction catches NoneType errors"""
+                    continue
+            readed_list = integer_list
+            print("The new readed list is: {}".format(readed_list))
+    except Exception as error:
+        print(color.RED + "Error during converting strings in {} list to integers.\nERROR: {}".format(file_type, error))
+
+
+    return readed_list
 
 def read_files():
         # def write_coefficents_to_file(filename, coefficients):
