@@ -76,12 +76,7 @@ def menu():
                 initial_terms = file_reader.read_lists_from_files(file_type="init", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
                 parts = file_reader.read_lists_from_files(file_type="parts", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
 
-                print(color.MAGENTA,
-                      "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}".format(degree,
-                                                                                                         initial_terms,
-                                                                                                         coefficients,
-                                                                                                         parts),
-                      color.RESET)
+                print(color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}".format(degree,initial_terms,coefficients,parts),color.RESET)
 
                 try:
                     hom_calling_test.solve_homog_relation(degree=degree, initial=initial_terms, parts=parts, coefficients=coefficients, filename=hom_comass_file)
