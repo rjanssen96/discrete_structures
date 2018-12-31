@@ -57,7 +57,7 @@ def find_type(homogeneous, path):
         newline = newline.replace("s(n)" + str(num), "s(n)")
         print("newline = " + newline)
     else:
-        print("AWH")
+        print("Not needed to higher/lower the n- values")
     print(eq)
     print("num = " + str(num))
 
@@ -66,22 +66,18 @@ def find_type(homogeneous, path):
 
     index = find_n(newline, "n")
 
-    print(index)
-    bracket_pos = []
-    minus_pos = []
+    s_pos = []
     count = 0
 
     for j in index:
-        bracket_pos.append(count)
-        bracket_pos[count] = j - 1
-        minus_pos.append(count)
-        minus_pos[count] = j + 1
+        s_pos.append(count)
+        s_pos[count] = j - 2
         count = count+1
     print(index)
-    print(bracket_pos)
+    print(s_pos)
 
-    for k in bracket_pos:
-        if newline[k] == "(":
+    for k in s_pos:
+        if newline[k] == "s":
             print("CORRECT " + str(k))
             homogeneous = True
             continue
