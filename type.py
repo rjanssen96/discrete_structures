@@ -76,18 +76,26 @@ def find_type(homogeneous, path):
     print(index)
     print(s_pos)
 
+    nonhom=[]
+    print(newline.split("("))
+    for l in newline.split("("):
+        nonhom.append(l)
+    nonhom.pop(0)
+    nonhom.pop(0)
+
     for k in s_pos:
-        if newline[k] == "s":
+        if newline[k] == "s" and homogeneous is not False:
             print("CORRECT " + str(k))
             homogeneous = True
             continue
-
+        if newline[k] == "s":
+            print("CORRECT " + str(k))
+            continue
         else:
             print("NOPE " + str(k))
             homogeneous = False
-            break
-
+            print("nonhom = " + str(nonhom))
     return homogeneous
 
-homogeneous = find_type(homogeneous=False, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass16.txt")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comasstest.txt")
 print(homogeneous)
