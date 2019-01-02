@@ -47,7 +47,7 @@ def menu():
         print("""Menu, choose a number:\n
         1) Solve the equations automatically.\n
         2) Solve manually equations (NOT READY).\n
-        3) Clear cache (remove all files except the input files).\n
+        3) Remove some files.\n
         4) Exit the program.\n""")
         choice = int(input("Enter your choice: "))
         # choice = 1
