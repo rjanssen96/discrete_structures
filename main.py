@@ -49,8 +49,8 @@ def menu():
         2) Solve manually equations (NOT READY).\n
         3) Clear cache (remove all files except the input files).\n
         4) Exit the program.\n""")
-        # choice = int(input("Enter your choice: "))
-        choice = 1
+        choice = int(input("Enter your choice: "))
+        # choice = 1
         if choice == 1:
 
             read_files()
@@ -126,7 +126,19 @@ def menu():
         elif choice == 2:
             print("You entered manual mode.\nThis mode is not implemented yet.\n")
         elif choice == 3:
-            print("Files will be removed.\n")
+            print("Which files do you want to remove?.\n")
+            print("""1) All files, including solutions.\n
+            2) Error files.\n
+            3) All files in a particular step.""")
+            delete_choice = int(input("Enter your choice: "))
+            if delete_choice == 1:
+                file_remover.remove_all()
+            elif delete_choice == 2:
+                file_remover.remove_error()
+            elif delete_choice == 3:
+                homogeneous = bool(input("Is de folder homogeneous (True or False)?: "))
+                folder = input("Type folder name: ")
+                file_remover.remove_files_in_folder(homogeneous=homogeneous, folder=folder)
 
         elif choice == 4:
             print("Closing program, BYE!\n")

@@ -7,7 +7,7 @@ from hom_step4 import *
 from hom_step5 import *
 from find_degree import find_degree
 from colorama import Fore as color
-
+import time
 import file_writer
 
 """"
@@ -127,7 +127,8 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
     # Step 5.2: Obtain specific solution
     try:
         specific_solution = gimme_specific_solution(general_solution, outcome)
-        print("\nStep 5.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n")
+        print(color.BLUE +"\nStep 5.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n", color.RESET)
+        time.sleep(10)
     except Exception as error:
         print("5.2 doesnt work, shocker dude: ERROR: {}".format(error))
         print(color.RED + "Error occurs in file: {}".format(filename), color.RESET)

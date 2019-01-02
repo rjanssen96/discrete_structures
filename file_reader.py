@@ -147,6 +147,7 @@ def det_coefficients(equation):
     # print("We have te find coefficients in the following lines: {} \n".format(lines))
     expression = re.compile("((-?\(-?\d+/\d+\)|-?\d+|\d?-?\(-?\d+/\d+\)|-?\d+|\d?)\*s(\(n-\d+\)))")
     results = expression.findall(str(equation))
+
     if results == None:
         print(color.RED + "No coefficients found!\n", color.RESET)
         print(equation)
@@ -309,7 +310,7 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
         print(color.BLUE + "The line is: {}\nThe type is: {}\n".format(readed_list, type(readed_list)))
         file.close()
     except Exception as error:
-        print(color.RED +"Error during opening requested file!\nERROR: {}".format(error), color.RESET)
+        print(color.RED + "Error during opening requested file!\nERROR: {}".format(error), color.RESET)
 
 
     """Convert degree, coefficients and initial terms from strings to integers"""
