@@ -206,7 +206,6 @@ def det_coefficients(equation):
     if results == None:
         print(color.RED + "No coefficients found!\n", color.RESET)
         print(equation)
-        test = input("type enter..\n")
     else:
         print("We found the following coefficients:\n")
         print(results)
@@ -222,43 +221,86 @@ def det_coefficients(equation):
                 coeff_dict[stripped_position] = item[0], "1"
 
                 print("SO, THESE ARE THE VALUES: {}".format((item[0], "1")))
-                test = input("type enter..\n")
+
             else:
 
                 print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], item[2]))
                 stripped_position = item[2].strip("(n").strip(")")
                 print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], stripped_position))
                 coeff_dict[stripped_position] = item[0], item[1]
-                # test = input("type enter..\n")
+
         print(coeff_dict)
-        test = input("heljiwfsd")
+
         for key in sorted(coeff_dict.keys()):
-            print(coeff_dict)
-            print(coeff_dict.get(key)[0])
-            polynomial = str(coeff_dict.get(key)[0])  # *s(n-2) from the ordered dictionary.
+            # print(coeff_dict)
+            # print(coeff_dict.get(key)[0])
+            #
+            # print("The key is: {}".format(key))
+            # polynomial = str(coeff_dict.get(str(key))[0])  # *s(n-2) from the ordered dictionary.
+            #
+            # pos_s_bracket = polynomial.find("*s(")  # Position of "*s("
+            # start_index_nr = pos_s_bracket + 0  # First index of x-value, when changing the 0 to 1. The * will be excluded!
+            # pos_bracket_equal = polynomial.find(")", pos_s_bracket)  # Position of ")="
+            # end_index_nr = pos_bracket_equal + 1  # includes the ) back in the polynomial
+            # # x_value = str(polynomial[start_index_nr:pos_bracket_equal]) #Assign the characters between *s( and ) to the x_value variable
+            # x_value = str(polynomial[start_index_nr:end_index_nr])  # Assign the characters between *s( and ) to the x_value variable
+            #
+            # # """Insert the 1 coefficients."""
+            # # if str(coeff_dict.get(str(key))[1]) == "1": #If the coefficients from the polynomial = 1, then s(n-1) does not need to be formatted.
+            # #     print("hello")
+            # #     # coeff_unsorted_dict[key] = (x_value, (coeff_dict.get(str(key))[0]), "1") #ADD the degree (key) and (x_value(part), polynomial, coefficient) to a dict.
+            # #     # x_value = str(coeff_dict.get(str(key))[0])
 
-            pos_s_bracket = polynomial.find("*s(")  # Position of "*s("
-            start_index_nr = pos_s_bracket + 0  # First index of x-value, when changing the 0 to 1. The * will be excluded!
-            pos_bracket_equal = polynomial.find(")", pos_s_bracket)  # Position of ")="
-            end_index_nr = pos_bracket_equal + 1  # includes the ) back in the polynomial
-            # x_value = str(polynomial[start_index_nr:pos_bracket_equal]) #Assign the characters between *s( and ) to the x_value variable
-            x_value = str(polynomial[
-                          start_index_nr:end_index_nr])  # Assign the characters between *s( and ) to the x_value variable
+            """Insert the 0 coefficients."""
+            #If the previous key is -1, then no action. Otherwise add 0
+            degree_list = list(reversed(sorted(coeff_dict)))
+            degree = int(degree_list[0])
+            print(color.BLUE + "The degree is: {}".format(degree), color.RESET)
 
-            if str(coeff_dict.get(key)[1]) == "1": #If the coefficients from the polynomial = 1, then s(n-1) does not need to be formatted.
-                x_value = str(coeff_dict.get(key)[0])
+            print("The range is: {}\n".format((range(degree, 0))))
+            for number in range(degree, 0):
+                # key = n # % 10
+                print("We will check: {}\n".format(number))
+                if str(number) in coeff_dict:
+                    print("Degree {} found in dict.\n".format(number))
 
-            print("The polynomial is: {}\n".format(x_value))
-            print("The coefficients is: {}\n".format(str(coeff_dict.get(key)[1])))
-            coeff_sorted_list.append(str(coeff_dict.get(key)[1]))  # Add the coefficients in order to the list
-            polynomial_sorted_list.append(x_value) # Add *s(n-2) to a list in the sequence of the coefficients
+                else:
+                    print("Degree {} not found in dict.\n".format(number))
+                    zero_tuple = (("0*s(n-{})".format(abs(number)), "0"))
+                    print("tuple[0] {}, tuple[1]: {}\n".format(zero_tuple[0], zero_tuple[1]))
+                    x_value = "(n-{})".format(abs(number))
 
-            test = input('hiosadf')
-            print(key)
+                    print("This is the data before adding \nNumber: {}, tuple: {}, coeff_dic:{}".format(number, zero_tuple, coeff_dict))
+                    coeff_dict[str(number)] = zero_tuple[0], zero_tuple[1] #The key is the degree, ten the part and the 0 coefficients is added to the dictionary.
+                    print("This is the data after adding \nNumber: {}, tuple: {}, coeff_dic:{}".format(number, zero_tuple, coeff_dict))
+                    print(color.RED + "The keys are: {}\n".format(coeff_dict.keys()), color.RESET)
+                    print(color.RED + "The dictionary is: {}\n".format(coeff_dict), color.RESET)
 
-        file_writer.write_coefficients_to_file(filename=filename, coefficients=coeff_sorted_list,
-                                               polynomials=polynomial_sorted_list)
+        print("\n\nEntering write fucniton\n\n")
+        print(sorted(coeff_dict.values()))
+        for all_keys in sorted(coeff_dict.keys()):
+            coefficient = str(coeff_dict.get(str(all_keys))[1])
+            """if a coefficient is 1, then there is no *s, so the find_parts function is not needed."""
+            if coefficient == "1":
+                polynomial = str(coeff_dict.get(str(all_keys))[0])
+            else:
+                polynomial = find_parts(polynomial=str(coeff_dict.get(str(all_keys))[0]))
+
+            coeff_sorted_list.append(coefficient) #Add the coefficients in order to the list
+            polynomial_sorted_list.append(polynomial)#Add *s(n-2) to a list in the sequence of the coefficients
+
+        file_writer.write_coefficients_to_file(filename=filename, coefficients=coeff_sorted_list, polynomials=polynomial_sorted_list)
         print(coeff_sorted_list)
+
+"""This function finds the parts from the polynomials, it removes the coefficients"""
+def find_parts(polynomial):
+    pos_s_bracket = polynomial.find("*s(")  # Position of "*s("
+    start_index_nr = pos_s_bracket + 0  # First index of x-value, when changing the 0 to 1. The * will be excluded!
+    pos_bracket_equal = polynomial.find(")", pos_s_bracket)  # Position of ")="
+    end_index_nr = pos_bracket_equal + 1  # includes the ) back in the polynomial
+    # x_value = str(polynomial[start_index_nr:pos_bracket_equal]) #Assign the characters between *s( and ) to the x_value variable
+    return str(polynomial[start_index_nr:end_index_nr])  # Assign the characters between *s( and ) to the x_value variable
+
 
 #These two function determ if the equation is homogeneous or not.
 # Then moves the homogeneous equations to the homogeneous folder and the nonhomogeneous to the nonhomogeneous folder.

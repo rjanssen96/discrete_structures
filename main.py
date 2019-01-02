@@ -37,7 +37,7 @@ def read_files():
     try:
         file_reader.read_files()
     except Exception as error:
-        print(color.RED + "Something went wrong! \nError: {}".format(error),color.RESET)
+        print(color.RED + "Something went wrong in the file reader! \nError: {}".format(error),color.RESET)
 
 
 def menu():
@@ -155,5 +155,5 @@ def menu():
         print(color.RED + "Only integers allowed!\n", color.RESET)
         time.sleep(2)
         menu()
-
-menu()
+while True:
+    menu()
