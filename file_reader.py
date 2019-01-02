@@ -141,16 +141,72 @@ def analyze_recurrence_equation(equation):
     # Sorry, but you will have to implement the treatment of F(n) yourself!
     return associated, f_n_list
 
+# """This functions checks what the coefficients are for each eaquation, this is only for homogeneous equations."""
+# def det_coefficients(equation):
+#     print("We are going to find the coefficients for: {}".format(str(equation)))
+#     # print("We have te find coefficients in the following lines: {} \n".format(lines))
+#     expression = re.compile("((-?\(-?\d+/\d+\)|-?\d+|\d?-?\(-?\d+/\d+\)|-?\d+|\d?)\*s(\(n-\d+\)))")
+#     results = expression.findall(str(equation))
+#
+#
+#
+#     """Find all the "s(" combinations, put them in a list. Those who do not occur in the results, insert an 1"""
+#
+#
+#
+#     if results == None:
+#         print(color.RED + "No coefficients found!\n", color.RESET)
+#         print(equation)
+#         test = input("type enter..\n")
+#     else:
+#         print("We found the following coefficients:\n")
+#         print(results)
+#         coeff_dict = {}
+#         coeff_sorted_list = []
+#         polynomial_sorted_list = []
+#         for item in results:
+#             # print(item)
+#             print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], item[2]))
+#             stripped_position = item[2].strip("(n").strip(")")
+#             print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], stripped_position))
+#             coeff_dict[stripped_position] = item[0],item[1]
+#             test = input("type enter..\n")
+#
+#         for key in sorted(coeff_dict.keys()):
+#             print(coeff_dict)
+#             print(coeff_dict.get(key)[0])
+#             polynomial = str(coeff_dict.get(key)[0]) #*s(n-2) from the ordered dictionary.
+#
+#             pos_s_bracket = polynomial.find("*s(")  # Position of "*s("
+#             start_index_nr = pos_s_bracket + 0  # First index of x-value, when changing the 0 to 1. The * will be excluded!
+#             pos_bracket_equal = polynomial.find(")", pos_s_bracket)  # Position of ")="
+#             end_index_nr = pos_bracket_equal + 1 #includes the ) back in the polynomial
+#             # x_value = str(polynomial[start_index_nr:pos_bracket_equal]) #Assign the characters between *s( and ) to the x_value variable
+#             x_value = str(polynomial[start_index_nr:end_index_nr]) #Assign the characters between *s( and ) to the x_value variable
+#
+#             print("The polynomial is: {}\n".format(x_value))
+#             coeff_sorted_list.append(key) #Add the coefficients in order to the list
+#             polynomial_sorted_list.append(x_value)#Add *s(n-2) to a list in the sequence of the coefficients
+#             # print(coeff_sorted_dict)
+#             print(key)
+#
+#         file_writer.write_coefficients_to_file(filename=filename, coefficients=coeff_sorted_list, polynomials=polynomial_sorted_list)
+#         print(coeff_sorted_list)
+
 """This functions checks what the coefficients are for each eaquation, this is only for homogeneous equations."""
+
 def det_coefficients(equation):
     print("We are going to find the coefficients for: {}".format(str(equation)))
     # print("We have te find coefficients in the following lines: {} \n".format(lines))
-    expression = re.compile("((-?\(-?\d+/\d+\)|-?\d+|\d?-?\(-?\d+/\d+\)|-?\d+|\d?)\*s(\(n-\d+\)))")
+    expression = re.compile("((-?\(-?\d+/\d+\)|-?\d+|\d?-?\(-?\d+/\d+\)|-?\d+|\d?)\*?s(\(n-\d+\)))")
     results = expression.findall(str(equation))
+
+    """Find all the "s(" combinations, put them in a list. Those who do not occur in the results, insert an 1"""
 
     if results == None:
         print(color.RED + "No coefficients found!\n", color.RESET)
         print(equation)
+        test = input("type enter..\n")
     else:
         print("We found the following coefficients:\n")
         print(results)
@@ -158,34 +214,51 @@ def det_coefficients(equation):
         coeff_sorted_list = []
         polynomial_sorted_list = []
         for item in results:
-            # print(item)
-            print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], item[2]))
-            stripped_position = item[2].strip("(n").strip(")")
-            print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], stripped_position))
-            coeff_dict[stripped_position] = item[0],item[1]
+            print(item)
+            if item[1] == "":
+                print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], "1", item[2]))
+                stripped_position = item[2].strip("(n").strip(")")
+                print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], "1", stripped_position))
+                coeff_dict[stripped_position] = item[0], "1"
 
+                print("SO, THESE ARE THE VALUES: {}".format((item[0], "1")))
+                test = input("type enter..\n")
+            else:
+
+                print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], item[2]))
+                stripped_position = item[2].strip("(n").strip(")")
+                print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], stripped_position))
+                coeff_dict[stripped_position] = item[0], item[1]
+                # test = input("type enter..\n")
+        print(coeff_dict)
+        test = input("heljiwfsd")
         for key in sorted(coeff_dict.keys()):
             print(coeff_dict)
             print(coeff_dict.get(key)[0])
-            polynomial = str(coeff_dict.get(key)[0]) #*s(n-2) from the ordered dictionary.
+            polynomial = str(coeff_dict.get(key)[0])  # *s(n-2) from the ordered dictionary.
 
             pos_s_bracket = polynomial.find("*s(")  # Position of "*s("
             start_index_nr = pos_s_bracket + 0  # First index of x-value, when changing the 0 to 1. The * will be excluded!
             pos_bracket_equal = polynomial.find(")", pos_s_bracket)  # Position of ")="
-            end_index_nr = pos_bracket_equal + 1 #includes the ) back in the polynomial
+            end_index_nr = pos_bracket_equal + 1  # includes the ) back in the polynomial
             # x_value = str(polynomial[start_index_nr:pos_bracket_equal]) #Assign the characters between *s( and ) to the x_value variable
-            x_value = str(polynomial[start_index_nr:end_index_nr]) #Assign the characters between *s( and ) to the x_value variable
+            x_value = str(polynomial[
+                          start_index_nr:end_index_nr])  # Assign the characters between *s( and ) to the x_value variable
+
+            if str(coeff_dict.get(key)[1]) == "1": #If the coefficients from the polynomial = 1, then s(n-1) does not need to be formatted.
+                x_value = str(coeff_dict.get(key)[0])
 
             print("The polynomial is: {}\n".format(x_value))
-            coeff_sorted_list.append(key) #Add the coefficients in order to the list
-            polynomial_sorted_list.append(x_value)#Add *s(n-2) to a list in the sequence of the coefficients
-            # print(coeff_sorted_dict)
+            print("The coefficients is: {}\n".format(str(coeff_dict.get(key)[1])))
+            coeff_sorted_list.append(str(coeff_dict.get(key)[1]))  # Add the coefficients in order to the list
+            polynomial_sorted_list.append(x_value) # Add *s(n-2) to a list in the sequence of the coefficients
+
+            test = input('hiosadf')
             print(key)
 
-        file_writer.write_coefficients_to_file(filename=filename, coefficients=coeff_sorted_list, polynomials=polynomial_sorted_list)
+        file_writer.write_coefficients_to_file(filename=filename, coefficients=coeff_sorted_list,
+                                               polynomials=polynomial_sorted_list)
         print(coeff_sorted_list)
-
-
 
 #These two function determ if the equation is homogeneous or not.
 # Then moves the homogeneous equations to the homogeneous folder and the nonhomogeneous to the nonhomogeneous folder.

@@ -89,8 +89,7 @@ def remove_files_in_folder(homogeneous, folder):
         print(color.RED + "ERROR: wrong homogeneous value\n", color.RESET)
 
     delete_folder = hom_folder + "{}".format(folder)
-    print("The folder is: {}".format(delete_folder))
     path = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/{}/comass[0-9][0-9]*.txt".format((delete_folder)))
     for file in glob.glob(path):
         os.remove(file)
-        print(color.GREEN + "File deleted: {}".format(file), color.RESET)
+        print(color.GREEN + "File deleted: {}\n".format(file), color.RESET)
