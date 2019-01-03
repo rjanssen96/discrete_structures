@@ -36,11 +36,11 @@ def find_type(homogeneous, path):
             while loopcount < totalcount:
                 split = line.split("(n-")[loopcount].split(")")[0]
                 newnum = int(split) + num
-                print("newnum = " + str(newnum))
+                #print("newnum = " + str(newnum))
                 oldstring = ("(n-"+split+")")
                 newstring = ("(n-"+str(newnum)+")")
-                print((oldstring))
-                print(newstring)
+                #print((oldstring))
+                #print(newstring)
                 newline = newline.replace(oldstring, newstring)
                 loopcount = loopcount+1
         else:
@@ -48,11 +48,11 @@ def find_type(homogeneous, path):
             while loopcount < totalcount:
                 split = line.split("(n-")[totalcount].split(")")[0]
                 newnum = int(split) + num
-                print("newnum = " + str(newnum))
+                #print("newnum = " + str(newnum))
                 oldstring = ("(n-"+split+")")
                 newstring = ("(n-"+str(newnum)+")")
-                print((oldstring))
-                print(newstring)
+                #print((oldstring))
+                #print(newstring)
                 newline = newline.replace(oldstring, newstring)
                 totalcount = totalcount-1
 
@@ -61,8 +61,6 @@ def find_type(homogeneous, path):
         print("newline = " + newline)
     else:
         print("Not needed to higher/lower the n- values")
-    print(eq)
-    print("num = " + str(num))
 
     if newline == "":
         newline = line
@@ -104,5 +102,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass33.txt")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
 print("homogeneous = " + str(homogeneous))
