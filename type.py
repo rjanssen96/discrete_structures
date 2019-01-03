@@ -15,9 +15,7 @@ def find_n(s,ch):
 def find_type(homogeneous, path):
     pathstring = str(path)
     newline = ""
-    #hom = re.compile(".\w\*s\(n-\w\)")
-    #hom = re.compile(".s\(n-\w\)")
-    hom = re.compile("((?:-|\+)(?:\d|\d\d|\d\d\d).s\(n-(?:\d|\d\d)\)|.\((?:\d|\d\d|\d\d\d).(?:\d|\d\d|\d\d\d)\).s\(n-(?:\d|\d\d)\))")
+    hom = re.compile("((?:-|\+|)(?:\d|\d\d|\d\d\d).s\(n-(?:\d|\d\d)\)|.\((?:\d|\d\d|\d\d\d).(?:\d|\d\d|\d\d\d)\).s\(n-(?:\d|\d\d)\))")
 
     print("path = " + str(path))
     print("pathstring = " + str(pathstring))
