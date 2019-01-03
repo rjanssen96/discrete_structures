@@ -124,7 +124,7 @@ def menu():
             #     print("There is an error in file: {}".format(function_type.type()))
 
         elif choice == 2:
-            manual_mode(filename="empyt")  # Is filename needed here? since its manual
+            manual_mode(filename="empty")  # Is filename needed here? since its manual
             exit()
 
 
