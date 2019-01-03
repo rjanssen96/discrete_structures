@@ -138,3 +138,4 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
             print(
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
                     filename, True, "Step 5.2", True, error))
+

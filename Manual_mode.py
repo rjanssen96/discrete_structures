@@ -138,8 +138,20 @@ def manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equa
         if continue_or_not == "yes":
             manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found, filename)
         elif continue_or_not == "no":
-            r_and_m_found = input("Manually input the root and multiplicity values:\n")
-            manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found, filename)
+            r_and_m_found = {}
+            nr_of_roots = input("How many roots should there be?:\n")
+            for x in range(0, int(nr_of_roots)):
+                root_value = int(input("What is root " + str(x) + "'s value?:\n"))
+                root_multiplicity = int(input("What is that root's multiplicity?\n"))
+                r_and_m_found[root_value] = root_multiplicity
+            print("Manually input the root and multiplicity values:")
+            print(r_and_m_found)
+
+            confirm_or_exit = input("Is this correct? (yes or no)\n")
+            if confirm_or_exit == "yes":
+                manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found, filename)
+            else:
+                print("Ending manual mode")
         else:
             print("Neither yes nor no given")
     except Exception as error:
@@ -184,8 +196,22 @@ def manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, gen
         if continue_or_not == "yes":
             manual_mode_homog_52(general_solution, outcome, filename)
         elif continue_or_not == "no":
-            outcome = input("Manually input the alpha values:\n")
-            manual_mode_homog_52(general_solution, outcome, filename)
+
+            outcome = {}
+            nr_of_roots = input("How many alphas should there be?:\n")
+            for x in range(0, int(nr_of_roots)):
+                alpha_value = int(input("What is alpha " + str(x) + "'s value?:\n"))
+                # root_multiplicity = int(input("What is that root's multiplicity?\n"))
+                outcome[x] = alpha_value
+            print("Manually input the alpha values:")
+            print(outcome)
+
+            confirm_or_exit = input("Is this correct? (yes or no)\n")
+            if confirm_or_exit == "yes":
+                manual_mode_homog_52(general_solution, outcome, filename)
+            else:
+                print("Ending manual mode")
+
         else:
             print("Neither yes nor no given")
     except Exception as error:
