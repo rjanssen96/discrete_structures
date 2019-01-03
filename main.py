@@ -68,7 +68,6 @@ def menu():
 
                 """The automatic mode uses the hom_calling_test.py file.
                 THIS IS THE HOMOGENEOUS PART!"""
-
                 """Move the files from the root folder, to the automatic folder."""
                 file_writer.move_to_step(filename=hom_comass_file, homogeneous=True, step="automatic")
                 degree = file_reader.read_lists_from_files(file_type="degree", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)

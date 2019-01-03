@@ -1,5 +1,6 @@
 import os
 import glob
+import re
 
 global homogeneous
 global path
@@ -14,6 +15,10 @@ def find_n(s,ch):
 def find_type(homogeneous, path):
     pathstring = str(path)
     newline = ""
+    #hom = re.compile(".\w\*s\(n-\w\)")
+    hom = re.compile("(\*s\(n-\w\))")
+
+
     print("path = " + str(path))
     print("pathstring = " + str(pathstring))
     with open(str(pathstring), "r") as f:
@@ -64,6 +69,9 @@ def find_type(homogeneous, path):
     if newline == "":
         newline = line
 
+    homogeneous = re.findall(hom, line)
+    print("nonhomogeneous = " + str(homogeneous))
+
     index = find_n(newline, "n")
 
     s_pos = []
@@ -76,12 +84,25 @@ def find_type(homogeneous, path):
     print(index)
     print(s_pos)
 
+    #splitline=[]
+    #print(newline.split("("))
+    #for l in newline.split("("):
+    #    splitline.append(l)
+    #splitline.pop(0)
+
     nonhom=[]
-    print(newline.split("("))
-    for l in newline.split("("):
-        nonhom.append(l)
-    nonhom.pop(0)
-    nonhom.pop(0)
+
+    #for x in range(len(splitline)):
+    #    if "s" in str(splitline[x]):
+    #        continue
+    #    elif "n" in str(splitline[x]) and "s" not in str(splitline[x-1]):
+    #        print("n = " + splitline[x])
+    #        if "s" in str(splitline[x-1]):
+    #            print("s = " + splitline[x-1])
+    #        else:
+    #            print("FALSE =" + splitline[x-1])
+    #            nonhom.append(str(splitline[x-1].split(")")[1]))
+    #            print("nonhom =" + str(nonhom))
 
     for k in s_pos:
         if newline[k] == "s" and homogeneous is not False:
@@ -94,8 +115,8 @@ def find_type(homogeneous, path):
         else:
             print("NOPE " + str(k))
             homogeneous = False
-            print("nonhom = " + str(nonhom))
+            #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comasstest.txt")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
 print(homogeneous)
