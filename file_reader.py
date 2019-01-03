@@ -2,6 +2,7 @@ import os
 import glob # Library for filename pattern-matching
 import file_writer
 import re
+import time
 from colorama import Fore as color
 import sympy
 from sympy import Poly
@@ -257,6 +258,9 @@ def det_coefficients(equation):
             degree = int(degree_list[0])
             print(color.BLUE + "The degree is: {}".format(degree), color.RESET)
 
+            """Write the degree to a file."""
+            file_writer.write_degree_to_file(filename=filename, degree=degree, homogeneous=True)
+
             print("The range is: {}\n".format((range(degree, 0))))
             for number in range(degree, 0):
                 # key = n # % 10
@@ -406,6 +410,8 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
             filename = str(filename)
         elif file_type == "coefficients":
             filename = str(filename).replace(".txt", "_coefficients.txt")
+            print(color.RED + "The coefficient file is: {}".format(filename), color.RESET)
+            # time.sleep(10)
         elif file_type == "degree":
             filename = str(filename).replace(".txt", "_degree.txt")
         elif file_type == "equation":
@@ -416,7 +422,7 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
             filename = str(filename).replace(".txt", "_parts.txt")
     except Exception:
         print(color.RED + "Wrong file_type specified!\n{}".format(error_banner))
-
+    integer_list = []
     try:
         file = open(filename, 'r')
         readed_list = str(str(str(str(file.readline()).strip("[")).strip("]").strip("'")))
@@ -424,27 +430,35 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
         readed_list = readed_list.split("""', '""")
         print(color.BLUE + "The line is: {}\nThe type is: {}\n".format(readed_list, type(readed_list)))
         file.close()
+        """The coefficients, degree and init needs to be returned as integers, the parts as strings."""
+        if file_type == ("coefficients" or "degree" or "init"):
+            for string in readed_list:
+                integer_list.append(int(string))
+            return integer_list
+        elif file_type == "parts":
+            return readed_list
     except Exception as error:
         print(color.RED + "Error during opening requested file!\nERROR: {}".format(error), color.RESET)
 
+    #
+    # """Convert degree, coefficients and initial terms from strings to integers"""
+    # try:
+    #     if file_type == ("coefficients" or "degree" or "init"):
+    #         integer_list = []
+    #         for string in readed_list:
+    #             try:
+    #                 integer_list = integer_list.append(int(string))
+    #                 return integer_list
+    #             except Exception:
+    #                 """This exeption catches NoneType errors"""
+    #                 continue
+    #         # readed_list = integer_list
+    #         print("The new readed list is: {}".format(integer_list))
+    # except Exception as error:
+    #     print(color.RED + "Error during converting strings in {} list to integers.\nERROR: {}".format(file_type, error))
 
-    """Convert degree, coefficients and initial terms from strings to integers"""
-    try:
-        if file_type == ("coefficients" or "degree" or "init"):
-            integer_list = []
-            for string in readed_list:
-                try:
-                    integer_list = integer_list.append(int(string))
-                except Exception:
-                    """This exepction catches NoneType errors"""
-                    continue
-            readed_list = integer_list
-            print("The new readed list is: {}".format(readed_list))
-    except Exception as error:
-        print(color.RED + "Error during converting strings in {} list to integers.\nERROR: {}".format(file_type, error))
 
-
-    return readed_list
+    # return integer_list
 
 def read_files():
         # def write_coefficents_to_file(filename, coefficients):

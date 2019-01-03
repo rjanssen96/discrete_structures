@@ -70,15 +70,15 @@ def menu():
                 THIS IS THE HOMOGENEOUS PART!"""
                 """Move the files from the root folder, to the automatic folder."""
                 file_writer.move_to_step(filename=hom_comass_file, homogeneous=True, step="automatic")
-                degree = file_reader.read_lists_from_files(file_type="degree", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
+                # degree = file_reader.read_lists_from_files(file_type="degree", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
                 coefficients = file_reader.read_lists_from_files(file_type="coefficients", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
                 initial_terms = file_reader.read_lists_from_files(file_type="init", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
                 parts = file_reader.read_lists_from_files(file_type="parts", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
 
-                print(color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}".format(degree,initial_terms,coefficients,parts),color.RESET)
+                print(color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}".format("unknown",initial_terms,coefficients,parts),color.RESET)
 
                 try:
-                    hom_calling_test.solve_homog_relation(degree=degree, initial=initial_terms, parts=parts, coefficients=coefficients, filename=hom_comass_file)
+                    hom_calling_test.solve_homog_relation(degree="", initial=initial_terms, parts=parts, coefficients=coefficients, filename=hom_comass_file)
 
                 except Exception as error:
                     print(color.RED + "Error in hom_calling_test, try manually!\nERROR: {}".format(error), color.RESET)
