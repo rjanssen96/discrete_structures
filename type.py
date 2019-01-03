@@ -16,8 +16,8 @@ def find_type(homogeneous, path):
     pathstring = str(path)
     newline = ""
     #hom = re.compile(".\w\*s\(n-\w\)")
-    hom = re.compile("(\*s\(n-\w\))")
-
+    #hom = re.compile(".s\(n-\w\)")
+    hom = re.compile("((?:-|\+)(?:\d|\d\d|\d\d\d).s\(n-(?:\d|\d\d)\)|.\((?:\d|\d\d|\d\d\d).(?:\d|\d\d|\d\d\d)\).s\(n-(?:\d|\d\d)\))")
 
     print("path = " + str(path))
     print("pathstring = " + str(pathstring))
@@ -69,8 +69,8 @@ def find_type(homogeneous, path):
     if newline == "":
         newline = line
 
-    homogeneous = re.findall(hom, line)
-    print("nonhomogeneous = " + str(homogeneous))
+    homogeneous = re.findall(hom, newline)
+    print("homogeneous = " + str(homogeneous))
 
     index = find_n(newline, "n")
 
