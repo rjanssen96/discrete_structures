@@ -1,8 +1,11 @@
+from sympy.parsing.sympy_parser import parse_expr
+
+
 # (Step 2) Obtaining char equation with degree 1
 def char_equation_1(first_term_in):
-    if first_term_in >= 0:
+    if parse_expr(first_term_in) >= 0:
         equation = "r-" + str(first_term_in) #+ "=0"
-    elif first_term_in < 0:
+    elif parse_expr(first_term_in) < 0:
         first_term_in = int(first_term_in*-1)
         equation = "r+" + str(first_term_in) #+ "=0"
     return equation
@@ -14,7 +17,7 @@ def char_equation_2(coeffs):
     i = 0
     next_power = len(coeffs)-1
     for x in range(len(coeffs)):
-        next_coeff = coeffs[i]
+        next_coeff = parse_expr(coeffs[i])
         if next_coeff >= 0:
             next_coeff = "-" + str(next_coeff)
         elif next_coeff < 0:

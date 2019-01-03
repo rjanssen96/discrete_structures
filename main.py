@@ -5,6 +5,7 @@ import file_reader, file_writer, file_remover
 import glob
 import hom_calling_test, nonhom_calling_test
 import hom_step1, hom_step2, hom_step3, hom_step4, hom_step5
+from Manual_mode import *
 from colorama import Fore as color
 import time
 
@@ -123,7 +124,11 @@ def menu():
             #     print("There is an error in file: {}".format(function_type.type()))
 
         elif choice == 2:
-            print("You entered manual mode.\nThis mode is not implemented yet.\n")
+            # print("You entered manual mode.\nThis mode is not implemented yet.\n")
+            manual_mode()
+            exit()
+
+
         elif choice == 3:
             print("Which files do you want to remove?.\n")
             print("""1) All files, including solutions.\n
