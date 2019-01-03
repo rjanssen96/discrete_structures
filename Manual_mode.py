@@ -8,6 +8,7 @@ from hom_step5 import *
 import file_writer
 
 
+# Chosing homog or non-homog
 def manual_mode(filename):
     hom_or_non = input("Is it a homogeneous (h) or non-homogeneous (n) relation?\n")
 
@@ -20,11 +21,9 @@ def manual_mode(filename):
     else:
         print("Wrong input m8...")
 
-    # print("Hey Boiiii")
 
-
+# Gathering correct input
 def manual_mod_homog_0(filename):
-    # Gathering correct input
     print("Make sure you add the following information in the correct order!!!")
     print("So coefficient of part one, then of part two, etc.")
     print("Also give fractions as 5/4 not (5/4)!!!")
@@ -83,7 +82,13 @@ def manual_mod_homog_1(coefficients, initial_terms, degree, filename):
             manual_mode_homog_2(coefficients, initial_terms, degree, sequence, filename)
         elif continue_or_not == "no":
             sequence = input("Give the relation manually:\n")
-            manual_mode_homog_2(coefficients, initial_terms, degree, sequence, filename)
+
+            # Confirm manual input or quit
+            confirm_or_exit = input("Is this correct? (yes or no)\n")
+            if confirm_or_exit == "yes":
+                manual_mode_homog_2(coefficients, initial_terms, degree, sequence, filename)
+            else:
+                print("Ending manual mode")
         else:
             print("Neither yes nor no given")
 
@@ -109,7 +114,13 @@ def manual_mode_homog_2(coefficients, initial_terms, degree, sequence, filename)
             manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation, filename)
         elif continue_or_not == "no":
             characteristic_equation = input("Manually input the characteristic equation:\n")
-            manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation, filename)
+
+            # Confirm manual input or quit
+            confirm_or_exit = input("Is this correct? (yes or no)\n")
+            if confirm_or_exit == "yes":
+                manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation, filename)
+            else:
+                print("Ending manual mode")
         else:
             print("Neither yes nor no given")
     except:
@@ -147,6 +158,7 @@ def manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equa
             print("Manually input the root and multiplicity values:")
             print(r_and_m_found)
 
+            # Confirm manual input or quit
             confirm_or_exit = input("Is this correct? (yes or no)\n")
             if confirm_or_exit == "yes":
                 manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found, filename)
@@ -174,7 +186,13 @@ def manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found, file
             manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution, filename)
         elif continue_or_not == "no":
             general_solution = input("Manually input the general solution:\n")
-            manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution, filename)
+
+            # Confirm manual input or quit
+            confirm_or_exit = input("Is this correct? (yes or no)\n")
+            if confirm_or_exit == "yes":
+                manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution, filename)
+            else:
+                print("Ending manual mode")
         else:
             print("Neither yes nor no given")
     except Exception as error:
@@ -206,6 +224,7 @@ def manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, gen
             print("Manually input the alpha values:")
             print(outcome)
 
+            # Confirm manual input or quit
             confirm_or_exit = input("Is this correct? (yes or no)\n")
             if confirm_or_exit == "yes":
                 manual_mode_homog_52(general_solution, outcome, filename)
@@ -244,6 +263,6 @@ def manual_mode_homog_52(general_solution, outcome, filename):
                 filename, True, "Step 5.2", True, error))
 
 
-def manual_mode_non_homog_0():
+def manual_mode_non_homog_0(filename):
     print("Go away!")
 
