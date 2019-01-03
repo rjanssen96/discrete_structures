@@ -1,8 +1,10 @@
 import os
 from colorama import Fore as color
-# from sympy import *
+from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 from hom_step2 import *
+from hom_step4 import *
+from hom_step5 import *
 
 def manual_mode():
     hom_or_non = input("Is it a homogeneous (h) or non-homogeneous (n) relation?\n")
@@ -53,11 +55,10 @@ def manual_mod_homog_0():
         print("Neither yes nor no was input...")
 
 
-# Step 1
+# Step 1: Rewriting the sequence
 def manual_mod_homog_1(coefficients, initial_terms, degree):
-    # Step 1: Rewriting the sequence
-    # Maybe replace this part with now Rico's read parts added together from the dictionary sort result?
     try:
+        # First try this step automated
         sequence = "s(n)="
         i = 0
         for x in coefficients:
@@ -73,13 +74,14 @@ def manual_mod_homog_1(coefficients, initial_terms, degree):
             i = i + 1
         print(color.GREEN + "Step 1: The rewritten sequence is: \n" + str(sequence) + "\n", color.RESET)
 
+        # Ask if altering is needed
         continue_or_not = input("Is this correct? (yes or no)\n")
         if continue_or_not == "yes":
             # print("Great!")
-            manual_mode_homg_2(coefficients, initial_terms, degree, sequence)
+            manual_mode_homog_2(coefficients, initial_terms, degree, sequence)
         elif continue_or_not == "no":
-            sequence = input("Give the relation manually:")
-            manual_mode_homg_2(coefficients, initial_terms, degree, sequence)
+            sequence = input("Give the relation manually:\n")
+            manual_mode_homog_2(coefficients, initial_terms, degree, sequence)
         else:
             print("Neither yes nor no given")
 
@@ -92,24 +94,114 @@ def manual_mod_homog_1(coefficients, initial_terms, degree):
     #         print(color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(filename, True, "Step 1", True, error))
 
 
-def manual_mode_homg_2(coefficients, initial_terms, degree, sequence):
-    # Step 2: Obtaining the characteristic equation
+# Step 2: Obtaining the characteristic equation
+def manual_mode_homog_2(coefficients, initial_terms, degree, sequence):
     try:
+        # First try this step automated
         characteristic_equation = char_equation_2(coefficients)
-        print("Step 2: The characteristic equation is: \n" + str(characteristic_equation) + "=0" + "\n")
+        print("\nStep 2: The characteristic equation is: \n" + str(characteristic_equation) + "=0" + "\n")
+
+        # Ask if altering is needed
+        continue_or_not = input("Is this correct? (yes or no)\n")
+        if continue_or_not == "yes":
+            manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation)
+        elif continue_or_not == "no":
+            characteristic_equation = input("Manually input the characteristic equation:\n")
+            manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation)
+        else:
+            print("Neither yes nor no given")
     except Exception as error:
         print("2 doesnt work, shocker dude")
+        print("2 doesnt work, ERROR: {}\n".format(error))
+
+
+# Step 3: Obtain the roots
+def manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation):
+    try:
+        # First try this step automated
+        r = symbols('r')
+        r_and_m_found = roots(characteristic_equation, r)  # returns root:multiplicity
+        print("\nStep 3: The roots of this equation are:")
+        print(r_and_m_found)  # root:multiplicity
+        print()
+
+        # Ask if altering is needed
+        continue_or_not = input("Is this correct? (yes or no)\n")
+        if continue_or_not == "yes":
+            manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found)
+        elif continue_or_not == "no":
+            r_and_m_found = input("Manually input the root and multiplicity values:\n")
+            manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found)
+        else:
+            print("Neither yes nor no given")
+    except Exception as error:
+        print("3 doesnt work, shocker dude")
         print("1 doesnt work, ERROR: {}\n".format(error))
 
-    continue_or_not = input("Is this correct? (yes or no)\n")
-    if continue_or_not == "yes":
-        print("Great!")
-        # manual_mode_homg_2(coefficients, initial_terms, degree, sequence)
-    elif continue_or_not == "no":
-        print("Damn!")
-    else:
-        print("Neither yes nor no given")
 
+# Step 4: Obtain general solution
+def manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found):
+    try:
+        # First try this step automated
+        general_solution = find_general_solution_2(r_and_m_found)
+        general_solution = general_solution.replace("s(n)=+", "s(n)=")
+        print("\nStep 4: The general solution of this equation is: \n" + str(general_solution) + "\n")
+
+        # Ask if altering is needed
+        continue_or_not = input("Is this correct? (yes or no)\n")
+        if continue_or_not == "yes":
+            manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution)
+        elif continue_or_not == "no":
+            general_solution = input("Manually input the general solution:\n")
+            manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution)
+        else:
+            print("Neither yes nor no given")
+    except:
+        print("4 doesnt work, shocker dude")
+
+
+# Step 5.1: Obtain alpha values
+def manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution):
+    try:
+        # First try this step automated
+        outcome = find_alpha_values(initial_terms, r_and_m_found)
+        print("\nStep 5.1: The value of the Alphas:")
+        print(outcome)
+
+        # Ask if altering is needed
+        continue_or_not = input("Is this correct? (yes or no)\n")
+        if continue_or_not == "yes":
+            manual_mode_homog_52(general_solution, outcome)
+        elif continue_or_not == "no":
+            outcome = input("Manually input the alpha values:\n")
+            manual_mode_homog_52(general_solution, outcome)
+        else:
+            print("Neither yes nor no given")
+    except:
+        print("5.1 doesnt work, shocker dude")
+        # print(color.RED + "Error occurs in file: {}".format(filename), color.RESET)
+
+# Step 5.2: Obtain specific solution
+def manual_mode_homog_52(general_solution, outcome):
+    try:
+        # First try this step automated
+        specific_solution = gimme_specific_solution(general_solution, outcome)
+        print(color.BLUE + "\nStep 5.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n",
+              color.RESET)
+        # time.sleep(10)
+
+        # Ask if altering is needed
+        continue_or_not = input("Is this correct? (yes or no)\n")
+        if continue_or_not == "yes":
+            life = "great"
+        elif continue_or_not == "no":
+            specific_solution = input("Manually input the alpha values:\n")
+            print(specific_solution)
+        else:
+            print("Neither yes nor no given")
+    except Exception as error:
+        print("5.2 doesnt work, shocker dude: ERROR: {}".format(error))
+        # print(color.RED + "Error occurs in file: {}".format(filename), color.RESET)
 
 def manual_mode_non_homog_0():
     print("Go away!")
