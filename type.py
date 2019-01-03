@@ -67,7 +67,9 @@ def find_type(homogeneous, path):
     if newline == "":
         newline = line
 
-    homogeneous = re.findall(hom, newline)
+    newline = newline.replace(" ", "")
+    print("newline = " + newline)
+    homogeneous = re.findall(hom, newline.strip())
     print("homogeneous = " + str(homogeneous))
 
     index = find_n(newline, "n")
