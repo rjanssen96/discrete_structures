@@ -376,6 +376,7 @@ def find_type(homogeneous, path):
             print("NOPE " + str(k))
             homogeneous = False
             break
+    #DEZE LATEN STAAN EN RETURNS ERUIT HALEN
     file_writer.move_files_based_on_type(filename=pathstring, homogeneous=homogeneous)
 
 def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
