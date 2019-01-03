@@ -15,7 +15,7 @@ def find_n(s,ch):
 def find_type(homogeneous, path):
     pathstring = str(path)
     newline = ""
-    hom = re.compile("((?:-|\+|)(?:\d|\d\d|\d\d\d).s\(n-(?:\d|\d\d)\)|.\((?:\d|\d\d|\d\d\d).(?:\d|\d\d|\d\d\d)\).s\(n-(?:\d|\d\d)\))")
+    hom = re.compile("((?:-|\+|)(?:|\d|\d\d|\d\d\d).s\(n-(?:\d|\d\d)\)|\S\((?:\d|\d\d|\d\d\d).(?:\d|\d\d|\d\d\d)\).s\(n-(?:\d|\d\d)\))")
 
     print("path = " + str(path))
     print("pathstring = " + str(pathstring))
@@ -68,9 +68,20 @@ def find_type(homogeneous, path):
         newline = line
 
     newline = newline.replace(" ", "")
-    print("newline = " + newline)
     homogeneous = re.findall(hom, newline.strip())
-    print("homogeneous = " + str(homogeneous))
+    print("homogeneous parts are : " + str(homogeneous))
+
+    nonhomogeneous_string = newline.replace("s(n)","")
+
+    for strings in homogeneous:
+        nonhomogeneous_string = nonhomogeneous_string.replace(strings,"").replace(',',"").replace("=","").strip()
+
+    print("nonhomogeneous_string = " + nonhomogeneous_string)
+    homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
+    print("homogeneous_string = " + homogeneous_string)
+
+    ordered_relation = homogeneous_string + nonhomogeneous_string
+    print("ordered relation = " + ordered_relation)
 
     index = find_n(newline, "n")
 
@@ -81,42 +92,17 @@ def find_type(homogeneous, path):
         s_pos.append(count)
         s_pos[count] = j - 2
         count = count+1
-    print(index)
-    print(s_pos)
-
-    #splitline=[]
-    #print(newline.split("("))
-    #for l in newline.split("("):
-    #    splitline.append(l)
-    #splitline.pop(0)
-
-    nonhom=[]
-
-    #for x in range(len(splitline)):
-    #    if "s" in str(splitline[x]):
-    #        continue
-    #    elif "n" in str(splitline[x]) and "s" not in str(splitline[x-1]):
-    #        print("n = " + splitline[x])
-    #        if "s" in str(splitline[x-1]):
-    #            print("s = " + splitline[x-1])
-    #        else:
-    #            print("FALSE =" + splitline[x-1])
-    #            nonhom.append(str(splitline[x-1].split(")")[1]))
-    #            print("nonhom =" + str(nonhom))
 
     for k in s_pos:
         if newline[k] == "s" and homogeneous is not False:
-            print("CORRECT " + str(k))
             homogeneous = True
             continue
         if newline[k] == "s":
-            print("CORRECT " + str(k))
             continue
         else:
-            print("NOPE " + str(k))
             homogeneous = False
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
-print(homogeneous)
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass33.txt")
+print("homogeneous = " + str(homogeneous))
