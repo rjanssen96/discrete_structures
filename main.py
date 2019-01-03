@@ -124,8 +124,7 @@ def menu():
             #     print("There is an error in file: {}".format(function_type.type()))
 
         elif choice == 2:
-            # print("You entered manual mode.\nThis mode is not implemented yet.\n")
-            manual_mode()
+            manual_mode(filename="empyt")  # Is filename needed here? since its manual
             exit()
 
 

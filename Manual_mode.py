@@ -5,23 +5,25 @@ from sympy.parsing.sympy_parser import parse_expr
 from hom_step2 import *
 from hom_step4 import *
 from hom_step5 import *
+import file_writer
 
-def manual_mode():
+
+def manual_mode(filename):
     hom_or_non = input("Is it a homogeneous (h) or non-homogeneous (n) relation?\n")
 
     if hom_or_non == "h":
         print("You choose homogeneous")
-        manual_mod_homog_0()
+        manual_mod_homog_0(filename)
     elif hom_or_non == "n":
         print("You choose non-homogeneous")
-        manual_mode_non_homog_0()
+        manual_mode_non_homog_0(filename)
     else:
         print("Wrong input m8...")
 
     # print("Hey Boiiii")
 
 
-def manual_mod_homog_0():
+def manual_mod_homog_0(filename):
     # Gathering correct input
     print("Make sure you add the following information in the correct order!!!")
     print("So coefficient of part one, then of part two, etc.")
@@ -47,16 +49,16 @@ def manual_mod_homog_0():
     continue_or_not = input("Are these lists correct? (yes or no)\n")
     if continue_or_not == "yes":
         print("Ok next")
-        manual_mod_homog_1(coefficients, initial_terms, degree)
+        manual_mod_homog_1(coefficients, initial_terms, degree, filename)
     elif continue_or_not == "no":
         print("Ok let's try again")
-        manual_mod_homog_0()
+        manual_mod_homog_0(filename)
     else:
         print("Neither yes nor no was input...")
 
 
 # Step 1: Rewriting the sequence
-def manual_mod_homog_1(coefficients, initial_terms, degree):
+def manual_mod_homog_1(coefficients, initial_terms, degree, filename):
     try:
         # First try this step automated
         sequence = "s(n)="
@@ -78,24 +80,24 @@ def manual_mod_homog_1(coefficients, initial_terms, degree):
         continue_or_not = input("Is this correct? (yes or no)\n")
         if continue_or_not == "yes":
             # print("Great!")
-            manual_mode_homog_2(coefficients, initial_terms, degree, sequence)
+            manual_mode_homog_2(coefficients, initial_terms, degree, sequence, filename)
         elif continue_or_not == "no":
             sequence = input("Give the relation manually:\n")
-            manual_mode_homog_2(coefficients, initial_terms, degree, sequence)
+            manual_mode_homog_2(coefficients, initial_terms, degree, sequence, filename)
         else:
             print("Neither yes nor no given")
 
     except Exception as error:
         print("1 doesnt work, ERROR: {}\n".format(error))
-    #     print(color.RED + "Error occurs in file: {}\n".format(filename), color.RESET)
-    #     try:
-    #         file_writer.error_in_file(filename=filename, homogeneous=True, step="Step 1", automatic=True, error=error)
-    #     except Exception as error:
-    #         print(color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(filename, True, "Step 1", True, error))
+        print(color.RED + "Error occurs in file: {}\n".format(filename), color.RESET)
+        try:
+            file_writer.error_in_file(filename=filename, homogeneous=True, step="Step 1", automatic=True, error=error)
+        except Exception as error:
+            print(color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(filename, True, "Step 1", True, error))
 
 
 # Step 2: Obtaining the characteristic equation
-def manual_mode_homog_2(coefficients, initial_terms, degree, sequence):
+def manual_mode_homog_2(coefficients, initial_terms, degree, sequence, filename):
     try:
         # First try this step automated
         characteristic_equation = char_equation_2(coefficients)
@@ -104,19 +106,25 @@ def manual_mode_homog_2(coefficients, initial_terms, degree, sequence):
         # Ask if altering is needed
         continue_or_not = input("Is this correct? (yes or no)\n")
         if continue_or_not == "yes":
-            manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation)
+            manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation, filename)
         elif continue_or_not == "no":
             characteristic_equation = input("Manually input the characteristic equation:\n")
-            manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation)
+            manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation, filename)
         else:
             print("Neither yes nor no given")
-    except Exception as error:
+    except:
         print("2 doesnt work, shocker dude")
-        print("2 doesnt work, ERROR: {}\n".format(error))
+        print(color.RED + "Error occurs in file: {}".format(filename), color.RESET)
+        try:
+            file_writer.error_in_file(filename=filename, homogeneous=True, step="Step 2", automatic=True, error=error)
+        except Exception as error:
+            print(
+                color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                    filename, True, "Step 2", True, error))
 
 
 # Step 3: Obtain the roots
-def manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation):
+def manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equation, filename):
     try:
         # First try this step automated
         r = symbols('r')
@@ -128,19 +136,20 @@ def manual_mode_homog_3(coefficients, initial_terms, degree, characteristic_equa
         # Ask if altering is needed
         continue_or_not = input("Is this correct? (yes or no)\n")
         if continue_or_not == "yes":
-            manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found)
+            manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found, filename)
         elif continue_or_not == "no":
             r_and_m_found = input("Manually input the root and multiplicity values:\n")
-            manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found)
+            manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found, filename)
         else:
             print("Neither yes nor no given")
     except Exception as error:
-        print("3 doesnt work, shocker dude")
-        print("1 doesnt work, ERROR: {}\n".format(error))
+        print(
+            color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                filename, True, "Step 3", True, error))
 
 
 # Step 4: Obtain general solution
-def manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found):
+def manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found, filename):
     try:
         # First try this step automated
         general_solution = find_general_solution_2(r_and_m_found)
@@ -150,18 +159,20 @@ def manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found):
         # Ask if altering is needed
         continue_or_not = input("Is this correct? (yes or no)\n")
         if continue_or_not == "yes":
-            manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution)
+            manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution, filename)
         elif continue_or_not == "no":
             general_solution = input("Manually input the general solution:\n")
-            manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution)
+            manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution, filename)
         else:
             print("Neither yes nor no given")
-    except:
-        print("4 doesnt work, shocker dude")
+    except Exception as error:
+        print(
+            color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                filename, True, "Step 4", True, error))
 
 
 # Step 5.1: Obtain alpha values
-def manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution):
+def manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution, filename):
     try:
         # First try this step automated
         outcome = find_alpha_values(initial_terms, r_and_m_found)
@@ -171,18 +182,20 @@ def manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, gen
         # Ask if altering is needed
         continue_or_not = input("Is this correct? (yes or no)\n")
         if continue_or_not == "yes":
-            manual_mode_homog_52(general_solution, outcome)
+            manual_mode_homog_52(general_solution, outcome, filename)
         elif continue_or_not == "no":
             outcome = input("Manually input the alpha values:\n")
-            manual_mode_homog_52(general_solution, outcome)
+            manual_mode_homog_52(general_solution, outcome, filename)
         else:
             print("Neither yes nor no given")
-    except:
-        print("5.1 doesnt work, shocker dude")
-        # print(color.RED + "Error occurs in file: {}".format(filename), color.RESET)
+    except Exception as error:
+        print(
+            color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                filename, True, "Step 5.1", True, error))
+
 
 # Step 5.2: Obtain specific solution
-def manual_mode_homog_52(general_solution, outcome):
+def manual_mode_homog_52(general_solution, outcome, filename):
     try:
         # First try this step automated
         specific_solution = gimme_specific_solution(general_solution, outcome)
@@ -200,8 +213,10 @@ def manual_mode_homog_52(general_solution, outcome):
         else:
             print("Neither yes nor no given")
     except Exception as error:
-        print("5.2 doesnt work, shocker dude: ERROR: {}".format(error))
-        # print(color.RED + "Error occurs in file: {}".format(filename), color.RESET)
+        print(
+            color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                filename, True, "Step 5.2", True, error))
+
 
 def manual_mode_non_homog_0():
     print("Go away!")
