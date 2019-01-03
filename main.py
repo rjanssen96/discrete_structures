@@ -124,9 +124,8 @@ def menu():
             #     print("There is an error in file: {}".format(function_type.type()))
 
         elif choice == 2:
-            manual_mode(filename="empty")  # Is filename needed here? since its manual
-            exit()
-
+            manual_mode(filename="empty")  # Is filename needed here? since it's manual
+            # exit()
 
         elif choice == 3:
             print("Which files do you want to remove?.\n")
