@@ -7,7 +7,7 @@ from hom_step4 import *
 from hom_step5 import *
 from nonhom_step5 import *
 from nonhom_step7 import *
-import file_writer
+from file_writer import *
 
 
 # Chosing homog or non-homog
