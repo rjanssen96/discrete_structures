@@ -34,7 +34,7 @@ def manual_mod_homog_0(filename):
     coefficients = []
 
     for x in range(0, degree):
-        coefficients = coefficients + [input("What is coefficients number " + str(x) + "\n")]
+        coefficients = coefficients + [str(input("What is coefficients number " + str(x) + "\n"))]
 
     print("List of coeffs:")
     print(coefficients)
@@ -42,7 +42,7 @@ def manual_mod_homog_0(filename):
     initial_terms = []
 
     for x in range(0, degree):
-        initial_terms = initial_terms + [parse_expr(input("What is initial_terms number " + str(x) + "\n"))]
+        initial_terms = initial_terms + [str(parse_expr(input("What is initial_terms number " + str(x) + "\n")))]
 
     print("List of initial_terms:")
     print(initial_terms)
@@ -206,7 +206,7 @@ def manual_mode_homog_4(coefficients, initial_terms, degree, r_and_m_found, file
 def manual_mode_homog_51(coefficients, initial_terms, degree, r_and_m_found, general_solution, filename):
     try:
         # First try this step automated
-        outcome = find_alpha_values(initial_terms, r_and_m_found)
+        outcome = hom_find_alpha_values(initial_terms, r_and_m_found)
         print("\nStep 5.1: The value of the Alphas:")
         print(outcome)
 
@@ -294,13 +294,13 @@ def manual_mode_non_homog_0(filename):
     print("List of initial_terms:")
     print(initial_terms)
 
-    highest_power_fn_part = input("what is the highest power of the F(n) part?:\n")
+    highest_power_fn_part = str(input("what is the highest power of the F(n) part?:\n"))
 
     fn_parts = {}
     next_power = int(highest_power_fn_part)
 
     for x in range(0, int(highest_power_fn_part)+1):
-        fn_parts[next_power] = parse_expr(input("What is the coeff of power " + str(next_power) + "?\n"))
+        fn_parts[next_power] = str(parse_expr(input("What is the coeff of power " + str(next_power) + "?\n")))
         next_power = next_power - 1
 
     # fn_part = input("What is the F(n) part of this relation?:\n")
@@ -312,7 +312,7 @@ def manual_mode_non_homog_0(filename):
     # in a
     # dictionary
 
-    fn_part_sn = input("What is the value of s in this F(n) part? s**n, if not given, then fill in 1\n")
+    fn_part_sn = str(input("What is the value of s in this F(n) part? s**n, if not given, then fill in 1\n"))
 
     continue_or_not = input("Are all these input values correct? (yes or no)\n")
     if continue_or_not == "yes":
@@ -401,33 +401,31 @@ def manual_mode_non_homog_2(coefficients, degree, initial_terms, fn_part, filena
 # Step 3: Obtain the roots  of the associated homog part
 def manual_mode_non_homog_3(coefficients, degree, initial_terms, fn_part, filename, sequence, highest_power_fn_part,
                             fn_part_sn, characteristic_equation):
-    try:
-        r = symbols('r')
-        r_and_m_found = roots(characteristic_equation, r)  # returns root:multiplicity
-        print("Step 3: The roots of this equation are:")
-        print(r_and_m_found)  # root:multiplicity
-        print()
+        try:
+            r = symbols('r')
+            r_and_m_found = roots(characteristic_equation, r)  # returns root:multiplicity
+            print("Step 3: The roots of this equation are:")
+            print(r_and_m_found)  # root:multiplicity
+            print()
 
-        # Ask if altering is needed
-        continue_or_not = input("Is this correct? (yes or no)\n")
-        if continue_or_not == "yes":
-            manual_mode_non_homog_4(coefficients, degree, initial_terms, fn_part, filename, sequence,
-                                    highest_power_fn_part, fn_part_sn, r_and_m_found)
-        elif continue_or_not == "no":
-            r_and_m_found = input("Give the roots and multiplicities manually:\n")
-
-            # Confirm manual input or quit
-            confirm_or_exit = input("Is this correct? (yes or no)\n")
-            if confirm_or_exit == "yes":
+            # Ask if altering is needed
+            continue_or_not = input("Is this correct? (yes or no)\n")
+            if continue_or_not == "yes":
                 manual_mode_non_homog_4(coefficients, degree, initial_terms, fn_part, filename, sequence,
                                         highest_power_fn_part, fn_part_sn, r_and_m_found)
+            elif continue_or_not == "no":
+                r_and_m_found = input("Give the roots and multiplicities manually:\n")
+                confirm_or_exit = input("Is this correct? (yes or no)\n")
+                if confirm_or_exit == "yes":
+                    manual_mode_non_homog_4(coefficients, degree, initial_terms, fn_part, filename, sequence,
+                                            highest_power_fn_part, fn_part_sn, r_and_m_found)
+                else:
+                    print("Ending manual mode")
             else:
-                print("Ending manual mode")
-        else:
-            print("Neither yes nor no given")
+                print("Neither yes nor no given")
 
-    except Exception as error:
-        print("3 doesnt work, shocker dude: ERROR: {}".format(error))
+        except Exception as error:
+            print("3 doesnt work, shocker dude: ERROR: {}".format(error))
 
 
 # Step 4: Obtain general solution of the associated homog part
@@ -558,7 +556,8 @@ def manual_mode_non_homog_72(setup_spec_sol, outcome):
         # Ask if altering is needed
         continue_or_not = input("Is this correct? (yes or no)\n")
         if continue_or_not == "yes":
-            manual_mode_non_homog_72(setup_spec_sol, outcome)
+            # manual_mode_non_homog_72(setup_spec_sol, outcome)
+            print("Thanks for playing!")
         elif continue_or_not == "no":
             specific_solution = input("Give the a_n solution manually:\n")
 

@@ -159,9 +159,15 @@ def automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, deg
 
 
 def automatic_check():
+    # type of relation
+    # type = homog or non
+
+    # given_comma_relation =
+    # automate this with existing functions from the relation above
     degree = 4
     initial_terms = ['2', '3', '3', '6']
     all_coefficient = ['4', '5', '2', '4']
+
     # our_specific_solution = parse_expr("55+n^4")
     our_specific_solution = "55+n^4"
 
@@ -170,5 +176,5 @@ def automatic_check():
     automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution)
 
 
-answer_check_manual_or_auto()
+# answer_check_manual_or_auto()
 

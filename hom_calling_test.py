@@ -117,7 +117,7 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
 
     # Step 5.1: Obtain alpha values
     try:
-        outcome = find_alpha_values(my_initial_terms=initial_terms, all_r_and_m=r_and_m_found)
+        outcome = hom_find_alpha_values(my_initial_terms=initial_terms, all_r_and_m=r_and_m_found)
         print("Step 5.1: The value of the Alphas:")
         print(outcome)
     except:
