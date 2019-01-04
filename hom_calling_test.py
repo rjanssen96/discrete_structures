@@ -37,7 +37,8 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
     coefficients = coefficients
     parts = parts
 
-    print(color.GREEN + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\n".format(degree, initial_terms, coefficients,parts), color.RESET)
+    # print(color.GREEN + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\n".format(degree, initial_terms, coefficients,parts), color.RESET)
+
     # Step 1: Rewriting the sequence
     # Maybe replace this part with now Rico's read parts added together from the dictionary sort result?
     try:
@@ -54,14 +55,15 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
             else:
                 print("wrong sequence step 1")
             i = i + 1
-        print(color.GREEN + "Step 1: The rewritten sequence is: \n" + str(sequence) + "\n", color.RESET)
+        print("Step 1: The rewritten sequence is: \n" + str(sequence) + "\n")
     except Exception as error:
         print("1 doesnt work, ERROR: {}\n".format(error))
         print(color.RED + "Error occurs in file: {}\n".format(filename), color.RESET)
         try:
             file_writer.error_in_file(filename=filename, homogeneous=True, step="Step 1", automatic=True, error=error)
         except Exception as error:
-            print(color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(filename, True, "Step 1", True, error))
+            print(color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(filename, True, "Step 1", True, error), color.RESET)
+            return
 
     # Step 2: Obtaining the characteristic equation
     try:
@@ -75,7 +77,9 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
         except Exception as error:
             print(
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
-                    filename, True, "Step 2", True, error))
+                    filename, True, "Step 2", True, error), color.RESET)
+            return
+
 
     # Step 3: Obtain the roots
     try:
@@ -92,7 +96,8 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
         except Exception as error:
             print(
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
-                    filename, True, "Step 3", True, error))
+                    filename, True, "Step 3", True, error), color.RESET)
+            return
 
     # Step 4: Obtain general solution
     try:
@@ -107,7 +112,8 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
         except Exception as error:
             print(
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
-                    filename, True, "Step 4", True, error))
+                    filename, True, "Step 4", True, error), color.RESET)
+            return
 
     # Step 5.1: Obtain alpha values
     try:
@@ -123,10 +129,12 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
             print(
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
                     filename, True, "Step 5.1", True, error), color.RESET)
+            return
 
     # Step 5.2: Obtain specific solution
     try:
         specific_solution = gimme_specific_solution(general_solution, outcome)
+        file_writer.write_solution(filename=filename, solution=specific_solution)
         print(color.BLUE +"\nStep 5.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n", color.RESET)
     except Exception as error:
         print("5.2 doesnt work, shocker dude: ERROR: {}".format(error))
@@ -137,4 +145,5 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
             print(
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
                     filename, True, "Step 5.2", True, error), color.RESET)
+            return
 

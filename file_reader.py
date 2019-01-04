@@ -200,29 +200,30 @@ def det_coefficients(equation):
             #If the previous key is -1, then no action. Otherwise add 0
             degree_list = list(reversed(sorted(coeff_dict)))
             degree = int(degree_list[0])
-            print(color.BLUE + "The degree is: {}".format(degree), color.RESET)
+            # print(color.BLUE + "The degree is: {}".format(degree), color.RESET)
 
             """Write the degree to a file."""
             file_writer.write_degree_to_file(filename=filename, degree=degree, homogeneous=True)
 
-            print("The range is: {}\n".format((range(degree, 0))))
+            # print("The range is: {}\n".format((range(degree, 0))))
             for number in range(degree, 0):
                 # key = n # % 10
-                print("We will check: {}\n".format(number))
+                # print("We will check: {}\n".format(number))
                 if str(number) in coeff_dict:
-                    print("Degree {} found in dict.\n".format(number))
+                    pass
+                    # print("Degree {} found in dict.\n".format(number))
 
                 else:
-                    print("Degree {} not found in dict.\n".format(number))
+                    # print("Degree {} not found in dict.\n".format(number))
                     zero_tuple = (("0*s(n-{})".format(abs(number)), "0"))
-                    print("tuple[0] {}, tuple[1]: {}\n".format(zero_tuple[0], zero_tuple[1]))
+                    # print("tuple[0] {}, tuple[1]: {}\n".format(zero_tuple[0], zero_tuple[1]))
                     x_value = "(n-{})".format(abs(number))
 
                     # print("This is the data before adding \nNumber: {}, tuple: {}, coeff_dic:{}".format(number, zero_tuple, coeff_dict))
                     coeff_dict[str(number)] = zero_tuple[0], zero_tuple[1] #The key is the degree, ten the part and the 0 coefficients is added to the dictionary.
                     # print("This is the data after adding \nNumber: {}, tuple: {}, coeff_dic:{}".format(number, zero_tuple, coeff_dict))
-                    print(color.RED + "The keys are: {}\n".format(coeff_dict.keys()), color.RESET)
-                    print(color.RED + "The dictionary is: {}\n".format(coeff_dict), color.RESET)
+                    # print(color.RED + "The keys are: {}\n".format(coeff_dict.keys()), color.RESET)
+                    # print(color.RED + "The dictionary is: {}\n".format(coeff_dict), color.RESET)
 
         # print("\n\nEntering write fucniton\n\n")
         print(sorted(coeff_dict.values()))
@@ -300,30 +301,32 @@ def find_type(homogeneous, path):
                 newline = newline.replace(oldstring, newstring)
                 totalcount = totalcount-1
 
-        print("oldline = " + line)
+        # print("oldline = " + line)
         newline = newline.replace("s(n)" + str(num), "s(n)")
-        print("newline = " + newline)
+        # print("newline = " + newline)
     else:
-        print("Not needed to higher/lower the n- values")
+        pass
+        # print("Not needed to higher/lower the n- values")
 
     if newline == "":
         newline = line
 
     newline = newline.replace(" ", "")
     homogeneous = re.findall(hom, newline.strip())
-    print("homogeneous parts are : " + str(homogeneous))
+    # print("homogeneous parts are : " + str(homogeneous))
 
     nonhomogeneous_string = newline.replace("s(n)","")
 
     for strings in homogeneous:
         nonhomogeneous_string = nonhomogeneous_string.replace(strings,"").replace(',',"").replace("=","").strip()
 
-    print("nonhomogeneous_string = " + nonhomogeneous_string)
+    # print("nonhomogeneous_string = " + nonhomogeneous_string)
     homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
-    print("homogeneous_string = " + homogeneous_string)
+    # print("homogeneous_string = " + homogeneous_string)
 
     ordered_relation = homogeneous_string + nonhomogeneous_string
-    print("ordered relation = " + ordered_relation)
+    # print("ordered relation = " + ordered_relation)
+
 
     index = find_n(newline, "n")
 
@@ -343,9 +346,11 @@ def find_type(homogeneous, path):
             continue
         else:
             homogeneous = False
-            #print("nonhom = " + str(splitline))
-    #return homogeneous
-    #DEZE LATEN STAAN EN RETURNS ERUIT HALEN
+            print(color.GREEN + "The nonhomogeneous string = {}".format(nonhomogeneous_string), color.RESET)
+            file_writer.write_fn_part_to_file(filename=pathstring, fn_parts=nonhomogeneous_string)
+
+            # print("nonhom = " + str(splitline))
+
     file_writer.move_files_based_on_type(filename=pathstring, homogeneous=homogeneous)
 
 def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
@@ -380,8 +385,6 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
             filename = str(filename)
         elif file_type == "coefficients":
             filename = str(filename).replace(".txt", "_coefficients.txt")
-            print(color.RED + "The coefficient file is: {}".format(filename), color.RESET)
-            # time.sleep(10)
         elif file_type == "degree":
             filename = str(filename).replace(".txt", "_degree.txt")
         elif file_type == "equation":
@@ -391,59 +394,34 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
         elif file_type == "parts":
             filename = str(filename).replace(".txt", "_parts.txt")
     except Exception:
-        print(color.RED + "Wrong file_type specified!\n{}".format(error_banner))
-    integer_list = []
+        print(color.RED + "Wrong file_type specified!\n{}".format(error_banner), color.RESET)
+
     try:
         file = open(filename, 'r')
         readed_list = str(str(str(str(file.readline()).strip("[")).strip("]").strip("'")))
         readed_list = readed_list.strip("'")
         readed_list = readed_list.split("""', '""")
-        print(color.BLUE + "The line is: {}\nThe type is: {}\n".format(readed_list, type(readed_list)))
+        # print(color.BLUE + "The line is: {}\nThe type is: {}\n".format(readed_list, type(readed_list)))
         file.close()
         """The coefficients, degree and init needs to be returned as integers, the parts as strings."""
-        # if file_type == ("coefficients" or "degree" or "init"):
-        #     for string in readed_list:
-        #         integer_list.append(int(string))
-        #     return integer_list
-        # elif file_type == "parts":
-        #     return readed_list
+
         return readed_list
     except Exception as error:
         print(color.RED + "Error during opening requested file!\nERROR: {}".format(error), color.RESET)
-
-    #
-    # """Convert degree, coefficients and initial terms from strings to integers"""
-    # try:
-    #     if file_type == ("coefficients" or "degree" or "init"):
-    #         integer_list = []
-    #         for string in readed_list:
-    #             try:
-    #                 integer_list = integer_list.append(int(string))
-    #                 return integer_list
-    #             except Exception:
-    #                 """This exeption catches NoneType errors"""
-    #                 continue
-    #         # readed_list = integer_list
-    #         print("The new readed list is: {}".format(integer_list))
-    # except Exception as error:
-    #     print(color.RED + "Error during converting strings in {} list to integers.\nERROR: {}".format(file_type, error))
-
-
-    # return integer_list
 
 def read_files():
         # def write_coefficents_to_file(filename, coefficients):
     path = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9].txt")
     global filename #The filename needs to be available in every function.
     for filename in glob.glob(path):
-        print("File: " + filename)
+        # print("File: " + filename)
         # next_symbolic_var_index = 0  # Reset this index for every file
         # debug_print("Beginning for file \"{0}\"".format(filename))
         lines = read_file(filename)
         lines = clear_commas(lines)
         lines = fix_syntax(lines)
-        print("Len lines: " + str(len(lines)))
-        print(lines)
+        # print("Len lines: " + str(len(lines)))
+        # print(lines)
         """Write the equation to a file"""
         file_writer.write_equation(equation=lines[0], filename=filename)
         # debug_print(lines)

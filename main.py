@@ -62,7 +62,10 @@ def menu():
             """Find all the commass files in the homogeneous folder"""
 
             hom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/homogeneous/comass[0-9][0-9].txt")
-            # print("\n\n\n\n\n This is the hom_comass path: {}\n\n\n\n".format(hom_comass_path))
+
+            print(color.CYAN + "\n\nAUTOMATC READING HOMOGENEOUS EQUATION.\n\n", color.RESET)
+            time.sleep(1)
+
             #Find every comass file in the /homogeneous/ folder. Then process the 5 steps for every file.
             for hom_comass_file in glob.glob(hom_comass_path):
                 print(color.GREEN + "\nHomogeneous file {} found!\n".format(hom_comass_file), color.RESET)
@@ -89,39 +92,48 @@ def menu():
                     except Exception as error:
                         print(color.RED + "Can not create error file for: {}\nERROR: {}".format(hom_comass_file, error))
 
-                # try:
-                #     """Determine the degree and write it to /output_files/homogeneous/step1/"""
-                #     degree = hom_step1.find_degree(filename=hom_comass_file)
-                #     file_writer.write_degree_to_file(filename=hom_comass_file, degree=degree, homogeneous=True)
-                #     file_writer.move_to_step(filename=hom_comass_file, homogeneous=True, step="step1")
-                #     #Remove all the moved files
-                #     try:
-                #         print("")
-                #         file_remover.remove_file(filename=hom_comass_file)
-                #     except Exception:
-                #         continue
-                # except Exception as error:
-                #     print(color.RED + "Error when determine the degree, file moved to error folder {}\n".format(error), color.RESET)
 
+                """Find all the commass files in the nonhomogeneous folder"""
+                nonhom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/nonhomogeneous/comass[0-9][0-9].txt")
 
-                """Step 2"""
-                # file = open(hom_comass_file, 'r')
-                # lines = file.readlines()
-                # equation = lines[0].strip("")
-                # if degree == 1:
-                #     hom_step2.char_equation_1(first_term_in=equation)
+                print(color.CYAN + "\n\nAUTOMATC READING NON-HOMOGENEOUS EQUATION.\n\n", color.RESET)
+                time.sleep(1)
+                # Find every comass file in the /homogeneous/ folder. Then process the 5 steps for every file.
+                for nonhom_comass_file in glob.glob(nonhom_comass_path):
+                    print(color.GREEN + "\nNon-Homogeneous file {} found!\n".format(hom_comass_file), color.RESET)
 
-            # #Determine if the function is an homogeneous or a non-homogeneous function
-            # try:
-            #     if function_type.type() == "homogeneous":
-            #         print("The equation is homogeneous")
-            #
-            #     elif function_type.type() == "nonhomogeneous":
-            #         print("The equation is non-homogeneous")
+                    """The automatic mode uses the hom_calling_test.py file.
+                    THIS IS THE NON-HOMOGENEOUS PART!"""
+                    """Move the files from the root folder, to the automatic folder."""
+                    file_writer.move_to_step(filename=nonhom_comass_file, homogeneous=False, step="automatic")
+                    degree = file_reader.read_lists_from_files(file_type="degree", filename=nonhom_comass_file,
+                                                               homogeneous=False, automatic=True, step=None)
+                    coefficients = file_reader.read_lists_from_files(file_type="coefficients", filename=nonhom_comass_file,
+                                                                     homogeneous=False, automatic=True, step=None)
+                    initial_terms = file_reader.read_lists_from_files(file_type="init", filename=nonhom_comass_file,
+                                                                      homogeneous=False, automatic=True, step=None)
+                    parts = file_reader.read_lists_from_files(file_type="parts", filename=nonhom_comass_file,
+                                                              homogeneous=False, automatic=True, step=None)
 
-            # except:
-            #     print("Error in type function: {}".format(Exception))
-            #     print("There is an error in file: {}".format(function_type.type()))
+                    print(
+                        color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}".format(
+                            degree, initial_terms, coefficients, parts), color.RESET)
+
+                    try:
+                        nonhom_calling_test.solve_nonhom_relations()
+                        # nonhom_calling_test.solve_nonhomog_relations(degree=degree, initial=initial_terms, parts=parts,
+                        #                                       coefficients=coefficients, filename=hom_comass_file)
+
+                    except Exception as error:
+                        print(color.RED + "Error in nonhom_calling_test, try manually!\nERROR: {}".format(error),
+                              color.RESET)
+                        try:
+                            file_writer.error_in_file(filename=hom_comass_file, homogeneous=False, step=None,
+                                                      error=error, automatic=True)
+                            print(color.LIGHTGREEN_EX + "Error file created!\n", color.RESET)
+                        except Exception as error:
+                            print(color.RED + "Can not create error file for: {}\nERROR: {}".format(hom_comass_file,
+                                                                                                    error))
 
         elif choice == 2:
             manual_mode(filename="empty")  # Is filename needed here? since it's manual
@@ -131,7 +143,9 @@ def menu():
             print("Which files do you want to remove?.\n")
             print("""1) All files, including solutions.\n
             2) Error files.\n
-            3) All files in a particular step.""")
+            3) All files in a particular step.\n
+            4) Remove all solutions. (NOT READY)\n""")
+
             delete_choice = int(input("Enter your choice: "))
             if delete_choice == 1:
                 file_remover.remove_all()

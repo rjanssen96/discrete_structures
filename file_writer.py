@@ -2,7 +2,8 @@
 import os
 from shutil import copyfile #Library to copy files
 from colorama import Fore as color
-
+import re
+import file_remover
 
 
 """This function writes the initial terms to commass[0-9][0-9]_init.txt"""
@@ -44,7 +45,7 @@ def write_degree_to_file(filename, degree, homogeneous):
         coef_file.write("{}".format(degree))  # Write the ordered sets to the file
         coef_file.close()
     except Exception as error:
-        print("Cannot write the degree to a file.\nERROR: {}".format(error))
+        print(color.RED + "Cannot write the degree to a file.\nERROR: {}ERROR: {}\n".format(filename, error), color.RESET)
 
 def write_equation(filename, equation):
     try:
@@ -55,7 +56,18 @@ def write_equation(filename, equation):
         equation_file.write(equation)
         equation_file.close()
     except Exception as error:
-        print(color.RED + "ERROR while write equation file: {}\n".format(error), color.RESET)
+        print(color.RED + "ERROR while write equation file: {}\nERROR: {}\n".format(filename, error), color.RESET)
+
+def write_fn_part_to_file(filename, fn_parts):
+    try:
+        print(color.CYAN + "FILENAME AND FN_PARTS: {}, {}\n".format(filename, fn_parts), color.RESET)
+        file = str(str(filename).strip('.txt') +"_fn_parts.txt")
+        equation_file = open(file, 'w')
+        equation_file.write(str(fn_parts))
+        equation_file.close()
+    except Exception as error:
+        print(color.RED + "ERROR while writing FN_parts to file: {}\nERROR: {}\n".format(filename, error), color.RESET)
+
 
 """This function determs if the homogeneous parameter is True or False.
 Based on this parameter the foldername will be decided by the other functions."""
@@ -75,14 +87,13 @@ def move_files_based_on_type(filename, homogeneous):
     #find commass files for that homogeneous equation
     commass_file = filename
     commass_file_homogeneous = str(filename).replace("/input_files", "/output_files/{}/".format(folder))
-    print("We move the homogeneous file: {}\nTo: {}\n".format(commass_file, commass_file_homogeneous))
+    print("We move the {} file: {}\nTo: {}\n".format(folder, commass_file, commass_file_homogeneous))
 
     """The strip statement removes .txt from the input file, which is the comass[0-9][0-9].txt file.
     Then adds the different variations to the filenames to locate these other files."""
     coefficients_file = str(filename).strip('.txt') + "_coefficients.txt"
     coefficients_file_type = str(str(filename).strip('.txt') +"_coefficients.txt").replace("/input_files", "/output_files/{}/".format(folder))
     print("We move the {} file: {}\nTo: {}\n".format(folder, coefficients_file, coefficients_file_type))
-
 
     initial_file = str(filename).strip('.txt') + "_init.txt"
     initial_file_type = str(str(filename).strip('.txt') +"_init.txt").replace("/input_files", "/output_files/{}/".format(folder))
@@ -101,13 +112,29 @@ def move_files_based_on_type(filename, homogeneous):
     parts_file_type = str(str(filename).strip('.txt') + "_parts.txt").replace("/input_files", "/output_files/{}/".format(folder))
     print("We move the {} file: {}\nTo: {}\n".format(folder, parts_file, parts_file_type))
 
-    #Copy the files to the homogeneous folder
+    if homogeneous == False: #If the file is nonhomogeneous, create also an fn_part
+        fn_file = str(filename).strip('.txt') + "_fn_parts.txt"
+        fn_file_type = str(str(filename).strip('.txt') + "_fn_parts.txt").replace("/input_files", "/output_files/{}/".format(folder))
+        print("We move the {} file: {}\nTo: {}\n".format(folder, fn_file, fn_file_type))
+        copyfile(fn_file, fn_file_type)
+    #Copy the files to the homogeneous folder and remove from the input folder
     copyfile(commass_file, commass_file_homogeneous)
+    #Do not remove commass file!
+
     copyfile(coefficients_file, coefficients_file_type)
+    # file_remover.remove_file(filename=coefficients_file)
+
     copyfile(initial_file, initial_file_type)
+    # file_remover.remove_file(filename=initial_file)
+
     copyfile(degree_file, degree_file_type)
+    # file_remover.remove_file(filename=degree_file)
+
     copyfile(equation_file, equation_file_type)
+    # file_remover.remove_file(filename=equation_file)
+
     copyfile(parts_file, parts_file_type)
+    # file_remover.remove_file(filename=parts_file)
 
 """Move homogeneous files to step 1."""
 def move_to_step(filename, homogeneous, step):
@@ -123,11 +150,13 @@ def move_to_step(filename, homogeneous, step):
         step1_coef_file = step1_coef_file.replace(".txt", "_coefficients.txt")
         copyfile(orinial_coef_file, step1_coef_file)
 
+
         """Move the associated init file to the given step folder."""
         step1_init_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder,step))
         orinial_init_file = str(filename).replace(".txt", "_init.txt")
         step1_init_file = step1_init_file.replace(".txt", "_init.txt")
         copyfile(orinial_init_file, step1_init_file)
+
 
         """Move the associated equation file to the given step folder."""
         step1_equation_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
@@ -135,18 +164,34 @@ def move_to_step(filename, homogeneous, step):
         step1_equation_file = step1_equation_file.replace(".txt", "_equation.txt")
         copyfile(orinial_equation_file, step1_equation_file)
 
+
         """Move the associated degree file to the given step folder."""
         step1_degree_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
         orinial_degree_file = str(filename).replace(".txt", "_degree.txt")
         step1_degree_file = step1_degree_file.replace(".txt", "_degree.txt")
         copyfile(orinial_degree_file, step1_degree_file)
 
-        """Move the associated equation file to the given step folder."""
+
+        """Move the associated parts file to the given step folder."""
         step1_parts_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
         orinial_parts_file = str(filename).replace(".txt", "_parts.txt")
         step1_parts_file = step1_parts_file.replace(".txt", "_parts.txt")
         copyfile(orinial_parts_file, step1_parts_file)
 
+        if homogeneous == False:
+            step1_fn_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+            orinial_fn_file = str(filename).replace(".txt", "_fn_parts.txt")
+            step1_fn_file = step1_fn_file.replace(".txt", "_fn_parts.txt")
+            copyfile(orinial_fn_file, step1_fn_file)
+            # file_remover.remove_file(filename=orinial_fn_file)
+
+        """Remove files"""
+        # file_remover.remove_file(filename=filename)
+        # file_remover.remove_file(filename=orinial_coef_file)
+        # file_remover.remove_file(filename=orinial_init_file)
+        # file_remover.remove_file(filename=orinial_equation_file)
+        # file_remover.remove_file(filename=orinial_degree_file)
+        # file_remover.remove_file(filename=orinial_parts_file)
     except IOError:
         print(color.RED + "File missing {}\n".format(filename), color.RESET)
     except Exception as error:
@@ -184,6 +229,17 @@ def move_nonhomogeneous_files(filename):
     copyfile(initial_file, initial_file_nonhomogeneous)
     copyfile(degree_file, degree_file_nonhomogeneous)
     copyfile(equation_file, equation_file_nonhomogeneous)
+
+"""This function writes a solution (dir files) to the solution folder."""
+def write_solution(filename, solution):
+    try:
+        commass_number = re.findall("comass[0-9][0-9].txt", str(filename))
+        path =  str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/solutions/")
+        solution_file = open((path + str(commass_number[0])), 'w')
+        solution_file.write(str(solution))
+        solution_file.close()
+    except Exception as error:
+        print(color.RED + "Cannot write solution to file!\nFilename: {}\nSolution: {}\nERROR: {}".format(filename, solution, error), color.RESET)
 
 
 """This function moves the error files to the error folder and adds the error to the file."""
