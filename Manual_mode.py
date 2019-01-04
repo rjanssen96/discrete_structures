@@ -346,6 +346,7 @@ def manual_mode_non_homog_1(coefficients, degree, initial_terms, fn_part, highes
         print(color.GREEN + "Step 1: The rewritten sequence is: \n" + str(sequence) + "\n", color.RESET)
 
         # Ask if altering is needed
+        print("Ignore the dictionary at the end pf the rewritten sequence")
         continue_or_not = input("Is this correct? (yes or no)\n")
         if continue_or_not == "yes":
             # print("Great!")
