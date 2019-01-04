@@ -36,5 +36,3 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples):
 
     # return smile
     return particular_sol
-
-

@@ -24,26 +24,25 @@ def find_alpha_values(my_initial_terms, all_r_and_m):
                 row_of_coeffs = row_of_coeffs + (next_coeff,)
 
         matrix_row = row_of_coeffs + (my_initial_terms[n],)  # adds the answer of the initial term to the row
-        alpha_coeffs[
-            "row_{0}".format(n)] = matrix_row  # adds all the coeffs+answers of each initial term to a dictionary
+        alpha_coeffs["row_{}".format(n)] = matrix_row  # adds all the coeffs+answers of each initial term to a dictionary
 
     """
     SECTION 2: CREATE ALL NEEDED MATRIX SOLVE INPUT
     """
     amount_of_rows = len(alpha_coeffs)
     for x in range(0, amount_of_rows):  # makes a list with lists in it for every row of the matrix
-        matrix_input = matrix_input + ((alpha_coeffs["row_" + str(x)]),)
+        matrix_input = matrix_input + ((alpha_coeffs["row_{}".format(x)]),)
 
     system = Matrix(matrix_input)  # creates correct syntax
-
-    for x in range(0,
-                   len(alpha_coeffs["row_0"]) - 1):  # Calculates how many different alpha coeffs need to be solved for
+    for x in range(0, len(alpha_coeffs["row_0"]) - 1):  # Calculates how many different alpha coeffs need to be solved for
         solve_variable = solve_variable + (x,)
 
     """
     SECTION 3: SOLVE THE SYSTEM
     """
     matrix_result = solve_linear_system(system, *solve_variable)
+
+
 
     return matrix_result
 

@@ -66,12 +66,11 @@ def det_init_conditions(lines):
         y_value = line[start_index_y:]
         conditions[x_value] = y_value
 
-    print("The conditions are: {}\n".format(conditions)) #This line can be removed.
+    # print("The conditions are: {}\n".format(conditions)) #This line can be removed.
 
     conditions_list = []
     for key in sorted(conditions.keys()): #Sort the initial terms in the dictionary
-        init_value = str(conditions.get(key)[0])  #Get the values of the inital terms
-        print("Added:\tInitial term number: {}\t value: {} to list.".format(key, init_value))
+        init_value = str(conditions.get(key))  #Get the values of the inital terms
         conditions_list.append(init_value)  # Add the values of the initial terms to a list
     file_writer.write_init_terms(filename=filename, conditions=conditions_list)
     return conditions
@@ -142,62 +141,11 @@ def analyze_recurrence_equation(equation):
     # Sorry, but you will have to implement the treatment of F(n) yourself!
     return associated, f_n_list
 
-# """This functions checks what the coefficients are for each eaquation, this is only for homogeneous equations."""
-# def det_coefficients(equation):
-#     print("We are going to find the coefficients for: {}".format(str(equation)))
-#     # print("We have te find coefficients in the following lines: {} \n".format(lines))
-#     expression = re.compile("((-?\(-?\d+/\d+\)|-?\d+|\d?-?\(-?\d+/\d+\)|-?\d+|\d?)\*s(\(n-\d+\)))")
-#     results = expression.findall(str(equation))
-#
-#
-#
-#     """Find all the "s(" combinations, put them in a list. Those who do not occur in the results, insert an 1"""
-#
-#
-#
-#     if results == None:
-#         print(color.RED + "No coefficients found!\n", color.RESET)
-#         print(equation)
-#         test = input("type enter..\n")
-#     else:
-#         print("We found the following coefficients:\n")
-#         print(results)
-#         coeff_dict = {}
-#         coeff_sorted_list = []
-#         polynomial_sorted_list = []
-#         for item in results:
-#             # print(item)
-#             print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], item[2]))
-#             stripped_position = item[2].strip("(n").strip(")")
-#             print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], stripped_position))
-#             coeff_dict[stripped_position] = item[0],item[1]
-#             test = input("type enter..\n")
-#
-#         for key in sorted(coeff_dict.keys()):
-#             print(coeff_dict)
-#             print(coeff_dict.get(key)[0])
-#             polynomial = str(coeff_dict.get(key)[0]) #*s(n-2) from the ordered dictionary.
-#
-#             pos_s_bracket = polynomial.find("*s(")  # Position of "*s("
-#             start_index_nr = pos_s_bracket + 0  # First index of x-value, when changing the 0 to 1. The * will be excluded!
-#             pos_bracket_equal = polynomial.find(")", pos_s_bracket)  # Position of ")="
-#             end_index_nr = pos_bracket_equal + 1 #includes the ) back in the polynomial
-#             # x_value = str(polynomial[start_index_nr:pos_bracket_equal]) #Assign the characters between *s( and ) to the x_value variable
-#             x_value = str(polynomial[start_index_nr:end_index_nr]) #Assign the characters between *s( and ) to the x_value variable
-#
-#             print("The polynomial is: {}\n".format(x_value))
-#             coeff_sorted_list.append(key) #Add the coefficients in order to the list
-#             polynomial_sorted_list.append(x_value)#Add *s(n-2) to a list in the sequence of the coefficients
-#             # print(coeff_sorted_dict)
-#             print(key)
-#
-#         file_writer.write_coefficients_to_file(filename=filename, coefficients=coeff_sorted_list, polynomials=polynomial_sorted_list)
-#         print(coeff_sorted_list)
 
 """This functions checks what the coefficients are for each eaquation, this is only for homogeneous equations."""
 
 def det_coefficients(equation):
-    print("We are going to find the coefficients for: {}".format(str(equation)))
+    # print("We are going to find the coefficients for: {}".format(str(equation)))
     # print("We have te find coefficients in the following lines: {} \n".format(lines))
     expression = re.compile("((-?\(-?\d+/\d+\)|-?\d+|\d?-?\(-?\d+/\d+\)|-?\d+|\d?)\*?s(\(n-\d+\)))")
     results = expression.findall(str(equation))
@@ -208,29 +156,25 @@ def det_coefficients(equation):
         print(color.RED + "No coefficients found!\n", color.RESET)
         print(equation)
     else:
-        print("We found the following coefficients:\n")
-        print(results)
+        # print("We found the following coefficients:\n")
+        # print(results)
         coeff_dict = {}
         coeff_sorted_list = []
         polynomial_sorted_list = []
         for item in results:
             print(item)
             if item[1] == "":
-                print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], "1", item[2]))
+                # print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], "1", item[2]))
                 stripped_position = item[2].strip("(n").strip(")")
-                print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], "1", stripped_position))
+                # print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], "1", stripped_position))
                 coeff_dict[stripped_position] = item[0], "1"
-
-                print("SO, THESE ARE THE VALUES: {}".format((item[0], "1")))
-
             else:
-
-                print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], item[2]))
+                # print("coefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], item[2]))
                 stripped_position = item[2].strip("(n").strip(")")
-                print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], stripped_position))
+                # print("\n new: \ncoefficient: {} \t macht: {} \t position: {}\n".format(item[0], item[1], stripped_position))
                 coeff_dict[stripped_position] = item[0], item[1]
 
-        print(coeff_dict)
+        # print(coeff_dict)
 
         for key in sorted(coeff_dict.keys()):
             # print(coeff_dict)
@@ -274,13 +218,13 @@ def det_coefficients(equation):
                     print("tuple[0] {}, tuple[1]: {}\n".format(zero_tuple[0], zero_tuple[1]))
                     x_value = "(n-{})".format(abs(number))
 
-                    print("This is the data before adding \nNumber: {}, tuple: {}, coeff_dic:{}".format(number, zero_tuple, coeff_dict))
+                    # print("This is the data before adding \nNumber: {}, tuple: {}, coeff_dic:{}".format(number, zero_tuple, coeff_dict))
                     coeff_dict[str(number)] = zero_tuple[0], zero_tuple[1] #The key is the degree, ten the part and the 0 coefficients is added to the dictionary.
-                    print("This is the data after adding \nNumber: {}, tuple: {}, coeff_dic:{}".format(number, zero_tuple, coeff_dict))
+                    # print("This is the data after adding \nNumber: {}, tuple: {}, coeff_dic:{}".format(number, zero_tuple, coeff_dict))
                     print(color.RED + "The keys are: {}\n".format(coeff_dict.keys()), color.RESET)
                     print(color.RED + "The dictionary is: {}\n".format(coeff_dict), color.RESET)
 
-        print("\n\nEntering write fucniton\n\n")
+        # print("\n\nEntering write fucniton\n\n")
         print(sorted(coeff_dict.values()))
         for all_keys in sorted(coeff_dict.keys()):
             coefficient = str(coeff_dict.get(str(all_keys))[1])
@@ -317,12 +261,12 @@ def find_type(homogeneous, path):
     newline = ""
     hom = re.compile("((?:-|\+|)(?:|\d|\d\d|\d\d\d).s\(n-(?:\d|\d\d)\)|\S\((?:\d|\d\d|\d\d\d).(?:\d|\d\d|\d\d\d)\).s\(n-(?:\d|\d\d)\))")
 
-    print("path = " + str(path))
-    print("pathstring = " + str(pathstring))
+    # print("path = " + str(path))
+    # print("pathstring = " + str(pathstring))
     with open(str(pathstring), "r") as f:
         for i in range(3):
             line = f.readline()
-        print("line = " + line)
+        # print("line = " + line)
 
     eq = line.split("=", 1)[0]
     num = eq.split(")",1)[1]
@@ -457,12 +401,13 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
         print(color.BLUE + "The line is: {}\nThe type is: {}\n".format(readed_list, type(readed_list)))
         file.close()
         """The coefficients, degree and init needs to be returned as integers, the parts as strings."""
-        if file_type == ("coefficients" or "degree" or "init"):
-            for string in readed_list:
-                integer_list.append(int(string))
-            return integer_list
-        elif file_type == "parts":
-            return readed_list
+        # if file_type == ("coefficients" or "degree" or "init"):
+        #     for string in readed_list:
+        #         integer_list.append(int(string))
+        #     return integer_list
+        # elif file_type == "parts":
+        #     return readed_list
+        return readed_list
     except Exception as error:
         print(color.RED + "Error during opening requested file!\nERROR: {}".format(error), color.RESET)
 

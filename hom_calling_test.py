@@ -37,19 +37,19 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
     coefficients = coefficients
     parts = parts
 
-    print(color.GREEN, "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\n".format(type(degree), initial_terms, coefficients,parts), color.RESET)
+    print(color.GREEN + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\n".format(degree, initial_terms, coefficients,parts), color.RESET)
     # Step 1: Rewriting the sequence
     # Maybe replace this part with now Rico's read parts added together from the dictionary sort result?
     try:
         sequence = "s(n)="
         i = 0
         for x in coefficients:
-            if coefficients[i] >= 0 and i == 0:
+            if int(coefficients[i]) >= 0 and i == 0:
                 sequence = sequence + str(coefficients[i]) + str(parts[i])
             # add a + for the positive coefficients
-            elif coefficients[i] >= 0:
+            elif int(coefficients[i]) >= 0:
                 sequence = sequence + "+" + str(coefficients[i]) + str(parts[i])
-            elif coefficients[i] < 0:
+            elif int(coefficients[i]) < 0:
                 sequence = sequence + str(coefficients[i]) + str(parts[i])
             else:
                 print("wrong sequence step 1")
@@ -111,7 +111,7 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
 
     # Step 5.1: Obtain alpha values
     try:
-        outcome = find_alpha_values(initial_terms, r_and_m_found)
+        outcome = find_alpha_values(my_initial_terms=initial_terms, all_r_and_m=r_and_m_found)
         print("Step 5.1: The value of the Alphas:")
         print(outcome)
     except:
@@ -122,13 +122,12 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
         except Exception as error:
             print(
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
-                    filename, True, "Step 5.1", True, error))
+                    filename, True, "Step 5.1", True, error), color.RESET)
 
     # Step 5.2: Obtain specific solution
     try:
         specific_solution = gimme_specific_solution(general_solution, outcome)
         print(color.BLUE +"\nStep 5.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n", color.RESET)
-        time.sleep(10)
     except Exception as error:
         print("5.2 doesnt work, shocker dude: ERROR: {}".format(error))
         print(color.RED + "Error occurs in file: {}".format(filename), color.RESET)
@@ -137,5 +136,5 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
         except Exception as error:
             print(
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
-                    filename, True, "Step 5.2", True, error))
+                    filename, True, "Step 5.2", True, error), color.RESET)
 

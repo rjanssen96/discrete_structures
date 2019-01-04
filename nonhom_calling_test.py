@@ -91,31 +91,31 @@ def solve_nonhom_relations():
         print("7.2 doesnt work, shocker dude: ERROR: {}".format(error))
 
 
-solve_nonhom_relations()
-
-
-# Testing specific solutions:
-my_spec_sol = "((1)*(n)^(3)+(0)*(n)^(2)+(0)*(n)^(1)+(0)*(n)^(0))*(1)^(n)+(+(3/4)+(-9/8)*n)*(2)^n+(+(-3/4)+(3/8)*n)*(-2)^n"
-my_spec_sol = my_spec_sol.replace("^", "**")
-my_answer_list = []
-
-for x in range(0, 20):
-    my_new_spec_sol = my_spec_sol.replace("n", str(x))
-    my_new_spec_sol = parse_expr(my_new_spec_sol)
-    my_answer_list.append(my_new_spec_sol)
-
-print(my_answer_list)
-
-comma_spec_sol = "161/162*(-1)^(n+1)*2^n-47*2^(n-1)+1/648*(417*(-1)^n*n+3321*n)*2^n+1/9*n^3+16/9*n^2+32/3*n+1984/81"
-comma_spec_sol = comma_spec_sol.replace("^", "**")
-comma_answer_list = []
-
-for x in range(0, 20):
-    comma_new_spec_sol = comma_spec_sol.replace("n", str(x))
-    comma_new_spec_sol = parse_expr(comma_new_spec_sol)
-    comma_answer_list.append(comma_new_spec_sol)
-
-print(comma_answer_list)
+# solve_nonhom_relations()
+#
+#
+# # Testing specific solutions:
+# my_spec_sol = "((1)*(n)^(3)+(0)*(n)^(2)+(0)*(n)^(1)+(0)*(n)^(0))*(1)^(n)+(+(3/4)+(-9/8)*n)*(2)^n+(+(-3/4)+(3/8)*n)*(-2)^n"
+# my_spec_sol = my_spec_sol.replace("^", "**")
+# my_answer_list = []
+#
+# for x in range(0, 20):
+#     my_new_spec_sol = my_spec_sol.replace("n", str(x))
+#     my_new_spec_sol = parse_expr(my_new_spec_sol)
+#     my_answer_list.append(my_new_spec_sol)
+#
+# print(my_answer_list)
+#
+# comma_spec_sol = "161/162*(-1)^(n+1)*2^n-47*2^(n-1)+1/648*(417*(-1)^n*n+3321*n)*2^n+1/9*n^3+16/9*n^2+32/3*n+1984/81"
+# comma_spec_sol = comma_spec_sol.replace("^", "**")
+# comma_answer_list = []
+#
+# for x in range(0, 20):
+#     comma_new_spec_sol = comma_spec_sol.replace("n", str(x))
+#     comma_new_spec_sol = parse_expr(comma_new_spec_sol)
+#     comma_answer_list.append(comma_new_spec_sol)
+#
+# print(comma_answer_list)
 
 # tested with:
 # assignment 3, (correct)
