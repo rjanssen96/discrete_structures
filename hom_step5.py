@@ -1,7 +1,7 @@
 from sympy import *
 
 # (Step 5.1) solving every systems with no matter the used theorem (cuz theorem 4 also contains theorem 3)
-def find_alpha_values(my_initial_terms, all_r_and_m):
+def hom_find_alpha_values(my_initial_terms, all_r_and_m):
     """
     SECTION 0: NEEDED INFORMATION
     """

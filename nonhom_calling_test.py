@@ -123,3 +123,4 @@ def solve_nonhom_relations():
 # commas33 (watch out for this one, put n-5 as a string in the coeff list),
 # commas36 doesnt work cuz key of dict will be str(n-4) :-/
 
+# solve_nonhom_relations()

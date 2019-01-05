@@ -6,6 +6,7 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples):
     # smile = fn_parts
     s_root_check = False
     particular_sol = "("
+    highest_power = int(highest_power)
 
     # puts the non_homog part into b_t*n^t form
     next_power = highest_power

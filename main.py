@@ -8,6 +8,7 @@ import hom_step1, hom_step2, hom_step3, hom_step4, hom_step5
 from Manual_mode import *
 from colorama import Fore as color
 import time
+from answer_checker import *
 
 def banner():
     path = os.path.dirname(os.path.realpath(__file__))
@@ -49,7 +50,8 @@ def menu():
         1) Solve the equations automatically.\n
         2) Solve manually equations (NOT READY).\n
         3) Remove some files.\n
-        4) Exit the program.\n""")
+        4) Check outcomes of solutions and relations.\n
+        5) Exit the program.\n""")
         choice = int(input("Enter your choice: "))
         # choice = 1
         if choice == 1:
@@ -137,7 +139,6 @@ def menu():
 
         elif choice == 2:
             manual_mode(filename="empty")  # Is filename needed here? since it's manual
-            # exit()
 
         elif choice == 3:
             print("Which files do you want to remove?.\n")
@@ -157,6 +158,9 @@ def menu():
                 file_remover.remove_files_in_folder(homogeneous=homogeneous, folder=folder)
 
         elif choice == 4:
+            answer_check_manual_or_auto()
+
+        elif choice == 5:
             print("Closing program, BYE!\n")
             exit()
         else:
