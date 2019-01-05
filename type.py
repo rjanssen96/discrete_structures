@@ -64,9 +64,9 @@ def find_type(homogeneous, path):
                 newline = newline.replace(oldstring, newstring)
                 totalcount = totalcount-1
 
-        print("oldline = " + line)
+        #print("oldline = " + line)
         newline = newline.replace("s(n)" + str(num), "s(n)")
-        print("newline = " + newline)
+        #print("newline = " + newline)
     else:
         print("Not needed to higher/lower the n- values")
 
@@ -101,8 +101,9 @@ def find_type(homogeneous, path):
         else:
             fn_parts_list_powers.append(1)
 
-    maxpower = max(fn_parts_list_powers)
+    maxpower = max(fn_parts_list_powers) #Finds the highest power in the list of powers
 
+    #This loop fills the list with powers which are not there F.I if it is 3,5,6 it will append 1,2,4
     for c in range(maxpower):
         if maxpower in fn_parts_list_powers:
             maxpower = maxpower-1
@@ -110,28 +111,30 @@ def find_type(homogeneous, path):
             fn_parts_list_powers.append(maxpower)
             maxpower= maxpower-1
 
+    #This is the difference between the amount of powers and coeffs in both lists after appending
     power_difference = max(fn_parts_list_powers)-len(fn_parts_list_coeffs)
 
+    #This loop appends 1's for coeffs that are missing, making both power and coeffs lists equal in length/numbers
     for p in range(power_difference):
         fn_parts_list_coeffs.append(1)
 
+    #Resetting the power count
     power_count = max(fn_parts_list_powers)
     counter = 0
 
+    #The next three lines create a list and fills it with as many 1's as the powers length. These will be substituted later.
     ordered_coeff_list = []
-
     for l in range(power_count):
-        ordered_coeff_list.append(l)
+        ordered_coeff_list.append(1)
 
     ordered_power_list = fn_parts_list_powers
 
+    #Finds the position/combinations of coeffs with the powers and sorts both so they still align, after the powers get sorted from 1-6.
     while counter < power_count:
         power_number = fn_parts_list_powers[counter]
         power_index = fn_parts_list_powers.index(power_number)
         ordered_coeff_list[power_number-1]=fn_parts_list_coeffs[power_index]
         counter = counter+1
-
-    #fn_parts_dict = dict(zip(fn_parts_list_powers,fn_parts_list_coeffs))
 
     #print("powers = " + str(fn_parts_list_powers))
     #print("coeffs = " + str(fn_parts_list_coeffs))
@@ -140,7 +143,6 @@ def find_type(homogeneous, path):
     #print("ordered coeffs = " + str(ordered_coeff_list))
     fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
     print(fn_parts_dict)
-
 
     #If the nonhom string didnt have a part like this, it sets it to -1
     if not fn_part_sn_string:
