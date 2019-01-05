@@ -82,6 +82,13 @@ def find_type(homogeneous, path):
     fn_part_sn_string = re.findall(("\d\^n|\d\d\^n|\d\d\d\^n"),nonhomogeneous_string) #Finds the sn part in the nonhom string
     fn_part_sn_string = ''.join(fn_part_sn_string).replace('^n','') #changes the variable to a string instead of a list
 
+    fn_parts_regex = re.compile("(\d\d\d\*n\^\d\d\d|\d\d\d\*n\^\d\d|\d\d\d\*n\^\d|\d\d\*n\^\d\d\d|\d\*n\^\d\d|\d\d\*n\^\d\d|\d\*n\^\d\d|\d\d\*n\^\d|\d\*n\^\d|n\^\d\d\d|n\^\d\d|n\^\d)")
+    all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
+    print("all_fn_parts = " + str(all_fn_parts))
+
+    fn_parts_dict = {}
+
+
     #If the nonhom string didnt have a part like this, it sets it to -1
     if not fn_part_sn_string:
         fn_part_sn_string = -1
@@ -92,13 +99,12 @@ def find_type(homogeneous, path):
     #This if statement checks if theorem 6 is applicable on the equation.
     if "^(n-" in nonhomogeneous_string:
         theorem_boolean = False
-    print(theorem_boolean)
+    #print(theorem_boolean)
 
     #This loop removes the nonhomogenous string from the whole equation, leaving just the homogeneous part
     for strings in homogeneous:
         nonhomogeneous_string = nonhomogeneous_string.replace(strings,"").replace(',',"").replace("=","").strip()
 
-    print("nonhomogeneous_string = " + nonhomogeneous_string)
     #This variable pastes the nonhom string after the hom string, correctly ordering the equation
     homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
     print("homogeneous_string = " + homogeneous_string)
