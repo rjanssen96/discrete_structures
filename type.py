@@ -109,7 +109,7 @@ def find_type(homogeneous, path):
     theorem_boolean = True #The boolean which checks if theorem 6 is applicable
 
     #This if statement checks if theorem 6 is applicable on the equation.
-    if "^(n-" in nonhomogeneous_string:
+    if "^(n-" in nonhomogeneous_string or "^(n+" in nonhomogeneous_string:
         theorem_boolean = False
     #print(theorem_boolean)
 
