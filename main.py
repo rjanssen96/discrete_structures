@@ -44,11 +44,11 @@ def read_files():
 
 def menu():
     #This function is the main menu for the program.
-    banner()
+    # banner()
     try:
         print("""Menu, choose a number:\n
         1) Solve the equations automatically.\n
-        2) Solve manually equations (NOT READY).\n
+        2) Solve manually equations.\n
         3) Remove some files.\n
         4) Check outcomes of solutions and relations.\n
         5) Exit the program.\n""")
