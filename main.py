@@ -44,7 +44,7 @@ def read_files():
 
 def menu():
     #This function is the main menu for the program.
-    banner()
+    # banner()
     try:
         print("""Menu, choose a number:\n
         1) Solve the equations automatically.\n
