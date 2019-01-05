@@ -70,6 +70,12 @@ def find_type(homogeneous, path):
     print("homogeneous parts are : " + str(homogeneous))
 
     nonhomogeneous_string = newline.replace("s(n)","")
+    fn_part_sn_string = re.findall(("\^n-"),nonhomogeneous_string)
+    print("fn_part_sn_string = " + str(fn_part_sn_string))
+
+    if not fn_part_sn_string:
+        fn_part_sn_string = -1
+    print("fn_part_sn_string = " + str(fn_part_sn_string))
 
     for strings in homogeneous:
         nonhomogeneous_string = nonhomogeneous_string.replace(strings,"").replace(',',"").replace("=","").strip()
@@ -102,5 +108,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass36.txt")
 print("homogeneous = " + str(homogeneous))
