@@ -70,8 +70,8 @@ def find_type(homogeneous, path):
     print("homogeneous parts are : " + str(homogeneous))
 
     nonhomogeneous_string = newline.replace("s(n)","")
-    fn_part_sn_string = re.findall(("\d\^n"),nonhomogeneous_string)
-    print("fn_part_sn_string = " + str(fn_part_sn_string))
+    fn_part_sn_string = re.findall(("\d\^n|\d\d\^n|\d\d\d\^n"),nonhomogeneous_string)
+    fn_part_sn_string = ''.join(fn_part_sn_string).replace('^n','')
 
     if not fn_part_sn_string:
         fn_part_sn_string = -1
