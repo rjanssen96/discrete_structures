@@ -17,7 +17,7 @@ def find_type(homogeneous, path):
     newline = ""
 
     #The RegEx to find all homogeneous parts of the equation.
-    hom = re.compile("((?:-|\+|)(?:|\d|\d\d|\d\d\d).s\(n-(?:\d|\d\d)\)|\S\((?:\d|\d\d|\d\d\d).(?:\d|\d\d|\d\d\d)\).s\(n-(?:\d|\d\d)\))")
+    hom = re.compile("((?:-|\+|)(?:|\d|\d\d|\d\d\d).s\((?:n-|n--)(?:\d|\d\d)\)|\S\((?:\d|\d\d|\d\d\d).(?:\d|\d\d|\d\d\d)\).s\((?:n-|n--)(?:\d|\d\d)\))")
 
     print("path = " + str(path))
     print("pathstring = " + str(pathstring))
@@ -101,50 +101,59 @@ def find_type(homogeneous, path):
         else:
             fn_parts_list_powers.append(1)
 
-    maxpower = max(fn_parts_list_powers) #Finds the highest power in the list of powers
+    print("fn_parts_list_powers = " + str(fn_parts_list_powers))
 
-    #This loop fills the list with powers which are not there F.I if it is 3,5,6 it will append 1,2,4
-    for c in range(maxpower):
-        if maxpower in fn_parts_list_powers:
-            maxpower = maxpower-1
-        else:
-            fn_parts_list_powers.append(maxpower)
-            maxpower= maxpower-1
+    if not fn_parts_list_powers:
+        maxpower = 0
+    else:
+        maxpower = max(fn_parts_list_powers) #Finds the highest power in the list of powers
 
-    #This is the difference between the amount of powers and coeffs in both lists after appending
-    power_difference = max(fn_parts_list_powers)-len(fn_parts_list_coeffs)
+    #If fn_parts_list_powers = empty, this fails and it continues as normal
+    try:
+        #This loop fills the list with powers which are not there F.I if it is 3,5,6 it will append 1,2,4
+        for c in range(maxpower):
+            if maxpower in fn_parts_list_powers:
+                maxpower = maxpower-1
+            else:
+                fn_parts_list_powers.append(maxpower)
+                maxpower= maxpower-1
 
-    #This loop appends 1's for coeffs that are missing, making both power and coeffs lists equal in length/numbers
-    for p in range(power_difference):
-        fn_parts_list_coeffs.append(1)
+        #This is the difference between the amount of powers and coeffs in both lists after appending
+        power_difference = max(fn_parts_list_powers)-len(fn_parts_list_coeffs)
 
-    #Resetting the power count
-    power_count = max(fn_parts_list_powers)
-    counter = 0
+        #This loop appends 1's for coeffs that are missing, making both power and coeffs lists equal in length/numbers
+        for p in range(power_difference):
+            fn_parts_list_coeffs.append(1)
 
-    #The next three lines create a list and fills it with as many 1's as the powers length. These will be substituted later.
-    ordered_coeff_list = []
-    for l in range(power_count):
-        ordered_coeff_list.append(1)
+        #Resetting the power count
+        power_count = max(fn_parts_list_powers)
+        counter = 0
 
-    ordered_power_list = fn_parts_list_powers
+        #The next three lines create a list and fills it with as many 1's as the powers length. These will be substituted later.
+        ordered_coeff_list = []
+        for l in range(power_count):
+            ordered_coeff_list.append(1)
 
-    #Finds the position/combinations of coeffs with the powers and sorts both so they still align, after the powers get sorted from 1-6.
-    while counter < power_count:
-        power_number = fn_parts_list_powers[counter]
-        power_index = fn_parts_list_powers.index(power_number)
-        ordered_coeff_list[power_number-1]=fn_parts_list_coeffs[power_index]
-        counter = counter+1
+        ordered_power_list = fn_parts_list_powers
 
-    #print("powers = " + str(fn_parts_list_powers))
-    #print("coeffs = " + str(fn_parts_list_coeffs))
-    ordered_power_list.sort()
-    #print("ordered powers = " + str(ordered_power_list))
-    #print("ordered coeffs = " + str(ordered_coeff_list))
+        #Finds the position/combinations of coeffs with the powers and sorts both so they still align, after the powers get sorted from 1-6.
+        while counter < power_count:
+            power_number = fn_parts_list_powers[counter]
+            power_index = fn_parts_list_powers.index(power_number)
+            ordered_coeff_list[power_number-1]=fn_parts_list_coeffs[power_index]
+            counter = counter+1
 
-    #This is the dict that is needed for nonhom_calling_test.py
-    fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
-    print(fn_parts_dict)
+        #print("powers = " + str(fn_parts_list_powers))
+        #print("coeffs = " + str(fn_parts_list_coeffs))
+        ordered_power_list.sort()
+        #print("ordered powers = " + str(ordered_power_list))
+        #print("ordered coeffs = " + str(ordered_coeff_list))
+
+        #This is the dict that is needed for nonhom_calling_test.py
+        fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
+        print(fn_parts_dict)
+    except:
+        pass
 
     #If the nonhom string didnt have a part like this, it sets it to -1
     if not fn_part_sn_string:
@@ -161,9 +170,11 @@ def find_type(homogeneous, path):
 
     #This loop removes the nonhomogenous string from the whole equation, leaving just the homogeneous part
     for strings in homogeneous:
-        nonhomogeneous_string = nonhomogeneous_string.replace(strings,"").replace(',',"").replace("=","").strip()
+        nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
 
     #This variable pastes the nonhom string after the hom string, correctly ordering the equation
+    print("newline = " + newline)
+    print("non homogeneous = " + nonhomogeneous_string)
     homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
     print("homogeneous_string = " + homogeneous_string)
 
@@ -193,5 +204,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass36.txt")
 print("homogeneous = " + str(homogeneous))
