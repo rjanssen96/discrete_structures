@@ -87,16 +87,34 @@ def find_type(homogeneous, path):
     #print("all_fn_parts = " + str(all_fn_parts))
 
     fn_parts_dict = {}
+    fn_parts_list = []
+    fn_parts_list_coeffs = []
+    fn_parts_list_powers = []
 
     #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
     for parts in all_fn_parts:
-        coeff =  parts.split('*')[0]
+        coeff = parts.split('*')[0]
+        fn_parts_list_coeffs.append(int(coeff))
         if "^" in parts:
             power = parts.split('^')[1]
+            fn_parts_list_powers.append(power)
         else:
-            power = 1
-        fn_parts_dict[int(power)] = int(coeff)
+            power = '1'
+            fn_parts_list_powers.append(1)
 
+        fn_parts_dict[int(power)] = int(coeff)
+        fn_parts_list.append(power+':'+coeff)
+
+    maxcoeff = max(fn_parts_list_coeffs)
+
+    for c in range(maxcoeff):
+
+
+    fn_parts_list.sort()
+
+    print(fn_parts_list)
+    print(fn_parts_list_powers)
+    print(fn_parts_list_coeffs)
     print(fn_parts_dict)
 
 

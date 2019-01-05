@@ -20,8 +20,8 @@ def find_degree(pathstring, degree):
 
             while j < num:
                 string = "(n-" + str(num) + ")"
-                print("string =" + string)
-                print("FOUND = " + str(line.find(string)))
+                #print("string =" + string)
+                #print("FOUND = " + str(line.find(string)))
                 if line.find(string) is not -1:
                     if num > degree:
                         degree = num
