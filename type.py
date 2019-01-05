@@ -97,24 +97,48 @@ def find_type(homogeneous, path):
         fn_parts_list_coeffs.append(int(coeff))
         if "^" in parts:
             power = parts.split('^')[1]
-            fn_parts_list_powers.append(power)
+            fn_parts_list_powers.append(int(power))
         else:
-            power = '1'
             fn_parts_list_powers.append(1)
 
-        fn_parts_dict[int(power)] = int(coeff)
-        fn_parts_list.append(power+':'+coeff)
+    maxpower = max(fn_parts_list_powers)
 
-    maxcoeff = max(fn_parts_list_coeffs)
+    for c in range(maxpower):
+        if maxpower in fn_parts_list_powers:
+            maxpower = maxpower-1
+        else:
+            fn_parts_list_powers.append(maxpower)
+            maxpower= maxpower-1
 
-    for c in range(maxcoeff):
+    power_difference = max(fn_parts_list_powers)-len(fn_parts_list_coeffs)
 
+    for p in range(power_difference):
+        fn_parts_list_coeffs.append(1)
 
-    fn_parts_list.sort()
+    power_count = max(fn_parts_list_powers)
+    counter = 0
 
-    print(fn_parts_list)
-    print(fn_parts_list_powers)
-    print(fn_parts_list_coeffs)
+    ordered_coeff_list = []
+
+    for l in range(power_count):
+        ordered_coeff_list.append(l)
+
+    ordered_power_list = fn_parts_list_powers
+
+    while counter < power_count:
+        power_number = fn_parts_list_powers[counter]
+        power_index = fn_parts_list_powers.index(power_number)
+        ordered_coeff_list[power_number-1]=fn_parts_list_coeffs[power_index]
+        counter = counter+1
+
+    #fn_parts_dict = dict(zip(fn_parts_list_powers,fn_parts_list_coeffs))
+
+    #print("powers = " + str(fn_parts_list_powers))
+    #print("coeffs = " + str(fn_parts_list_coeffs))
+    ordered_power_list.sort()
+    #print("ordered powers = " + str(ordered_power_list))
+    #print("ordered coeffs = " + str(ordered_coeff_list))
+    fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
     print(fn_parts_dict)
 
 
