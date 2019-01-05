@@ -36,7 +36,7 @@ def find_degree(pathstring, degree):
             break
         else:
             continue
+    print("found degree = " + str(the_degree))
     return degree
 
-the_degree = find_degree(pathstring=pathstring, degree=0)
-print("found degree = " + str(the_degree))
+#the_degree = find_degree(pathstring=pathstring, degree=0)
