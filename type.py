@@ -84,14 +84,26 @@ def find_type(homogeneous, path):
 
     fn_parts_regex = re.compile("(\d\d\d\*n\^\d\d\d|\d\d\d\*n\^\d\d|\d\d\d\*n\^\d|\d\d\*n\^\d\d\d|\d\*n\^\d\d|\d\d\*n\^\d\d|\d\*n\^\d\d|\d\d\*n\^\d|\d\*n\^\d|\d\d\d\*n|\d\d\*n|\d\*n)")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
-    print("all_fn_parts = " + str(all_fn_parts))
+    #print("all_fn_parts = " + str(all_fn_parts))
 
     fn_parts_dict = {}
+
+    #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
+    for parts in all_fn_parts:
+        coeff =  parts.split('*')[0]
+        if "^" in parts:
+            power = parts.split('^')[1]
+        else:
+            power = 1
+        fn_parts_dict[int(power)] = int(coeff)
+
+    print(fn_parts_dict)
 
 
     #If the nonhom string didnt have a part like this, it sets it to -1
     if not fn_part_sn_string:
         fn_part_sn_string = -1
+
     print("fn_part_sn_string = " + str(fn_part_sn_string))
 
     theorem_boolean = True #The boolean which checks if theorem 6 is applicable
