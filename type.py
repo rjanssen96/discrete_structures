@@ -82,7 +82,7 @@ def find_type(homogeneous, path):
     fn_part_sn_string = re.findall(("\d\^n|\d\d\^n|\d\d\d\^n"),nonhomogeneous_string) #Finds the sn part in the nonhom string
     fn_part_sn_string = ''.join(fn_part_sn_string).replace('^n','') #changes the variable to a string instead of a list
 
-    fn_parts_regex = re.compile("(\d\d\d\*n\^\d\d\d|\d\d\d\*n\^\d\d|\d\d\d\*n\^\d|\d\d\*n\^\d\d\d|\d\*n\^\d\d|\d\d\*n\^\d\d|\d\*n\^\d\d|\d\d\*n\^\d|\d\*n\^\d|\d\d\d\*n|\d\d\*n|\d\*n)")
+    fn_parts_regex = re.compile("(\d\d\d\*n\^\d\d\d|\d\d\d\*n\^\d\d|\d\d\d\*n\^\d|\d\d\*n\^\d\d\d|\d\*n\^\d\d|\d\d\*n\^\d\d|\d\*n\^\d\d|\d\d\*n\^\d|\d\*n\^\d|\d\d\d\*n|\d\d\*n|\d\*n|n\^\d|n\^\d\d|n\^\d\d\d)")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
     #print("all_fn_parts = " + str(all_fn_parts))
 
@@ -93,8 +93,14 @@ def find_type(homogeneous, path):
 
     #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
     for parts in all_fn_parts:
+        print(parts)
+
         coeff = parts.split('*')[0]
+        if 'n' in coeff:
+            coeff=1
+
         fn_parts_list_coeffs.append(int(coeff))
+
         if "^" in parts:
             power = parts.split('^')[1]
             fn_parts_list_powers.append(int(power))
@@ -107,6 +113,8 @@ def find_type(homogeneous, path):
         maxpower = 0
     else:
         maxpower = max(fn_parts_list_powers) #Finds the highest power in the list of powers
+
+    print("maxpower = " + str(maxpower))
 
     #If fn_parts_list_powers = empty, this fails and it continues as normal
     try:
@@ -123,7 +131,7 @@ def find_type(homogeneous, path):
 
         #This loop appends 1's for coeffs that are missing, making both power and coeffs lists equal in length/numbers
         for p in range(power_difference):
-            fn_parts_list_coeffs.append(1)
+            fn_parts_list_coeffs.append(0)
 
         #Resetting the power count
         power_count = max(fn_parts_list_powers)
@@ -154,6 +162,8 @@ def find_type(homogeneous, path):
         print(fn_parts_dict)
     except:
         pass
+
+    print(fn_parts_dict)
 
     #If the nonhom string didnt have a part like this, it sets it to -1
     if not fn_part_sn_string:
@@ -204,5 +214,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass36.txt")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass33.txt")
 print("homogeneous = " + str(homogeneous))

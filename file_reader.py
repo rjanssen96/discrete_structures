@@ -330,9 +330,9 @@ def find_type(homogeneous, path):
     fn_part_sn_string = re.findall(("\d\^n|\d\d\^n|\d\d\d\^n"),nonhomogeneous_string) #Finds the sn part in the nonhom string
     fn_part_sn_string = ''.join(fn_part_sn_string).replace('^n','') #changes the variable to a string instead of a list
 
-    fn_parts_regex = re.compile("(\d\d\d\*n\^\d\d\d|\d\d\d\*n\^\d\d|\d\d\d\*n\^\d|\d\d\*n\^\d\d\d|\d\*n\^\d\d|\d\d\*n\^\d\d|\d\*n\^\d\d|\d\d\*n\^\d|\d\*n\^\d|\d\d\d\*n|\d\d\*n|\d\*n)")
+    fn_parts_regex = re.compile("(\d\d\d\*n\^\d\d\d|\d\d\d\*n\^\d\d|\d\d\d\*n\^\d|\d\d\*n\^\d\d\d|\d\*n\^\d\d|\d\d\*n\^\d\d|\d\*n\^\d\d|\d\d\*n\^\d|\d\*n\^\d|\d\d\d\*n|\d\d\*n|\d\*n|n\^\d|n\^\d\d|n\^\d\d\d)")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
-    print("all_fn_parts = " + str(all_fn_parts))
+    #print("all_fn_parts = " + str(all_fn_parts))
 
     fn_parts_dict = {}
     fn_parts_list = []
@@ -341,8 +341,14 @@ def find_type(homogeneous, path):
 
     #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
     for parts in all_fn_parts:
+        print(parts)
+
         coeff = parts.split('*')[0]
+        if 'n' in coeff:
+            coeff=1
+
         fn_parts_list_coeffs.append(int(coeff))
+
         if "^" in parts:
             power = parts.split('^')[1]
             fn_parts_list_powers.append(int(power))
@@ -355,6 +361,8 @@ def find_type(homogeneous, path):
         maxpower = 0
     else:
         maxpower = max(fn_parts_list_powers) #Finds the highest power in the list of powers
+
+    print("maxpower = " + str(maxpower))
 
     #If fn_parts_list_powers = empty, this fails and it continues as normal
     try:
@@ -371,7 +379,7 @@ def find_type(homogeneous, path):
 
         #This loop appends 1's for coeffs that are missing, making both power and coeffs lists equal in length/numbers
         for p in range(power_difference):
-            fn_parts_list_coeffs.append(1)
+            fn_parts_list_coeffs.append(0)
 
         #Resetting the power count
         power_count = max(fn_parts_list_powers)
@@ -382,7 +390,7 @@ def find_type(homogeneous, path):
         for l in range(power_count):
             ordered_coeff_list.append(1)
 
-        ordered_power_list = fn_parts_list_powers.sort()
+        ordered_power_list = fn_parts_list_powers
 
         #Finds the position/combinations of coeffs with the powers and sorts both so they still align, after the powers get sorted from 1-6.
         while counter < power_count:
@@ -393,17 +401,17 @@ def find_type(homogeneous, path):
 
         #print("powers = " + str(fn_parts_list_powers))
         #print("coeffs = " + str(fn_parts_list_coeffs))
-        # ordered_power_list.sort()
+        ordered_power_list.sort()
         #print("ordered powers = " + str(ordered_power_list))
         #print("ordered coeffs = " + str(ordered_coeff_list))
 
         #This is the dict that is needed for nonhom_calling_test.py
         fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
-        print("The fn parts dict is: {}\n".format(fn_parts_dict))
-        time.sleep(5)
-    except Exception as error:
-        print(color.RED, "An error occurs: {}\n".format(error), color.RESET)
+        print(fn_parts_dict)
+    except:
         pass
+
+    print(fn_parts_dict)
 
     #If the nonhom string didnt have a part like this, it sets it to -1
     if not fn_part_sn_string:
@@ -428,7 +436,6 @@ def find_type(homogeneous, path):
     homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
     print("homogeneous_string = " + homogeneous_string)
 
-
     ordered_relation = homogeneous_string + nonhomogeneous_string
     print("ordered relation = " + ordered_relation)
 
@@ -452,29 +459,6 @@ def find_type(homogeneous, path):
             continue
         else:
             homogeneous = False
-            """When the theorem cannot be used, the c^n = A * C^n principle is used."""
-            if theorem_boolean == False:
-                """This regular expression finds 43^(n-1), this is c^n"""
-                regex_cn = re.compile("(\d*)\^(\([n]-\d*\))")
-                input = nonhomogeneous_string
-                find_cn = re.findall(regex_cn, input)
-                match = re.search(regex_cn, input)
-                print(match)
-                print(find_cn)
-                constant = find_cn[0][0]
-                power = find_cn[0][1]
-
-                old = "{}^{}".format(constant, power)
-                a_formula = "a*{}**{}".format(constant, power)
-                new_formula = (input.replace(old, a_formula)).replace("^", "**").replace(" ", "")
-                print("The nonhomogeneous new formula is: {}\n".format(new_formula))
-                print("The equation is: {}**{}".format(constant, power))
-
-                new_fn_part = solve(new_formula, a)
-                print("We found the F(n) solution: {}\n".format(new_fn_part))
-                file_writer.write_fn_part_to_file(filename=pathstring, fn_parts=new_fn_part, fn_part_sn=fn_part_sn_string)
-            else:
-                file_writer.write_fn_part_to_file(filename=pathstring, fn_parts=fn_parts_dict, fn_part_sn=fn_part_sn_string)
             #print("nonhom = " + str(splitline))
 
     file_writer.move_files_based_on_type(filename=pathstring, homogeneous=homogeneous)
