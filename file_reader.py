@@ -4,6 +4,9 @@ import file_writer
 import re
 import time
 from colorama import Fore as color
+import re
+from sympy.abc import a, n
+from sympy.solvers import solve
 import sympy
 from sympy import Poly
 import numpy
@@ -329,7 +332,7 @@ def find_type(homogeneous, path):
 
     fn_parts_regex = re.compile("(\d\d\d\*n\^\d\d\d|\d\d\d\*n\^\d\d|\d\d\d\*n\^\d|\d\d\*n\^\d\d\d|\d\*n\^\d\d|\d\d\*n\^\d\d|\d\*n\^\d\d|\d\d\*n\^\d|\d\*n\^\d|\d\d\d\*n|\d\d\*n|\d\*n)")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
-    #print("all_fn_parts = " + str(all_fn_parts))
+    print("all_fn_parts = " + str(all_fn_parts))
 
     fn_parts_dict = {}
     fn_parts_list = []
@@ -379,7 +382,7 @@ def find_type(homogeneous, path):
         for l in range(power_count):
             ordered_coeff_list.append(1)
 
-        ordered_power_list = fn_parts_list_powers
+        ordered_power_list = fn_parts_list_powers.sort()
 
         #Finds the position/combinations of coeffs with the powers and sorts both so they still align, after the powers get sorted from 1-6.
         while counter < power_count:
@@ -390,14 +393,16 @@ def find_type(homogeneous, path):
 
         #print("powers = " + str(fn_parts_list_powers))
         #print("coeffs = " + str(fn_parts_list_coeffs))
-        ordered_power_list.sort()
+        # ordered_power_list.sort()
         #print("ordered powers = " + str(ordered_power_list))
         #print("ordered coeffs = " + str(ordered_coeff_list))
 
         #This is the dict that is needed for nonhom_calling_test.py
         fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
-        print(fn_parts_dict)
-    except:
+        print("The fn parts dict is: {}\n".format(fn_parts_dict))
+        time.sleep(5)
+    except Exception as error:
+        print(color.RED, "An error occurs: {}\n".format(error), color.RESET)
         pass
 
     #If the nonhom string didnt have a part like this, it sets it to -1
@@ -423,6 +428,7 @@ def find_type(homogeneous, path):
     homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
     print("homogeneous_string = " + homogeneous_string)
 
+
     ordered_relation = homogeneous_string + nonhomogeneous_string
     print("ordered relation = " + ordered_relation)
 
@@ -446,6 +452,29 @@ def find_type(homogeneous, path):
             continue
         else:
             homogeneous = False
+            """When the theorem cannot be used, the c^n = A * C^n principle is used."""
+            if theorem_boolean == False:
+                """This regular expression finds 43^(n-1), this is c^n"""
+                regex_cn = re.compile("(\d*)\^(\([n]-\d*\))")
+                input = nonhomogeneous_string
+                find_cn = re.findall(regex_cn, input)
+                match = re.search(regex_cn, input)
+                print(match)
+                print(find_cn)
+                constant = find_cn[0][0]
+                power = find_cn[0][1]
+
+                old = "{}^{}".format(constant, power)
+                a_formula = "a*{}**{}".format(constant, power)
+                new_formula = (input.replace(old, a_formula)).replace("^", "**").replace(" ", "")
+                print("The nonhomogeneous new formula is: {}\n".format(new_formula))
+                print("The equation is: {}**{}".format(constant, power))
+
+                new_fn_part = solve(new_formula, a)
+                print("We found the F(n) solution: {}\n".format(new_fn_part))
+                file_writer.write_fn_part_to_file(filename=pathstring, fn_parts=new_fn_part, fn_part_sn=fn_part_sn_string)
+            else:
+                file_writer.write_fn_part_to_file(filename=pathstring, fn_parts=fn_parts_dict, fn_part_sn=fn_part_sn_string)
             #print("nonhom = " + str(splitline))
 
     file_writer.move_files_based_on_type(filename=pathstring, homogeneous=homogeneous)

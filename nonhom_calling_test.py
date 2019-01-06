@@ -61,7 +61,11 @@ def solve_nonhom_relations():
 
     # Step 5: Obtain the particular solution of the non-homog part
     try:
-        particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
+        if type(fn_parts) == dict:
+            particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
+        else:
+            """If the theorem is not needed, the solution is already calculated in the file reader."""
+            particular_solution = fn_parts
         print("Step 5: The particular solution of the non-homog part is: \n" + "s(n)=" + str(particular_solution) + "\n")
     except Exception as error:
         print("5 doesnt work, shocker dude: ERROR: {}".format(error))

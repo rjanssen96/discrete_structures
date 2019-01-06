@@ -17,7 +17,7 @@ def banner():
     print("\nWe have two categories; homogeneous equations and non-homogeneous equations:\n")
 
     print("For homogeneous equations we follow the following steps:\n")
-    print("Step 1: Write the equation in general form, determine the degree and the coefficients. \n")
+    print("Step 1: Write the equation in general form, determine the degree and the coefficients.\n")
     print("Step 2: \n")
     print("Step 3: \n")
     print("Step 4: \n")
@@ -39,7 +39,7 @@ def read_files():
     try:
         file_reader.read_files()
     except Exception as error:
-        print(color.RED + "Something went wrong in the file reader! \nError: {}".format(error),color.RESET)
+        print(color.RED + "Something went wrong in the file reader! \nError: {}\n".format(error),color.RESET)
 
 
 def menu():
@@ -81,18 +81,18 @@ def menu():
                 initial_terms = file_reader.read_lists_from_files(file_type="init", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
                 parts = file_reader.read_lists_from_files(file_type="parts", filename=hom_comass_file, homogeneous=True, automatic=True, step=None)
 
-                print(color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}".format(degree,initial_terms,coefficients,parts),color.RESET)
+                print(color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\n".format(degree,initial_terms,coefficients,parts),color.RESET)
 
                 try:
                     hom_calling_test.solve_homog_relation(degree=degree, initial=initial_terms, parts=parts, coefficients=coefficients, filename=hom_comass_file)
 
                 except Exception as error:
-                    print(color.RED + "Error in hom_calling_test, try manually!\nERROR: {}".format(error), color.RESET)
+                    print(color.RED + "Error in hom_calling_test, try manually!\nERROR: {}\n".format(error), color.RESET)
                     try:
                         file_writer.error_in_file(filename=hom_comass_file, homogeneous=True, step=None, error=error, automatic=True)
                         print(color.LIGHTGREEN_EX + "Error file created!\n", color.RESET)
                     except Exception as error:
-                        print(color.RED + "Can not create error file for: {}\nERROR: {}".format(hom_comass_file, error))
+                        print(color.RED + "Can not create error file for: {}\nERROR: {}\n".format(hom_comass_file, error))
 
 
                 """Find all the commass files in the nonhomogeneous folder"""
@@ -118,7 +118,7 @@ def menu():
                                                               homogeneous=False, automatic=True, step=None)
 
                     print(
-                        color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}".format(
+                        color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\n".format(
                             degree, initial_terms, coefficients, parts), color.RESET)
 
                     try:
@@ -127,14 +127,14 @@ def menu():
                         #                                       coefficients=coefficients, filename=hom_comass_file)
 
                     except Exception as error:
-                        print(color.RED + "Error in nonhom_calling_test, try manually!\nERROR: {}".format(error),
+                        print(color.RED + "Error in nonhom_calling_test, try manually!\nERROR: {}\n".format(error),
                               color.RESET)
                         try:
                             file_writer.error_in_file(filename=hom_comass_file, homogeneous=False, step=None,
                                                       error=error, automatic=True)
                             print(color.LIGHTGREEN_EX + "Error file created!\n", color.RESET)
                         except Exception as error:
-                            print(color.RED + "Can not create error file for: {}\nERROR: {}".format(hom_comass_file,
+                            print(color.RED + "Can not create error file for: {}\nERROR: {}\n".format(hom_comass_file,
                                                                                                     error))
 
         elif choice == 2:
