@@ -98,11 +98,15 @@ def find_type(homogeneous, path):
         coeff = parts.split('*')[0]
         if 'n' in coeff:
             coeff=1
+        else:
+            coeff = parse_expr(str(coeff))
+            print(coeff)
 
         fn_parts_list_coeffs.append(int(coeff))
 
         if "^" in parts:
             power = parts.split('^')[1]
+            #power = parse_expr(input(str(power)))
             fn_parts_list_powers.append(int(power))
         else:
             fn_parts_list_powers.append(1)
