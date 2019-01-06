@@ -330,7 +330,7 @@ def find_type(homogeneous, path):
     fn_part_sn_string = re.findall(("\d\^n|\d\d\^n|\d\d\d\^n"),nonhomogeneous_string) #Finds the sn part in the nonhom string
     fn_part_sn_string = ''.join(fn_part_sn_string).replace('^n','') #changes the variable to a string instead of a list
 
-    fn_parts_regex = re.compile("(\d\d\d\*n\^\d\d\d|\d\d\d\*n\^\d\d|\d\d\d\*n\^\d|\d\d\*n\^\d\d\d|\d\*n\^\d\d|\d\d\*n\^\d\d|\d\*n\^\d\d|\d\d\*n\^\d|\d\*n\^\d|\d\d\d\*n|\d\d\*n|\d\*n|n\^\d|n\^\d\d|n\^\d\d\d)")
+    fn_parts_regex = re.compile("(.\d\d\d\*n\^\d\d\d|.\d\d\d\*n\^\d\d|.\d\d\d\*n\^\d|.\d\d\*n\^\d\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d|.\d\*n\^\d|.\d\d\d\*n|.\d\d\*n|.\d\*n|.n\^\d|.n\^\d\d|.n\^\d\d\d)")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
     #print("all_fn_parts = " + str(all_fn_parts))
 
@@ -341,8 +341,7 @@ def find_type(homogeneous, path):
 
     #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
     for parts in all_fn_parts:
-        print(parts)
-
+        #print(parts)
         coeff = parts.split('*')[0]
         if 'n' in coeff:
             coeff=1
@@ -362,7 +361,7 @@ def find_type(homogeneous, path):
     else:
         maxpower = max(fn_parts_list_powers) #Finds the highest power in the list of powers
 
-    print("maxpower = " + str(maxpower))
+    #print("maxpower = " + str(maxpower))
 
     #If fn_parts_list_powers = empty, this fails and it continues as normal
     try:
@@ -411,13 +410,13 @@ def find_type(homogeneous, path):
     except:
         pass
 
-    print(fn_parts_dict)
+    #print(fn_parts_dict)
 
     #If the nonhom string didnt have a part like this, it sets it to -1
     if not fn_part_sn_string:
         fn_part_sn_string = -1
 
-    print("fn_part_sn_string = " + str(fn_part_sn_string))
+    #print("fn_part_sn_string = " + str(fn_part_sn_string))
 
     theorem_boolean = True #The boolean which checks if theorem 6 is applicable
 
@@ -431,7 +430,7 @@ def find_type(homogeneous, path):
         nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
 
     #This variable pastes the nonhom string after the hom string, correctly ordering the equation
-    print("newline = " + newline)
+    #print("newline = " + newline)
     print("non homogeneous = " + nonhomogeneous_string)
     homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
     print("homogeneous_string = " + homogeneous_string)
