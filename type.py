@@ -153,12 +153,12 @@ def find_type(homogeneous, path):
 
         #print("powers = " + str(fn_parts_list_powers))
         #print("coeffs = " + str(fn_parts_list_coeffs))
-        ordered_power_list.sort()
+        ordered_power_list.sort(reverse=True)
         #print("ordered powers = " + str(ordered_power_list))
         #print("ordered coeffs = " + str(ordered_coeff_list))
 
         #This is the dict that is needed for nonhom_calling_test.py
-        fn_parts_dict = dict(zip(ordered_coeff_list, ordered_power_list))
+        fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
         print(fn_parts_dict)
     except:
         pass
