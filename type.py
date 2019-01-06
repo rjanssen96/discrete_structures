@@ -1,6 +1,7 @@
 import os
 import glob
 import re
+from sympy.parsing.sympy_parser import parse_expr
 
 global homogeneous
 global path
@@ -157,7 +158,7 @@ def find_type(homogeneous, path):
         #print("ordered coeffs = " + str(ordered_coeff_list))
 
         #This is the dict that is needed for nonhom_calling_test.py
-        fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
+        fn_parts_dict = dict(zip(ordered_coeff_list, ordered_power_list))
         print(fn_parts_dict)
     except:
         pass
@@ -213,5 +214,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass36.txt")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
 print("homogeneous = " + str(homogeneous))
