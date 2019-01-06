@@ -512,7 +512,8 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
     if file type = degree, the comass[0-9][0-9]_degree.txt will be the file type.\n
     if file type = equation, the comass[0-9][0-9]_equation.txt will be the file type.\n
     if file type = init, the comass[0-9][0-9]_init.txt will be the file type.\n
-    if file type = parts, the comass[0-9][0-9]_parts.txt will be the file type.\n"""
+    if file type = parts, the comass[0-9][0-9]_parts.txt will be the file type.\n
+    if file type = fn_parts or fn_part_sn, the comass[0-9][0-9]_fn_parts.txt will be the file type.\n"""
     try:
         if file_type == "comass":
             filename = str(filename)
@@ -526,6 +527,8 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
             filename = str(filename).replace(".txt", "_init.txt")
         elif file_type == "parts":
             filename = str(filename).replace(".txt", "_parts.txt")
+        elif file_type == "fn_parts" or "fn_part_sn":
+            filename = str(filename).replace(".txt", "_fn_parts.txt")
     except Exception:
         print(color.RED + "Wrong file_type specified!\n{}".format(error_banner), color.RESET)
 
@@ -537,8 +540,14 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
         # print(color.BLUE + "The line is: {}\nThe type is: {}\n".format(readed_list, type(readed_list)))
         file.close()
         """The coefficients, degree and init needs to be returned as integers, the parts as strings."""
-
+        if file_type == "fn_parts":
+            readed_list = str(readed_list).split(" | ")
+            readed_list = str(str(readed_list[0]).strip("['")).strip("]")
+        elif file_type == "fn_part_sn":
+            readed_list = str(readed_list).split(" | ")
+            readed_list = str(str(readed_list[1]).strip("']")).strip("[")
         return readed_list
+
     except Exception as error:
         print(color.RED + "Error during opening requested file!\nERROR: {}".format(error), color.RESET)
 

@@ -62,7 +62,6 @@ def write_fn_part_to_file(filename, fn_parts, fn_part_sn):
     try:
         print(color.CYAN + "FILENAME AND FN_PARTS: {}, {}\n".format(filename, fn_parts), color.RESET)
         file = str(str(filename).strip('.txt') +"_fn_parts.txt")
-        fn_parts = str(fn_parts).strip("[").strip("]")
         equation_file = open(file, 'w')
         equation_file.write("{} | {}".format((str(fn_parts)), (str(fn_part_sn))))
         equation_file.close()
@@ -236,6 +235,7 @@ def write_solution(filename, solution):
     try:
         commass_number = re.findall("comass[0-9][0-9].txt", str(filename))
         path =  str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/solutions/")
+        solution_filename =  str(commass_number[0]).replace(".txt", "-dir.txt")
         solution_file = open((path + str(commass_number[0])), 'w')
         solution_file.write(str(solution))
         solution_file.close()

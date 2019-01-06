@@ -55,14 +55,20 @@ def remove_all():
     nonhomogeneous_step6 = nonhomogeneous_folder + "step6/"
     nonhomogeneous_step7 = nonhomogeneous_folder + "step7/"
 
-    folder_list = [homogeneous_folder, homogeneous_automatic, homogeneous_error, homogeneous_step1, homogeneous_step2, homogeneous_step3, homogeneous_step4, homogeneous_step5, nonhomogeneous_folder, nonhomogeneous_automatic, nonhomogeneous_error, nonhomogeneous_step1, nonhomogeneous_step2, nonhomogeneous_step3, nonhomogeneous_step4, nonhomogeneous_step5, nonhomogeneous_step6, nonhomogeneous_step7]
+    solution_folder = "/solutions/"
+    folder_list = [homogeneous_folder, homogeneous_automatic, homogeneous_error, solution_folder, homogeneous_step1, homogeneous_step2, homogeneous_step3, homogeneous_step4, homogeneous_step5, nonhomogeneous_folder, nonhomogeneous_automatic, nonhomogeneous_error, nonhomogeneous_step1, nonhomogeneous_step2, nonhomogeneous_step3, nonhomogeneous_step4, nonhomogeneous_step5, nonhomogeneous_step6, nonhomogeneous_step7]
 
     for folder in folder_list:
         path = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/{}/comass[0-9][0-9]*.txt".format(folder))
-        for file in glob.glob(path):
 
+        for file in glob.glob(path):
             os.remove(file)
             print(color.GREEN +"File deleted: {}".format(file), color.RESET)
+
+    input_files = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9]_*.txt")
+    for file in glob.glob(input_files):
+        os.remove(file)
+        print(color.GREEN + "File deleted: {}".format(file), color.RESET)
 
 def remove_error():
     homogeneous_folder = "/homogeneous/"
@@ -93,3 +99,9 @@ def remove_files_in_folder(homogeneous, folder):
     for file in glob.glob(path):
         os.remove(file)
         print(color.GREEN + "File deleted: {}\n".format(file), color.RESET)
+
+def remove_all_solutions():
+    input_files = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/solutions/comass[0-9][0-9]*.txt")
+    for file in glob.glob(input_files):
+        os.remove(file)
+        print(color.GREEN + "File deleted: {}".format(file), color.RESET)
