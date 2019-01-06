@@ -95,9 +95,11 @@ def find_type(homogeneous, path):
 
     #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
     for parts in all_fn_parts:
-        #print(parts)
+        print(parts)
         coeff = parts.split('*')[0]
-        if 'n' in coeff:
+        if '-n' in coeff:
+            coeff=-1
+        elif 'n' in coeff:
             coeff=1
         else:
             coeff = parse_expr(str(coeff))
@@ -222,5 +224,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass16.txt")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
 print("homogeneous = " + str(homogeneous))

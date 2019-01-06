@@ -332,7 +332,8 @@ def find_type(homogeneous, path):
     fn_part_sn_string = re.findall(("\d\^n|\d\d\^n|\d\d\d\^n"),nonhomogeneous_string) #Finds the sn part in the nonhom string
     fn_part_sn_string = ''.join(fn_part_sn_string).replace('^n','') #changes the variable to a string instead of a list
 
-    fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n)")
+    #fn_parts_regex = re.compile("(.\d\d\d\*n\^\d\d\d|.\d\d\d\*n\^\d\d|.\d\d\d\*n\^\d|.\d\d\*n\^\d\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d|.\d\*n\^\d|.\d\d\d\*n|.\d\d\*n|.\d\*n|.n\^\d|.n\^\d\d|.n\^\d\d\d)")
+    fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+|)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n|(?:(?:-|\+)n\^(?:\d\d\d|\d\d|\d)))")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
     #print("all_fn_parts = " + str(all_fn_parts))
 
@@ -343,9 +344,11 @@ def find_type(homogeneous, path):
 
     #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
     for parts in all_fn_parts:
-        #print(parts)
+        print(parts)
         coeff = parts.split('*')[0]
-        if 'n' in coeff:
+        if '-n' in coeff:
+            coeff=-1
+        elif 'n' in coeff:
             coeff=1
         else:
             coeff = parse_expr(str(coeff))
@@ -416,6 +419,8 @@ def find_type(homogeneous, path):
         print(fn_parts_dict)
     except:
         pass
+
+    print(fn_parts_dict)
 
     #print(fn_parts_dict)
 
