@@ -7,6 +7,8 @@ from colorama import Fore as color
 import re
 from sympy.abc import a, n
 from sympy.solvers import solve
+from sympy.parsing.sympy_parser import parse_expr
+
 import sympy
 from sympy import Poly
 import numpy
