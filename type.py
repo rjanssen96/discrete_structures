@@ -1,6 +1,7 @@
 import os
 import glob
 import re
+from sympy.parsing.sympy_parser import parse_expr
 
 global homogeneous
 global path
@@ -97,11 +98,15 @@ def find_type(homogeneous, path):
         coeff = parts.split('*')[0]
         if 'n' in coeff:
             coeff=1
+        else:
+            coeff = parse_expr(str(coeff))
+            print(coeff)
 
         fn_parts_list_coeffs.append(int(coeff))
 
         if "^" in parts:
             power = parts.split('^')[1]
+            #power = parse_expr(input(str(power)))
             fn_parts_list_powers.append(int(power))
         else:
             fn_parts_list_powers.append(1)
@@ -152,7 +157,8 @@ def find_type(homogeneous, path):
 
         #print("powers = " + str(fn_parts_list_powers))
         #print("coeffs = " + str(fn_parts_list_coeffs))
-        ordered_power_list.sort()
+        ordered_coeff_list = reversed(ordered_coeff_list)
+        ordered_power_list.sort(reverse=True)
         #print("ordered powers = " + str(ordered_power_list))
         #print("ordered coeffs = " + str(ordered_coeff_list))
 
@@ -213,5 +219,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass16.txt")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
 print("homogeneous = " + str(homogeneous))
