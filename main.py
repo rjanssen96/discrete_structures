@@ -117,14 +117,18 @@ def menu():
                     parts = file_reader.read_lists_from_files(file_type="parts", filename=nonhom_comass_file,
                                                               homogeneous=False, automatic=True, step=None)
 
+                    fn_parts = file_reader.read_lists_from_files(file_type="fn_parts", filename=nonhom_comass_file,
+                                                              homogeneous=False, automatic=True, step=None)
+
+                    fn_parts_sn = file_reader.read_lists_from_files(file_type="fn_part_sn", filename=nonhom_comass_file,
+                                                              homogeneous=False, automatic=True, step=None)
+
                     print(
                         color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\n".format(
                             degree, initial_terms, coefficients, parts), color.RESET)
 
                     try:
-                        nonhom_calling_test.solve_nonhom_relations()
-                        # nonhom_calling_test.solve_nonhomog_relations(degree=degree, initial=initial_terms, parts=parts,
-                        #                                       coefficients=coefficients, filename=hom_comass_file)
+                        nonhom_calling_test.solve_nonhom_relations(fn_parts=fn_parts, fn_part_sn=fn_parts_sn, degree=degree, initial_terms=initial_terms, homogeneous_coeffs=coefficients)
 
                     except Exception as error:
                         print(color.RED + "Error in nonhom_calling_test, try manually!\nERROR: {}\n".format(error),

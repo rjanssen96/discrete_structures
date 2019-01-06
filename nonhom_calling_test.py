@@ -18,20 +18,28 @@ from nonhom_step5 import *
 from nonhom_step7 import *
 
 
-def solve_nonhom_relations():
+def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogeneous_coeffs):
     # Step 1: rewrite the relation to its default form: a_n = homog + F(n)
     homogeneous_part = ""
     # fn_part = "3**2"  # Needs to be in the right order, so biggest power to lowest power
     # fn_parts = [0, 3]  # every elemts in this list is the next b in fn, so bn**0, bn**1, bn**2
 
     # all powers from max up to and including 0
-    fn_parts = {1:1, 0:0}  # power:coeff, so n^2 = 2:1, cuz power=2 ^ coeff=1. SORTED FROM HIGH TO LOW 2:1, 1:3, 0:2
-    fn_part_sn = 3  # the s in s**n, if no s**n part in fn, then put 1 here
+    # fn_parts = {1:1, 0:0}  # power:coeff, so n^2 = 2:1, cuz power=2 ^ coeff=1. SORTED FROM HIGH TO LOW 2:1, 1:3, 0:2
+    # fn_part_sn = 3  # the s in s**n, if no s**n part in fn, then put 1 here
     highest_power_fn_part = next(iter(fn_parts))  # represents the "t" in the particular solution of non-hom part (step 5)
 
-    degree = 2
-    initial_terms = [1, 4]
-    homogeneous_coeffs = [8, 2]  # coeffs of the associated homogeneous relation
+    # degree = 2
+    # initial_terms = [1, 4]
+    # homogeneous_coeffs = [8, 2]  # coeffs of the associated homogeneous relation
+    #
+    fn_parts = dict(fn_parts)
+    fn_part_sn = fn_part_sn
+    degree = int(degree)
+    initial_terms = initial_terms
+    homogeneous_coeffs = homogeneous_coeffs
+    highest_power_fn_part = next(iter(fn_parts))  # represents the "t" in the particular solution of non-hom part (step 5)
+
 
     # Step 2: Obtaining the characteristic equation  of the associated homog part
     try:
