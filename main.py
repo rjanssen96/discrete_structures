@@ -102,7 +102,7 @@ def menu():
                 time.sleep(1)
                 # Find every comass file in the /homogeneous/ folder. Then process the 5 steps for every file.
                 for nonhom_comass_file in glob.glob(nonhom_comass_path):
-                    print(color.GREEN + "\nNon-Homogeneous file {} found!\n".format(hom_comass_file), color.RESET)
+                    print(color.GREEN + "\nNon-Homogeneous file {} found!\n".format(nonhom_comass_file), color.RESET)
 
                     """The automatic mode uses the hom_calling_test.py file.
                     THIS IS THE NON-HOMOGENEOUS PART!"""
@@ -124,8 +124,8 @@ def menu():
                                                               homogeneous=False, automatic=True, step=None)
 
                     print(
-                        color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\n".format(
-                            degree, initial_terms, coefficients, parts), color.RESET)
+                        color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\nfn_parts are: {}\nfn_parts_sn is: {}".format(
+                            degree, initial_terms, coefficients, parts, fn_parts, fn_parts_sn), color.RESET)
 
                     try:
                         nonhom_calling_test.solve_nonhom_relations(fn_parts=fn_parts, fn_part_sn=fn_parts_sn, degree=degree, initial_terms=initial_terms, homogeneous_coeffs=coefficients)
@@ -134,11 +134,11 @@ def menu():
                         print(color.RED + "Error in nonhom_calling_test, try manually!\nERROR: {}\n".format(error),
                               color.RESET)
                         try:
-                            file_writer.error_in_file(filename=hom_comass_file, homogeneous=False, step=None,
+                            file_writer.error_in_file(filename=nonhom_comass_file, homogeneous=False, step=None,
                                                       error=error, automatic=True)
                             print(color.LIGHTGREEN_EX + "Error file created!\n", color.RESET)
                         except Exception as error:
-                            print(color.RED + "Can not create error file for: {}\nERROR: {}\n".format(hom_comass_file,
+                            print(color.RED + "Can not create error file for: {}\nERROR: {}\n".format(nonhom_comass_file,
                                                                                                     error))
 
         elif choice == 2:
@@ -149,7 +149,7 @@ def menu():
             print("""1) All files, including solutions.\n
             2) Error files.\n
             3) All files in a particular step.\n
-            4) Remove all solutions. (NOT READY)\n""")
+            4) Remove all solutions.\n""")
 
             delete_choice = int(input("Enter your choice: "))
             if delete_choice == 1:
@@ -160,7 +160,8 @@ def menu():
                 homogeneous = bool(input("Is de folder homogeneous (True or False)?: "))
                 folder = input("Type folder name: ")
                 file_remover.remove_files_in_folder(homogeneous=homogeneous, folder=folder)
-
+            elif delete_choice == 4:
+                file_remover.remove_all_solutions()
         elif choice == 4:
             answer_check_manual_or_auto()
 

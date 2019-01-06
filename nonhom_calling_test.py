@@ -1,5 +1,6 @@
 from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
+from ast import literal_eval #This library transforms strings into dictionaries.
 
 """
 smth is from with finding the particular solution
@@ -33,9 +34,17 @@ def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogene
     # initial_terms = [1, 4]
     # homogeneous_coeffs = [8, 2]  # coeffs of the associated homogeneous relation
     #
-    fn_parts = dict(fn_parts)
+    try:
+        fn_parts = literal_eval(fn_parts)
+        print("Converted fn parts: {}".format(type(fn_parts)))
+        print("The dict is now: {}".format(fn_parts))
+    except Exception as error:
+        print("cannot read f_parts as dict.\nError: {}".format(error))
+        fn_parts = fn_parts
+        print("We have the fn parts set to string: {}".format(type(fn_parts)))
+
     fn_part_sn = fn_part_sn
-    degree = int(degree)
+    degree = int(degree[0])
     initial_terms = initial_terms
     homogeneous_coeffs = homogeneous_coeffs
     highest_power_fn_part = next(iter(fn_parts))  # represents the "t" in the particular solution of non-hom part (step 5)
