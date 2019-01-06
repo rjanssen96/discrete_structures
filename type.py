@@ -213,5 +213,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass16.txt")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass36.txt")
 print("homogeneous = " + str(homogeneous))
