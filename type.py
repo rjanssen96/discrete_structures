@@ -84,7 +84,7 @@ def find_type(homogeneous, path):
     fn_part_sn_string = ''.join(fn_part_sn_string).replace('^n','') #changes the variable to a string instead of a list
 
     #fn_parts_regex = re.compile("(.\d\d\d\*n\^\d\d\d|.\d\d\d\*n\^\d\d|.\d\d\d\*n\^\d|.\d\d\*n\^\d\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d|.\d\*n\^\d|.\d\d\d\*n|.\d\d\*n|.\d\*n|.n\^\d|.n\^\d\d|.n\^\d\d\d)")
-    fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n)")
+    fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+|)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n|(?:(?:-|\+)n\^(?:\d\d\d|\d\d|\d)))")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
     #print("all_fn_parts = " + str(all_fn_parts))
 
@@ -169,6 +169,8 @@ def find_type(homogeneous, path):
     except:
         pass
 
+    print(fn_parts_dict)
+
     #print(fn_parts_dict)
 
     #If the nonhom string didnt have a part like this, it sets it to -1
@@ -220,5 +222,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass16.txt")
 print("homogeneous = " + str(homogeneous))
