@@ -429,7 +429,7 @@ def find_type(homogeneous, path):
 
         #This is the dict that is needed for nonhom_calling_test.py
         fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
-        print(fn_parts_dict)
+        #print(fn_parts_dict)
     except:
         pass
 
