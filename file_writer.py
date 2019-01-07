@@ -80,7 +80,7 @@ def locate_folder(homogeneous):
         elif homogeneous == False:
             folder = "nonhomogeneous"
     except Exception as error:
-        print("ERROR, add the homogeneous parameter to the function call. {}\n".format(error))
+        print(color.RED + "ERROR, add the homogeneous parameter to the function call. {}\n".format(error), color.RESET)
 
     return folder
 

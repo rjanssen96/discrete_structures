@@ -59,6 +59,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         characteristic_equation = char_equation_2(homogeneous_coeffs)
         print("Step 2: The characteristic equation is: \n" + str(characteristic_equation) + "=0" + "\n")
     except Exception as error:
+        print(color.RED + "2 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
         print("2 doesnt work, shocker dude: ERROR: {}".format(error))
         try:
             file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 2", automatic=True, error=error)
@@ -76,6 +77,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         print(r_and_m_found)  # root:multiplicity
         print()
     except Exception as error:
+        print(color.RED + "3 doesnt work, shocker dude: ERROR: {}".format(error), color.RED)
         print("3 doesnt work, shocker dude: ERROR: {}".format(error))
         try:
             file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 3", automatic=True, error=error)
@@ -92,7 +94,8 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         # general_solution = "Sup Nerd!"
         print("Step 4: The general solution of this equation is: \n" + str(general_solution) + "\n")
     except Exception as error:
-        print("4 doesnt work, shocker dude: ERROR: {}".format(error))
+        print(color.RED + "4 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
+
         try:
             file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 4", automatic=True, error=error)
         except Exception as error:

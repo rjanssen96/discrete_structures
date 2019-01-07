@@ -354,7 +354,6 @@ def find_type(homogeneous, path):
     except:
         pass
 
-    print("noonhom =" + nonhomogeneous_string)
     fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+|)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n|(?:(?:-|\+)n\^(?:\d\d\d|\d\d|\d)))")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
     #print("all_fn_parts = " + str(all_fn_parts))
@@ -366,7 +365,7 @@ def find_type(homogeneous, path):
 
     #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
     for parts in all_fn_parts:
-        print(parts)
+        #print(parts)
         coeff = parts.split('*')[0]
         if '-n' in coeff:
             coeff=-1
@@ -444,7 +443,7 @@ def find_type(homogeneous, path):
         fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
         print(fn_parts_dict)
     except Exception as error:
-        print("there is a simplify error: {}".format(error))
+        print(color.RED + "there is a simplify error: {}".format(error), color.RESET)
         pass
 
     print(fn_parts_dict)
@@ -456,7 +455,7 @@ def find_type(homogeneous, path):
         if not fn_part_sn_string:
             fn_part_sn_string = -1
     except Exception as error:
-        print("Nonhom string wrong: {}".format(error))
+        print(color.RED + "Nonhom string wrong: {}".format(error), color.RESET)
 
     #print("fn_part_sn_string = " + str(fn_part_sn_string))
 
@@ -666,4 +665,4 @@ def read_files():
             #
             # debug_print("#################################\n")
     except Exception as error:
-        print("error in read_files: {}".format(error))
+        print(color.RED + "error in read_files: {}".format(error), color.RESET)
