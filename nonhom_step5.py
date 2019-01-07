@@ -7,13 +7,24 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree)
     particular_sol = "("
     highest_power = int(highest_power)
 
+    # # puts the non_homog part into b_t*n^t form
+    # next_power = highest_power
+    # for t in range(0, highest_power+1):  # +1 because not including the boundaries
+    #     if t != highest_power:
+    #         particular_sol = particular_sol + "(" + str(fn_parts[next_power]) + ")*(n)**(" + str(next_power) + ")+"
+    #     elif t == highest_power:
+    #         particular_sol = particular_sol + "(" + str(fn_parts[next_power]) + ")*(n)**(" + str(next_power) + ")"
+    #     next_power = next_power - 1
+    #
+    # particular_sol = particular_sol + ")*(" + str(s) + ")**(n)"  # () to prevent wrong order of operations with weird n
+
     # puts the non_homog part into b_t*n^t form
     next_power = highest_power
     for t in range(0, highest_power+1):  # +1 because not including the boundaries
         if t != highest_power:
-            particular_sol = particular_sol + "(" + str(fn_parts[next_power]) + ")*(n)**(" + str(next_power) + ")+"
+            particular_sol = particular_sol + "(p" + str(next_power) + ")*(n)**(" + str(next_power) + ")+"
         elif t == highest_power:
-            particular_sol = particular_sol + "(" + str(fn_parts[next_power]) + ")*(n)**(" + str(next_power) + ")"
+            particular_sol = particular_sol + "(p" + str(next_power) + ")*(n)**(" + str(next_power) + ")"
         next_power = next_power - 1
 
     particular_sol = particular_sol + ")*(" + str(s) + ")**(n)"  # () to prevent wrong order of operations with weird n
