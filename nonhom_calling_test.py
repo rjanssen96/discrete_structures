@@ -60,6 +60,13 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         print("Step 2: The characteristic equation is: \n" + str(characteristic_equation) + "=0" + "\n")
     except Exception as error:
         print("2 doesnt work, shocker dude: ERROR: {}".format(error))
+        try:
+            file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 2", automatic=True, error=error)
+        except Exception as error:
+            print(
+                color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                    filename, False, "Step 2", True, error), color.RESET)
+            return
 
     # Step 3: Obtain the roots  of the associated homog part
     try:
@@ -70,6 +77,13 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         print()
     except Exception as error:
         print("3 doesnt work, shocker dude: ERROR: {}".format(error))
+        try:
+            file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 3", automatic=True, error=error)
+        except Exception as error:
+            print(
+                color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                    filename, False, "Step 3", True, error), color.RESET)
+            return
 
     # Step 4: Obtain general solution of the associated homog part
     try:
@@ -79,6 +93,13 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         print("Step 4: The general solution of this equation is: \n" + str(general_solution) + "\n")
     except Exception as error:
         print("4 doesnt work, shocker dude: ERROR: {}".format(error))
+        try:
+            file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 4", automatic=True, error=error)
+        except Exception as error:
+            print(
+                color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                    filename, False, "Step 4", True, error), color.RESET)
+            return
 
     # Step 5: Obtain the particular solution of the non-homog part
     try:
@@ -93,6 +114,13 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
     except Exception as error:
         print(color.RED + "5 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
     # particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
+        try:
+            file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 5", automatic=True, error=error)
+        except Exception as error:
+            print(
+                color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                    filename, False, "Step 5", True, error), color.RESET)
+            return
     print("The particular solution is: {}".format(particular_solution))
 
     # Step 6: Obtain the solution a_n = a_n(p) + a_n(h)
@@ -102,6 +130,13 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         print("Step 6: a_n = a_n(p) + a_n(h):\n" + "s(n)=" + particular_solution + "+" + general_solution + "\n")
     except Exception as error:
         print(color.RED + "6 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
+        try:
+            file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 6", automatic=True, error=error)
+        except Exception as error:
+            print(
+                color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                    filename, False, "Step 6", True, error), color.RESET)
+            return
 
     # Step 7.1: Obtain the alpha values with a_n(p) + a_n(h)
     try:
@@ -110,15 +145,29 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         print(outcome)
     except Exception as error:
         print(color.RED + "7.1 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
+        try:
+            file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 7.1", automatic=True, error=error)
+        except Exception as error:
+            print(
+                color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                    filename, False, "Step 7.1", True, error), color.RESET)
+            return
 
     # Step 7.2: Obtain specific solution
     try:
         # specific_solution = setup_spec_sol
         specific_solution = get_specific_solution(setup_spec_sol, outcome)
         file_writer.write_solution(filename=filename, solution=specific_solution)
-        print("\nStep 7.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n")
+        print(color.BLUE + "\nStep 7.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n", color.RESET)
     except Exception as error:
         print(color.RED + "7.2 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
+        try:
+            file_writer.error_in_file(filename=filename, homogeneous=False, step="Step 7.2", automatic=True, error=error)
+        except Exception as error:
+            print(
+                color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
+                    filename, False, "Step 7.2", True, error), color.RESET)
+            return
 
 
 # solve_nonhom_relations()
