@@ -126,7 +126,7 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree,
 
     for key in equation.keys():
         print("The key is: {}".format(key))
-        particular_sol = particular_sol.replace(key, equation.get(key))
+        particular_sol = particular_sol.replace(str(key), str(equation.get(key)))
         print("particular solution is: {}".format(particular_sol))
     # return smile
     return particular_sol

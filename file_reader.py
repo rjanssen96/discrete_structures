@@ -611,74 +611,59 @@ def read_files():
         try:
             path = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/input_files/comass[0-9][0-9].txt")))
         except Exception as error:
-            print(color.RED + "Error while determing path: {}".format(error), color.RESET)
-        try:
+            print(color.RED + "Error while determing path: {}".format(error))
+        global filename #The filename needs to be available in every function.
+        for filename in glob.glob(path):
+            # print("File: " + filename)
+            # next_symbolic_var_index = 0  # Reset this index for every file
+            # debug_print("Beginning for file \"{0}\"".format(filename))
+            lines = read_file(filename)
+            lines = clear_commas(lines)
+            lines = fix_syntax(lines)
+            # print("Len lines: " + str(len(lines)))
+            # print(lines)
+            """Write the equation to a file"""
+            file_writer.write_equation(equation=lines[0], filename=filename)
+            # debug_print(lines)
+            # # The following quick fix was done because some input files had two newlines at their end and the list "lines" thus may contain one empty line "" at the end
+            tmp = len(lines)
+            if lines[len(lines) - 1] == "":
+                tmp -= 1
+            init_conditions = det_init_conditions([lines[index] for index in range(1, tmp)])  # Determine initial conditions with all but the first line as input
+            associated, f_n_list = analyze_recurrence_equation(lines[0])
             try:
-                global filename #The filename needs to be available in every function.
+                det_coefficients(equation=lines)
             except Exception as error:
-                print("Error in global: {}".format(error))
-            for filename in glob.glob(path):
-                # print("File: " + filename)
-                # next_symbolic_var_index = 0  # Reset this index for every file
-                # debug_print("Beginning for file \"{0}\"".format(filename))
-                try:
-                    lines = read_file(filename)
-                    lines = clear_commas(lines)
-                    lines = fix_syntax(lines)
-                except Exception as error:
-                    print(color.RED + "Cannot read lines", color.RESET)
-                # print("Len lines: " + str(len(lines)))
-                # print(lines)
-                try:
-                    """Write the equation to a file"""
-                    file_writer.write_equation(equation=lines[0], filename=filename)
-                except Exception as error:
-                    print(color.RED + "cannot write equation to file: {}".format(error), color.RESET)
-                try:
+                print(color.RED + "Cannot determine the coefficients: {}".format(error))
 
-                    # The following quick fix was done because some input files had two newlines at their end and the list "lines" thus may contain one empty line "" at the end
-                    tmp = len(lines)
-                    if lines[len(lines) - 1] == "":
-                        tmp -= 1
-                    init_conditions = det_init_conditions([lines[index] for index in range(1, tmp)])  # Determine initial conditions with all but the first line as input
-                    associated, f_n_list = analyze_recurrence_equation(lines[0])
-                except Exception as error:
-                    print(color.RED + "Error in init conditions", color.RESET)
-                try:
-                    det_coefficients(equation=lines)
-                except Exception as error:
-                    print(color.RED + "Cannot determine the coefficients: {}".format(error))
+            # find_degree(filename=filename)
+            try:
+                find_type(path=filename, homogeneous=False)
+            except Exception as error:
+                """Replace the filename with the error name."""
+                error_name = str(filename).replace("commass", "ERROR_commass")
+                os.rename(filename, error_name)
+                print(color.RED + "Cannot determine the equation type, ERROR: {}\nFile renamed to: {}\n".format(error, error_name), color.RESET)
 
-                # find_degree(filename=filename)
-                try:
-                    find_type(path=filename, homogeneous=False)
-                except Exception as error:
-                    """Replace the filename with the error name."""
-                    error_name = str(filename).replace("commass", "ERROR_commass")
-                    os.rename(filename, error_name)
-                    print(color.RED + "Cannot determine the equation type, ERROR: {}\nFile renamed to: {}\n".format(error, error_name), color.RESET)
-
-                # # Print debugging information:
-                # debug_print(filename)
-                # debug_print("Initial conditions:")
-                # debug_print(init_conditions)
-                # debug_print("Associated homogeneous recurrence relation:")
-                # debug_print(associated)
-                # debug_print("F(n):")
-                # debug_print(f_n_list)
-                #
-                # output_filename = filename.replace(".txt", "-dir.txt")
-                # resulting_equ = ""
-                # # Check if the equation is a homogeneous relation
-                # if not f_n_list:  # The list is empty
-                #     resulting_equ = solve_homogeneous_equation(init_conditions, associated)
-                # else:
-                #     resulting_equ = solve_nonhomogeneous_equation(init_conditions, associated, f_n_list)
-                # resulting_equ = reformat_equation(resulting_equ)
-                # write_output_to_file(output_filename, resulting_equ)
-                #
-                # debug_print("#################################\n")
-        except Exception as error:
-            print("Error in for loop")
+            # # Print debugging information:
+            # debug_print(filename)
+            # debug_print("Initial conditions:")
+            # debug_print(init_conditions)
+            # debug_print("Associated homogeneous recurrence relation:")
+            # debug_print(associated)
+            # debug_print("F(n):")
+            # debug_print(f_n_list)
+            #
+            # output_filename = filename.replace(".txt", "-dir.txt")
+            # resulting_equ = ""
+            # # Check if the equation is a homogeneous relation
+            # if not f_n_list:  # The list is empty
+            #     resulting_equ = solve_homogeneous_equation(init_conditions, associated)
+            # else:
+            #     resulting_equ = solve_nonhomogeneous_equation(init_conditions, associated, f_n_list)
+            # resulting_equ = reformat_equation(resulting_equ)
+            # write_output_to_file(output_filename, resulting_equ)
+            #
+            # debug_print("#################################\n")
     except Exception as error:
         print("error in read_files: {}".format(error))
