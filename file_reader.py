@@ -7,6 +7,7 @@ from colorama import Fore as color
 import re
 from sympy.abc import a, n
 from sympy.solvers import solve
+from sympy import simplify
 from sympy.parsing.sympy_parser import parse_expr
 from pathlib import Path
 
@@ -334,7 +335,13 @@ def find_type(homogeneous, path):
     fn_part_sn_string = re.findall(("\d\^n|\d\d\^n|\d\d\d\^n"),nonhomogeneous_string) #Finds the sn part in the nonhom string
     fn_part_sn_string = ''.join(fn_part_sn_string).replace('^n','') #changes the variable to a string instead of a list
 
-    #fn_parts_regex = re.compile("(.\d\d\d\*n\^\d\d\d|.\d\d\d\*n\^\d\d|.\d\d\d\*n\^\d|.\d\d\*n\^\d\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d|.\d\*n\^\d|.\d\d\d\*n|.\d\d\*n|.\d\*n|.n\^\d|.n\^\d\d|.n\^\d\d\d)")
+    for strings in homogeneous:
+        nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
+
+    nonhomogeneous_string = str(simplify(nonhomogeneous_string))
+    nonhomogeneous_string =  nonhomogeneous_string.replace("**", "^").replace(" ","")
+
+    print("noonhom =" + nonhomogeneous_string)
     fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+|)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n|(?:(?:-|\+)n\^(?:\d\d\d|\d\d|\d)))")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
     #print("all_fn_parts = " + str(all_fn_parts))
@@ -439,22 +446,26 @@ def find_type(homogeneous, path):
 
     theorem_boolean = True #The boolean which checks if theorem 6 is applicable
 
+    print("nonhomogeneous string === " + nonhomogeneous_string)
+
     #This if statement checks if theorem 6 is applicable on the equation.
     if "^(n-" in nonhomogeneous_string or "^(n+" in nonhomogeneous_string:
         theorem_boolean = False
     #print(theorem_boolean)
 
     #This loop removes the nonhomogenous string from the whole equation, leaving just the homogeneous part
-    for strings in homogeneous:
-        nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
+    #for strings in homogeneous:
+    #    nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
 
     #This variable pastes the nonhom string after the hom string, correctly ordering the equation
     #print("newline = " + newline)
+
     print("non homogeneous = " + nonhomogeneous_string)
-    homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
+    #homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
+    homogeneous_string = "s(n)" + ''.join(homogeneous)
     print("homogeneous_string = " + homogeneous_string)
 
-    ordered_relation = homogeneous_string + nonhomogeneous_string
+    ordered_relation = homogeneous_string + "+" + nonhomogeneous_string
     print("ordered relation = " + ordered_relation)
 
     index = find_n(newline, "n")
