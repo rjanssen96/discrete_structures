@@ -122,7 +122,7 @@ def manual_check_values_our_solution(our_specific_solution, comma_answer_list):
     for x in range(0, 20):
         my_new_spec_sol = my_spec_sol.replace("n", str(x))
         my_new_spec_sol = parse_expr(my_new_spec_sol)
-        my_answer_list.append(my_new_spec_sol)
+        my_answer_list.append(str(my_new_spec_sol))
 
     print("\nFirst 20 outcomes of our specific solution")
     print(my_answer_list)
@@ -173,14 +173,14 @@ def automatic_check():
 
     # given_comma_relation =
     # automate this with existing functions from the relation above
-    degree = 4
-    initial_terms = ['2', '3', '3', '6']
-    all_coefficient = ['4', '5', '2', '4']
+    degree = 2
+    initial_terms = ['1', '1']
+    all_coefficient = ['1', '1']
 
     fn_part = "0"  # if homog then put a 0 here
 
     # our_specific_solution = parse_expr("55+n^4")
-    our_specific_solution = "55+n^4"
+    our_specific_solution = "(-sqrt(5)/10 + 1/2)*(-sqrt(5)/2 + 1/2)^n+(sqrt(5)/10 + 1/2)*(1/2 + sqrt(5)/2)^n"
 
     # different from manual... give spec sol
     # manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree)
@@ -189,3 +189,4 @@ def automatic_check():
 
 # answer_check_manual_or_auto()
 
+# print(float(parse_expr('(-sqrt(5)/2 + 1/2)*(-sqrt(5)/10 + 1/2) + (1/2 + sqrt(5)/2)*(sqrt(5)/10 + 1/2)')))
