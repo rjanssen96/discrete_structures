@@ -202,8 +202,8 @@ def find_type(homogeneous, path):
     print("nonhomogeneous string === " + nonhomogeneous_string)
 
     #This if statement checks if theorem 6 is applicable on the equation.
-    if "^(n-" in nonhomogeneous_string or "^(n+" in nonhomogeneous_string:
-        theorem_boolean = False
+    #if "^(n-" in nonhomogeneous_string or "^(n+" in nonhomogeneous_string:
+    #    theorem_boolean = False
     #print(theorem_boolean)
 
     #This loop removes the nonhomogenous string from the whole equation, leaving just the homogeneous part
