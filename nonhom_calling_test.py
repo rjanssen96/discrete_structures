@@ -1,6 +1,9 @@
 from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 from ast import literal_eval #This library transforms strings into dictionaries.
+from colorama import Fore as color
+
+
 
 """
 smth is from with finding the particular solution
@@ -89,7 +92,7 @@ def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogene
             particular_solution = fn_parts
         print("Step 5: The particular solution of the non-homog part is: \n" + "s(n)=" + str(particular_solution) + "\n")
     except Exception as error:
-        print("5 doesnt work, shocker dude: ERROR: {}".format(error))
+        print(color.RED + "5 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
     # particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
     print("The particular solution is: {}".format(particular_solution))
 
@@ -99,7 +102,7 @@ def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogene
         setup_spec_sol = "s(n)=" + particular_solution + "+" + general_solution  # for step 7.2
         print("Step 6: a_n = a_n(p) + a_n(h):\n" + "s(n)=" + particular_solution + "+" + general_solution + "\n")
     except Exception as error:
-        print("6 doesnt work, shocker dude: ERROR: {}".format(error))
+        print(color.RED + "6 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
 
     # Step 7.1: Obtain the alpha values with a_n(p) + a_n(h)
     try:
@@ -107,7 +110,7 @@ def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogene
         print("Step 7.1: The value of the Alphas:")
         print(outcome)
     except Exception as error:
-        print("7.1 doesnt work, shocker dude: ERROR: {}".format(error))
+        print(color.RED + "7.1 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
 
     # Step 7.2: Obtain specific solution
     try:
@@ -115,7 +118,7 @@ def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogene
         specific_solution = get_specific_solution(setup_spec_sol, outcome)
         print("\nStep 7.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n")
     except Exception as error:
-        print("7.2 doesnt work, shocker dude: ERROR: {}".format(error))
+        print(color.RED + "7.2 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
 
 
 # solve_nonhom_relations()
