@@ -122,7 +122,7 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree,
     # equation = solveset(Eq(part1, part2), *test)
     # equation = solve(Eq(part1, part2), *test)
 
-    print(equation)
+    # print(equation)
 
     for key in equation.keys():
         #print("The key is: {}".format(key))
