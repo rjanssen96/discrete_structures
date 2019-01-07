@@ -129,19 +129,23 @@ def find_type(homogeneous, path):
         for c in range(maxpower):
             if maxpower in fn_parts_list_powers:
                 maxpower = maxpower-1
+                print("maxpower = " + str(maxpower))
             else:
                 fn_parts_list_powers.append(maxpower)
                 maxpower= maxpower-1
 
+        if 0 not in fn_parts_list_powers:
+            fn_parts_list_powers.append(0)
+
         #This is the difference between the amount of powers and coeffs in both lists after appending
-        power_difference = max(fn_parts_list_powers)-len(fn_parts_list_coeffs)
+        power_difference = len(fn_parts_list_powers)-len(fn_parts_list_coeffs)
 
         #This loop appends 1's for coeffs that are missing, making both power and coeffs lists equal in length/numbers
         for p in range(power_difference):
             fn_parts_list_coeffs.append(0)
 
         #Resetting the power count
-        power_count = max(fn_parts_list_powers)
+        power_count = max(fn_parts_list_powers)+1
         counter = 0
 
         #The next three lines create a list and fills it with as many 1's as the powers length. These will be substituted later.
@@ -150,12 +154,13 @@ def find_type(homogeneous, path):
             ordered_coeff_list.append(1)
 
         ordered_power_list = fn_parts_list_powers
+        print(ordered_power_list)
 
         #Finds the position/combinations of coeffs with the powers and sorts both so they still align, after the powers get sorted from 1-6.
         while counter < power_count:
             power_number = fn_parts_list_powers[counter]
             power_index = fn_parts_list_powers.index(power_number)
-            ordered_coeff_list[power_number-1]=fn_parts_list_coeffs[power_index]
+            ordered_coeff_list[power_number]=fn_parts_list_coeffs[power_index]
             counter = counter+1
 
         #print("powers = " + str(fn_parts_list_powers))
