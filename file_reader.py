@@ -338,8 +338,12 @@ def find_type(homogeneous, path):
     for strings in homogeneous:
         nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
 
-    nonhomogeneous_string = str(simplify(nonhomogeneous_string))
-    nonhomogeneous_string =  nonhomogeneous_string.replace("**", "^").replace(" ","")
+
+    try:
+        nonhomogeneous_string = str(simplify(nonhomogeneous_string))
+        nonhomogeneous_string =  nonhomogeneous_string.replace("**", "^").replace(" ","")
+    except:
+        pass
 
     print("noonhom =" + nonhomogeneous_string)
     fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+|)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n|(?:(?:-|\+)n\^(?:\d\d\d|\d\d|\d)))")
@@ -373,6 +377,11 @@ def find_type(homogeneous, path):
 
     #print("fn_parts_list_powers = " + str(fn_parts_list_powers))
     #print("fn_parts_list_coeffs = " + str(fn_parts_list_coeffs))
+
+    list = [-1,-3,-2]
+
+    list_power = max(list)
+    print(str(list_power) + "Is the highest power")
 
     if not fn_parts_list_powers:
         maxpower = 0
@@ -429,7 +438,7 @@ def find_type(homogeneous, path):
 
         #This is the dict that is needed for nonhom_calling_test.py
         fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
-        #print(fn_parts_dict)
+        print(fn_parts_dict)
     except:
         pass
 
@@ -448,8 +457,8 @@ def find_type(homogeneous, path):
     print("nonhomogeneous string === " + nonhomogeneous_string)
 
     #This if statement checks if theorem 6 is applicable on the equation.
-    #if "^(n-" in nonhomogeneous_string or "^(n+" in nonhomogeneous_string:
-    #    theorem_boolean = False
+    if "^(n-" in nonhomogeneous_string or "^(n+" in nonhomogeneous_string:
+        theorem_boolean = False
     #print(theorem_boolean)
 
     #This loop removes the nonhomogenous string from the whole equation, leaving just the homogeneous part
@@ -488,28 +497,28 @@ def find_type(homogeneous, path):
         else:
             homogeneous = False
             """When the theorem cannot be used, the c^n = A * C^n principle is used."""
-            # if theorem_boolean == False:
-            #     """This regular expression finds 43^(n-1), this is c^n"""
-            #     regex_cn = re.compile("(\d*)\^(\([n]-\d*\))")
-            #     input = nonhomogeneous_string
-            #     find_cn = re.findall(regex_cn, input)
-            #     match = re.search(regex_cn, input)
-            #     print(match)
-            #     print(find_cn)
-            #     constant = find_cn[0][0]
-            #     power = find_cn[0][1]
-            #
-            #     old = "{}^{}".format(constant, power)
-            #     a_formula = "a*{}**{}".format(constant, power)
-            #     new_formula = (input.replace(old, a_formula)).replace("^", "**").replace(" ", "")
-            #     print("The nonhomogeneous new formula is: {}\n".format(new_formula))
-            #     print("The equation is: {}**{}".format(constant, power))
-            #
-            #     new_fn_part = solve(new_formula, a)
-            #     print("We found the F(n) solution: {}\n".format(new_fn_part))
-            #     file_writer.write_fn_part_to_file(filename=pathstring, fn_parts=new_fn_part, fn_part_sn=fn_part_sn_string)
-            # else:
-            file_writer.write_fn_part_to_file(filename=pathstring, fn_parts=fn_parts_dict, fn_part_sn=fn_part_sn_string, ordered_relation=ordered_relation)
+            if theorem_boolean == False:
+                """This regular expression finds 43^(n-1), this is c^n"""
+                regex_cn = re.compile("(\d*)\^(\([n]-\d*\))")
+                input = nonhomogeneous_string
+                find_cn = re.findall(regex_cn, input)
+                match = re.search(regex_cn, input)
+                print(match)
+                print(find_cn)
+                constant = find_cn[0][0]
+                power = find_cn[0][1]
+
+                old = "{}^{}".format(constant, power)
+                a_formula = "a*{}**{}".format(constant, power)
+                new_formula = (input.replace(old, a_formula)).replace("^", "**").replace(" ", "")
+                print("The nonhomogeneous new formula is: {}\n".format(new_formula))
+                print("The equation is: {}**{}".format(constant, power))
+
+                new_fn_part = solve(new_formula, a)
+                print("We found the F(n) solution: {}\n".format(new_fn_part))
+                file_writer.write_fn_part_to_file(filename=pathstring, fn_parts=new_fn_part, fn_part_sn=fn_part_sn_string)
+            else:
+                file_writer.write_fn_part_to_file(filename=pathstring, fn_parts=fn_parts_dict, fn_part_sn=fn_part_sn_string)
             #print("nonhom = " + str(splitline))
 
     file_writer.move_files_based_on_type(filename=pathstring, homogeneous=homogeneous)
@@ -555,7 +564,7 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
             filename = str(filename).replace(".txt", "_init.txt")
         elif file_type == "parts":
             filename = str(filename).replace(".txt", "_parts.txt")
-        elif file_type == "fn_parts" or "fn_part_sn" or "ordered_relation":
+        elif file_type == "fn_parts" or "fn_part_sn":
             filename = str(filename).replace(".txt", "_fn_parts.txt")
     except Exception:
         print(color.RED + "Wrong file_type specified!\n{}".format(error_banner), color.RESET)
@@ -574,15 +583,6 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
         elif file_type == "fn_part_sn":
             readed_list = str(readed_list).split(" | ")
             readed_list = str(str(readed_list[1]).strip("']")).strip("[")
-        elif file_type == "ordered_relation":
-            try:
-                readed_list = str(readed_list).split(" | ")
-                readed_list = str(str(readed_list[2]).strip("']")).strip("[")
-                print("The readed list is: {}".format(readed_list))
-            except IndexError:
-                print(color.RED + "There is no ordered relation in: {}\n".format(filename), color.RESET)
-            except Exception as error:
-                print(color.RED + "General error when reading ordered relation in file: {}\nThe readed list is: {}\nError: {}\n".format(filename, readed_list,error), color.RESET)
         return readed_list
 
     except Exception as error:

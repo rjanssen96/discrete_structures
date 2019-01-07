@@ -87,8 +87,12 @@ def find_type(homogeneous, path):
     for strings in homogeneous:
         nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
 
-    nonhomogeneous_string = str(simplify(nonhomogeneous_string))
-    nonhomogeneous_string =  nonhomogeneous_string.replace("**", "^").replace(" ","")
+
+    try:
+        nonhomogeneous_string = str(simplify(nonhomogeneous_string))
+        nonhomogeneous_string =  nonhomogeneous_string.replace("**", "^").replace(" ","")
+    except:
+        pass
 
     print("noonhom =" + nonhomogeneous_string)
     fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+|)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n|(?:(?:-|\+)n\^(?:\d\d\d|\d\d|\d)))")
