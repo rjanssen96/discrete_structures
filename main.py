@@ -3,6 +3,7 @@ import os
 import function_type
 import file_reader, file_writer, file_remover
 import glob
+from pathlib import Path
 import hom_calling_test, nonhom_calling_test
 import hom_step1, hom_step2, hom_step3, hom_step4, hom_step5
 from Manual_mode import *
@@ -63,7 +64,7 @@ def menu():
 
             """Find all the commass files in the homogeneous folder"""
 
-            hom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + os.path.join("/output_files/homogeneous/comass[0-9][0-9].txt"))
+            hom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/homogeneous/comass[0-9][0-9].txt")))
 
             print(color.CYAN + "\n\nAUTOMATC READING HOMOGENEOUS EQUATION.\n\n", color.RESET)
             time.sleep(1)
@@ -96,7 +97,7 @@ def menu():
 
 
                 """Find all the commass files in the nonhomogeneous folder"""
-                nonhom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + os.path.join("/output_files/nonhomogeneous/comass[0-9][0-9].txt"))
+                nonhom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/nonhomogeneous/comass[0-9][0-9].txt")))
 
                 print(color.CYAN + "\n\nAUTOMATC READING NON-HOMOGENEOUS EQUATION.\n\n", color.RESET)
                 time.sleep(1)
