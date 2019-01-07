@@ -423,7 +423,7 @@ def find_type(homogeneous, path):
             ordered_coeff_list.append(1)
 
         ordered_power_list = fn_parts_list_powers
-        print(ordered_power_list)
+        # print(ordered_power_list)
 
         #Finds the position/combinations of coeffs with the powers and sorts both so they still align, after the powers get sorted from 1-6.
         while counter < power_count:
@@ -441,12 +441,12 @@ def find_type(homogeneous, path):
 
         #This is the dict that is needed for nonhom_calling_test.py
         fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
-        print(fn_parts_dict)
+        # print(fn_parts_dict)
     except Exception as error:
         print(color.RED + "there is a simplify error: {}".format(error), color.RESET)
         pass
 
-    print(fn_parts_dict)
+    # print(fn_parts_dict)
 
     #print(fn_parts_dict)
 
@@ -461,11 +461,11 @@ def find_type(homogeneous, path):
 
     theorem_boolean = True #The boolean which checks if theorem 6 is applicable
 
-    print("nonhomogeneous string === " + nonhomogeneous_string)
+    # print("nonhomogeneous string === " + nonhomogeneous_string)
 
     #This if statement checks if theorem 6 is applicable on the equation.
     if "^(n-" in nonhomogeneous_string or "^(n+" in nonhomogeneous_string:
-        theorem_boolean = False
+        theorem_boolean = True
     #print(theorem_boolean)
 
     #This loop removes the nonhomogenous string from the whole equation, leaving just the homogeneous part
@@ -475,13 +475,13 @@ def find_type(homogeneous, path):
     #This variable pastes the nonhom string after the hom string, correctly ordering the equation
     #print("newline = " + newline)
 
-    print("non homogeneous = " + nonhomogeneous_string)
+    # print("non homogeneous = " + nonhomogeneous_string)
     #homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
     homogeneous_string = "s(n)" + ''.join(homogeneous)
-    print("homogeneous_string = " + homogeneous_string)
+    # print("homogeneous_string = " + homogeneous_string)
 
     ordered_relation = homogeneous_string + "+" + nonhomogeneous_string
-    print("ordered relation = " + ordered_relation)
+    # print("ordered relation = " + ordered_relation)
 
     index = find_n(newline, "n")
 

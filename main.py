@@ -13,7 +13,7 @@ from answer_checker import *
 
 def banner():
     path = os.path.dirname(os.path.realpath(__file__))
-    print("This program is written by ...\n")
+    print("This program is written by Rik van Brakel, Bjorn Kraal and Rico Janssen\n")
     print("This program derives a direct formula from a recurrence relation\n")
     print("\nWe have two categories; homogeneous equations and non-homogeneous equations:\n")
 

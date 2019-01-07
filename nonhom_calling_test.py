@@ -108,7 +108,6 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
     # Step 5: Obtain the particular solution of the non-homog part
     try:
         if type(fn_parts) == dict:
-            print("I do get here!")
             particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found, degree, ordered_relation)
 
         else:
