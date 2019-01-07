@@ -236,9 +236,9 @@ def move_nonhomogeneous_files(filename):
 def write_solution(filename, solution):
     try:
         commass_number = re.findall("comass[0-9][0-9].txt", str(filename))
-        path =  str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/solutions/")))
-        solution_filename =  str(commass_number[0]).replace(".txt", "-dir.txt")
-        solution_file = open((path + solution_filename), 'w')
+        solution_filename = str(Path(str(commass_number[0]).replace(".txt", "-dir.txt")))
+        path = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/solutions/{}".format(solution_filename))))
+        solution_file = open(path, 'w')
         solution_file.write(str(solution))
         solution_file.close()
     except Exception as error:
@@ -256,7 +256,7 @@ def error_in_file(filename, homogeneous, step, error, automatic):
     error_file.write("""Error: {}""".format(error))
     error_file.close()
     """Specify the error folder"""
-    error_folder = str(filename).replace("/{}/".format(folder),"/{}/error/".format(folder))
+    error_folder = str(Path(str(filename).replace("/{}/".format(folder),"/{}/error/".format(folder))))
     copyfile(str(Path(filename)), str(Path(error_folder)))
 
 
