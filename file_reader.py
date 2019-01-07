@@ -575,10 +575,14 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
             readed_list = str(readed_list).split(" | ")
             readed_list = str(str(readed_list[1]).strip("']")).strip("[")
         elif file_type == "ordered_relation":
-            readed_list = str(readed_list).split(" | ")
-
-            readed_list = str(str(readed_list[2]).strip("']")).strip("[")
-            print("The readed list is: {}".format(readed_list))
+            try:
+                readed_list = str(readed_list).split(" | ")
+                readed_list = str(str(readed_list[2]).strip("']")).strip("[")
+                print("The readed list is: {}".format(readed_list))
+            except IndexError:
+                print(color.RED + "There is no ordered relation in: {}\n".format(filename), color.RESET)
+            except Exception as error:
+                print(color.RED + "General error when reading ordered relation in file: {}\nThe readed list is: {}\nError: {}\n".format(filename, readed_list,error), color.RESET)
         return readed_list
 
     except Exception as error:
