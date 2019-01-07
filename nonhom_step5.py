@@ -98,11 +98,11 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree,
             if "s(n-" + str(d) in ordered_relation:
                 ordered_relation = ordered_relation.replace("s(n-" + str(d) + ")", "(" + an_equation + ")").replace(" ",
                                                                                                                     "")
-                print("s(n-" + str(d) + ")")
+                #print("s(n-" + str(d) + ")")
 
-        print(an_replace)
-        print("ordered = " + ordered_relation)
-        print(an_symbols)
+        #print(an_replace)
+        #print("ordered = " + ordered_relation)
+        #print(an_symbols)
 
 
     # p0, p1, p2, p3, p4 = symbols('p0 p1 p2 p3 p4')
@@ -114,7 +114,7 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree,
     init_printing(use_unicode=True)
     par1 = ordered_relation.split("=")[0]
     part1 = parse_expr(par1)
-    print("The eq is: {}".format(part1))
+    #print("The eq is: {}".format(part1))
     par2 = ordered_relation.split("=")[1]
     part2 = parse_expr(par2)
     # test = (x,y)
@@ -125,8 +125,8 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree,
     print(equation)
 
     for key in equation.keys():
-        print("The key is: {}".format(key))
+        #print("The key is: {}".format(key))
         particular_sol = particular_sol.replace(str(key), str(equation.get(key)))
-        print("particular solution is: {}".format(particular_sol))
+        #print("particular solution is: {}".format(particular_sol))
     return particular_sol
 
