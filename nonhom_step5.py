@@ -1,8 +1,6 @@
 # Find the particular solution of a non-homogeneous part
-import find_degree from find_degree
 
-
-def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples):
+def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree):
     # print("Have a nice day!!!")
     # smile = fn_parts
     s_root_check = False
@@ -37,13 +35,17 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples):
     # See theorem 6 of the book
 
 
-
-
-
     """
     RIK BEGIN HIER:
     """
-
+    an_replace = "s(n) = p0*5^n"
+    degree = 6
+    for d in range(degree):
+        if d == 1:
+            an_replace = an_replace.replace("n", "n-" + str(d))
+        else:
+            an_replace = an_replace.replace("n-" + (str(d - 1)), "n-" + str(d))
+        print(an_replace)
 
 
 

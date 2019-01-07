@@ -80,7 +80,7 @@ def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogene
     try:
         if type(fn_parts) == dict:
             print("I do get here!")
-            particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
+            particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found, degree)
 
         else:
             """If the theorem is not needed, the solution is already calculated in the file reader."""
