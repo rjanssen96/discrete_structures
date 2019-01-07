@@ -341,7 +341,7 @@ def find_type(homogeneous, path):
     nonhomogeneous_string = str(simplify(nonhomogeneous_string))
     nonhomogeneous_string =  nonhomogeneous_string.replace("**", "^").replace(" ","")
 
-    #print("nonhom =" + nonhomogeneous_string)
+    print("noonhom =" + nonhomogeneous_string)
     fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+|)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n|(?:(?:-|\+)n\^(?:\d\d\d|\d\d|\d)))")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
     #print("all_fn_parts = " + str(all_fn_parts))
@@ -353,7 +353,7 @@ def find_type(homogeneous, path):
 
     #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
     for parts in all_fn_parts:
-        #print(parts)
+        print(parts)
         coeff = parts.split('*')[0]
         if '-n' in coeff:
             coeff=-1
@@ -411,6 +411,7 @@ def find_type(homogeneous, path):
             ordered_coeff_list.append(1)
 
         ordered_power_list = fn_parts_list_powers
+        print(ordered_power_list)
 
         #Finds the position/combinations of coeffs with the powers and sorts both so they still align, after the powers get sorted from 1-6.
         while counter < power_count:
@@ -443,6 +444,8 @@ def find_type(homogeneous, path):
     #print("fn_part_sn_string = " + str(fn_part_sn_string))
 
     theorem_boolean = True #The boolean which checks if theorem 6 is applicable
+
+    print("nonhomogeneous string === " + nonhomogeneous_string)
 
     #This if statement checks if theorem 6 is applicable on the equation.
     if "^(n-" in nonhomogeneous_string or "^(n+" in nonhomogeneous_string:
