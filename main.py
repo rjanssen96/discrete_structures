@@ -63,7 +63,7 @@ def menu():
 
             """Find all the commass files in the homogeneous folder"""
 
-            hom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/homogeneous/comass[0-9][0-9].txt")
+            hom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + os.path.join("/output_files/homogeneous/comass[0-9][0-9].txt"))
 
             print(color.CYAN + "\n\nAUTOMATC READING HOMOGENEOUS EQUATION.\n\n", color.RESET)
             time.sleep(1)
@@ -96,7 +96,7 @@ def menu():
 
 
                 """Find all the commass files in the nonhomogeneous folder"""
-                nonhom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/nonhomogeneous/comass[0-9][0-9].txt")
+                nonhom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + os.path.join("/output_files/nonhomogeneous/comass[0-9][0-9].txt"))
 
                 print(color.CYAN + "\n\nAUTOMATC READING NON-HOMOGENEOUS EQUATION.\n\n", color.RESET)
                 time.sleep(1)
