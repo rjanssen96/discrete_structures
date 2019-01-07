@@ -4,6 +4,7 @@ from ast import literal_eval #This library transforms strings into dictionaries.
 from colorama import Fore as color
 import file_writer
 
+
 """
 smth is from with finding the particular solution
 how can we implement it so that 10^(n-1) etc will be used correctly as well?
