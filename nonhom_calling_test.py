@@ -2,8 +2,7 @@ from sympy import *
 from sympy.parsing.sympy_parser import parse_expr
 from ast import literal_eval #This library transforms strings into dictionaries.
 from colorama import Fore as color
-
-
+import file_writer
 
 """
 smth is from with finding the particular solution
@@ -22,7 +21,7 @@ from nonhom_step5 import *
 from nonhom_step7 import *
 
 
-def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogeneous_coeffs, ordered_relation):
+def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms, homogeneous_coeffs, ordered_relation):
     # Step 1: rewrite the relation to its default form: a_n = homog + F(n)
     homogeneous_part = ""
     # fn_part = "3**2"  # Needs to be in the right order, so biggest power to lowest power
@@ -116,6 +115,7 @@ def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogene
     try:
         # specific_solution = setup_spec_sol
         specific_solution = get_specific_solution(setup_spec_sol, outcome)
+        file_writer.write_solution(filename=filename, solution=specific_solution)
         print("\nStep 7.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n")
     except Exception as error:
         print(color.RED + "7.2 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)

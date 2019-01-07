@@ -131,7 +131,7 @@ def menu():
                             degree, initial_terms, coefficients, parts, fn_parts, fn_parts_sn, ordered_relation), color.RESET)
 
                     try:
-                        nonhom_calling_test.solve_nonhom_relations(fn_parts=fn_parts, fn_part_sn=fn_parts_sn, degree=degree, initial_terms=initial_terms, homogeneous_coeffs=coefficients, ordered_relation=ordered_relation)
+                        nonhom_calling_test.solve_nonhom_relations(filename=nonhom_comass_file, fn_parts=fn_parts, fn_part_sn=fn_parts_sn, degree=degree, initial_terms=initial_terms, homogeneous_coeffs=coefficients, ordered_relation=ordered_relation)
 
                     except Exception as error:
                         print(color.RED + "Error in nonhom_calling_test, try manually!\nERROR: {}\n".format(error),
