@@ -34,8 +34,13 @@ def manual_check_input():
         coefficient = [input("What is the coefficient of term " + str(x) + "\n")]
         all_coefficient = all_coefficient + coefficient
 
+    fn_part = str(input("What is the fn part? Put 0 if you're testing a homogeneous relation"))
+
     # Ask for specific solution
     # print it like the rest below
+
+    print("fn_part")
+    print(fn_part)
 
     print("All coefficients")
     print(all_coefficient)
@@ -45,13 +50,13 @@ def manual_check_input():
 
     correct_or_not = input("Are these values correct? (yes or no)\n")
     if correct_or_not == "yes":
-        manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree)
+        manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, fn_part)
     elif correct_or_not == "no":
         manual_check_input()
 
 
 # rewrite the expression of the comma file relation to check before calculating and get our specific formula
-def manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree):
+def manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, fn_part):
     comma_spec_sol = ""
     i = 1
     for coeff in all_coefficient:
@@ -61,6 +66,8 @@ def manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree
         elif i == len(all_coefficient):
             comma_spec_sol = comma_spec_sol + str(coeff) + "*s(n-" + str(i) + ")"
         i = i + 1
+
+    comma_spec_sol = comma_spec_sol + "+" + fn_part
 
     our_specific_solution = input("What is our specific solution?\n")
 
@@ -138,7 +145,7 @@ def compare_results(my_answer_list, comma_answer_list):
 
 
 # rewrite the expression of the comma file relation to check before calculating and get our specific formula
-def automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution):
+def automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution, fn_part):
     comma_spec_sol = ""
     i = 1
     for coeff in all_coefficient:
@@ -148,6 +155,8 @@ def automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, deg
         elif i == len(all_coefficient):
             comma_spec_sol = comma_spec_sol + str(coeff) + "*s(n-" + str(i) + ")"
         i = i + 1
+
+    comma_spec_sol = comma_spec_sol + "+" + fn_part
 
     print("\nOur specific solution given:")
     print(our_specific_solution)
@@ -168,12 +177,14 @@ def automatic_check():
     initial_terms = ['2', '3', '3', '6']
     all_coefficient = ['4', '5', '2', '4']
 
+    fn_part = "0"  # if homog then put a 0 here
+
     # our_specific_solution = parse_expr("55+n^4")
     our_specific_solution = "55+n^4"
 
     # different from manual... give spec sol
     # manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree)
-    automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution)
+    automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution, fn_part)
 
 
 # answer_check_manual_or_auto()
