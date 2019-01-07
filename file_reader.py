@@ -7,6 +7,7 @@ from colorama import Fore as color
 import re
 from sympy.abc import a, n
 from sympy.solvers import solve
+from sympy import simplify
 from sympy.parsing.sympy_parser import parse_expr
 from pathlib import Path
 
@@ -334,7 +335,13 @@ def find_type(homogeneous, path):
     fn_part_sn_string = re.findall(("\d\^n|\d\d\^n|\d\d\d\^n"),nonhomogeneous_string) #Finds the sn part in the nonhom string
     fn_part_sn_string = ''.join(fn_part_sn_string).replace('^n','') #changes the variable to a string instead of a list
 
-    #fn_parts_regex = re.compile("(.\d\d\d\*n\^\d\d\d|.\d\d\d\*n\^\d\d|.\d\d\d\*n\^\d|.\d\d\*n\^\d\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d\d|.\d\*n\^\d\d|.\d\d\*n\^\d|.\d\*n\^\d|.\d\d\d\*n|.\d\d\*n|.\d\*n|.n\^\d|.n\^\d\d|.n\^\d\d\d)")
+    for strings in homogeneous:
+        nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
+
+    nonhomogeneous_string = str(simplify(nonhomogeneous_string))
+    nonhomogeneous_string =  nonhomogeneous_string.replace("**", "^").replace(" ","")
+
+    #print("nonhom =" + nonhomogeneous_string)
     fn_parts_regex = re.compile("(?:(?:-|\+|(?:-|\+|)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d|\d\d\d\d)\*n(?:\^|)(?:\d|\d\d|\d\d\d|\d\d\d\d)|(?:-|\+|(?:-|\+)(?:\d\/|\d\d\/|\d\d\d\/))(?:\d|\d\d|\d\d\d)\*n|(?:(?:-|\+)n\^(?:\d\d\d|\d\d|\d)))")
     all_fn_parts = re.findall(fn_parts_regex,nonhomogeneous_string)
     #print("all_fn_parts = " + str(all_fn_parts))
@@ -346,7 +353,7 @@ def find_type(homogeneous, path):
 
     #This for loop creates a dictionary of all the fn parts for nonhom_calling_test
     for parts in all_fn_parts:
-        print(parts)
+        #print(parts)
         coeff = parts.split('*')[0]
         if '-n' in coeff:
             coeff=-1
@@ -380,7 +387,6 @@ def find_type(homogeneous, path):
         for c in range(maxpower):
             if maxpower in fn_parts_list_powers:
                 maxpower = maxpower-1
-                print("maxpower = " + str(maxpower))
             else:
                 fn_parts_list_powers.append(maxpower)
                 maxpower= maxpower-1
@@ -405,7 +411,6 @@ def find_type(homogeneous, path):
             ordered_coeff_list.append(1)
 
         ordered_power_list = fn_parts_list_powers
-        print(ordered_power_list)
 
         #Finds the position/combinations of coeffs with the powers and sorts both so they still align, after the powers get sorted from 1-6.
         while counter < power_count:
@@ -445,16 +450,18 @@ def find_type(homogeneous, path):
     #print(theorem_boolean)
 
     #This loop removes the nonhomogenous string from the whole equation, leaving just the homogeneous part
-    for strings in homogeneous:
-        nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
+    #for strings in homogeneous:
+    #    nonhomogeneous_string = nonhomogeneous_string.replace(str(strings),"").replace(',',"").replace("=","").strip()
 
     #This variable pastes the nonhom string after the hom string, correctly ordering the equation
     #print("newline = " + newline)
+
     print("non homogeneous = " + nonhomogeneous_string)
-    homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
+    #homogeneous_string = newline.replace(nonhomogeneous_string,"").replace(',',"").strip()
+    homogeneous_string = "s(n)" + ''.join(homogeneous)
     print("homogeneous_string = " + homogeneous_string)
 
-    ordered_relation = homogeneous_string + nonhomogeneous_string
+    ordered_relation = homogeneous_string + "+" + nonhomogeneous_string
     print("ordered relation = " + ordered_relation)
 
     index = find_n(newline, "n")

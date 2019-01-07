@@ -136,7 +136,6 @@ def find_type(homogeneous, path):
         for c in range(maxpower):
             if maxpower in fn_parts_list_powers:
                 maxpower = maxpower-1
-                print("maxpower = " + str(maxpower))
             else:
                 fn_parts_list_powers.append(maxpower)
                 maxpower= maxpower-1
@@ -240,5 +239,5 @@ def find_type(homogeneous, path):
             #print("nonhom = " + str(splitline))
     return homogeneous
 
-homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass33.txt")
+homogeneous = find_type(homogeneous=True, path=os.path.dirname(os.path.realpath(__file__)) + "/input_files/nonhomtest")
 print("homogeneous = " + str(homogeneous))
