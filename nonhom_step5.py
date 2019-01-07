@@ -35,5 +35,26 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples):
     # smile = ":-)"
     # See theorem 6 of the book
 
+
+
+
+
+    """
+    RIK BEGIN HIER:
+    """
+
+
+
+
+
+
+    """
+    RCIO BEGIN HIER:
+    """
+
+
+
+
+
     # return smile
     return particular_sol

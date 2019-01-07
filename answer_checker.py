@@ -190,3 +190,4 @@ def automatic_check():
 # answer_check_manual_or_auto()
 
 # print(float(parse_expr('(-sqrt(5)/2 + 1/2)*(-sqrt(5)/10 + 1/2) + (1/2 + sqrt(5)/2)*(sqrt(5)/10 + 1/2)')))
+
