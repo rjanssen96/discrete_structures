@@ -1,4 +1,5 @@
 # Find the particular solution of a non-homogeneous part
+import find_degree from find_degree
 
 
 def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples):
