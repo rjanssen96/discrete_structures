@@ -173,14 +173,14 @@ def automatic_check():
 
     # given_comma_relation =
     # automate this with existing functions from the relation above
-    degree = 2
-    initial_terms = ['1', '1']
-    all_coefficient = ['1', '1']
+    degree = 4
+    initial_terms = ['0', '1', '2', '3']
+    all_coefficient = ['0', '8', '0', '-16']
 
     fn_part = "0"  # if homog then put a 0 here
 
     # our_specific_solution = parse_expr("55+n^4")
-    our_specific_solution = "(-sqrt(5)/10 + 1/2)*(-sqrt(5)/2 + 1/2)^n+(sqrt(5)/10 + 1/2)*(1/2 + sqrt(5)/2)^n"
+    our_specific_solution = "((16/3)*(n)^(0))*(-1)^(n)+(+(-53/96)+(19/32)*n)*(2)^n+(+(-153/32)+(53/32)*n)*(-2)^n"
 
     # different from manual... give spec sol
     # manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree)

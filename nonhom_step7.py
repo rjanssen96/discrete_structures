@@ -18,10 +18,10 @@ def find_alpha_values(my_initial_terms, all_r_and_m, parti_sol_in):
     for n in range(0, nr_of_initial_terms):  # a_0, a_1, ..., a_n
         row_of_coeffs = ()  # resets the tuples with the previous alphas coeff values
         parti_sol = parti_sol_in  # resets parti sol to what it was input as, to determine new answ for matrix row
-        parti_sol = parti_sol.replace("n", str(n))  # replaces the string n with an actual value n
-        answ_parti_sol = parse_expr(parti_sol)  # gives an answer for parti sol with n replaced to value n
-        new_init_term = my_initial_terms[n] - answ_parti_sol  # calculates answer for matrix row
-
+        parti_sol = parse_expr(parti_sol.replace("n", str(n)))  # replaces the string n with an actual value n
+        answ_parti_sol = parti_sol # gives an answer for parti sol with n replaced to value n
+        new_init_term = parse_expr(my_initial_terms[n]) - answ_parti_sol # calculates answer for matrix row
+        # print()
         for r in all_r_and_m:  # r holds the value of each root one by one for all initial terms
             m = all_r_and_m[r]  # m is the value of the multiplicty of the current root
 

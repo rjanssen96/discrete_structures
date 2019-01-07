@@ -122,10 +122,10 @@ def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogene
 
 
 # solve_nonhom_relations()
-#
+
 #
 # # Testing specific solutions:
-# my_spec_sol = "((1)*(n)^(3)+(0)*(n)^(2)+(0)*(n)^(1)+(0)*(n)^(0))*(1)^(n)+(+(3/4)+(-9/8)*n)*(2)^n+(+(-3/4)+(3/8)*n)*(-2)^n"
+# my_spec_sol = "((16/3)*(n)^(0))*(-1)^(n)+(+(-53/96)+(19/32)*n)*(2)^n+(+(-153/32)+(53/32)*n)*(-2)^n"
 # my_spec_sol = my_spec_sol.replace("^", "**")
 # my_answer_list = []
 #
