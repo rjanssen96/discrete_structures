@@ -3,6 +3,8 @@ import os
 from shutil import copyfile #Library to copy files
 from colorama import Fore as color
 import re
+from pathlib import Path
+
 import file_remover
 
 
@@ -40,7 +42,7 @@ def write_degree_to_file(filename, degree, homogeneous):
     """The if statements determine the correct folder for the files"""
     folder = locate_folder(homogeneous=homogeneous)
     try:
-        coef_filename = str(str(filename).strip('.txt')).replace("/{}/".format(folder), "/{}/step1/".format(folder))  # Remove .txt from the filename
+        coef_filename = str(str(filename).strip('.txt')).replace(str(Path("/{}/".format(folder))), str(Path("/{}/step1/".format(folder))))  # Remove .txt from the filename
         coef_file = open((coef_filename + "_degree.txt"), 'w')  # Add _degree.txt to the filename
         coef_file.write("{}".format(degree))  # Write the ordered sets to the file
         coef_file.close()
@@ -86,35 +88,35 @@ def move_files_based_on_type(filename, homogeneous):
     folder = locate_folder(homogeneous=homogeneous)
     #find commass files for that homogeneous equation
     commass_file = filename
-    commass_file_homogeneous = str(filename).replace("/input_files", "/output_files/{}/".format(folder))
+    commass_file_homogeneous = str(filename).replace(str(Path("/input_files")), str(Path("/output_files/{}/".format(folder))))
     print("We move the {} file: {}\nTo: {}\n".format(folder, commass_file, commass_file_homogeneous))
 
     """The strip statement removes .txt from the input file, which is the comass[0-9][0-9].txt file.
     Then adds the different variations to the filenames to locate these other files."""
     coefficients_file = str(filename).strip('.txt') + "_coefficients.txt"
-    coefficients_file_type = str(str(filename).strip('.txt') +"_coefficients.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    coefficients_file_type = str(str(filename).strip('.txt') +"_coefficients.txt").replace(str(Path("/input_files")), str(Path("/output_files/{}/".format(folder))))
     print("We move the {} file: {}\nTo: {}\n".format(folder, coefficients_file, coefficients_file_type))
 
     initial_file = str(filename).strip('.txt') + "_init.txt"
-    initial_file_type = str(str(filename).strip('.txt') +"_init.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    initial_file_type = str(str(filename).strip('.txt') +"_init.txt").replace(str(Path("/input_files")), str(Path("/output_files/{}/".format(folder))))
     print("We move the {} file: {}\nTo: {}\n".format(folder, initial_file, initial_file_type))
 
 
     degree_file = str(filename).strip('.txt') + "_degree.txt"
-    degree_file_type = str(str(filename).strip('.txt') +"_degree.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    degree_file_type = str(str(filename).strip('.txt') +"_degree.txt").replace(str(Path("/input_files")), str(Path("/output_files/{}/".format(folder))))
     print("We move the {} file: {}\nTo: {}\n".format(folder, degree_file, degree_file_type))
 
     equation_file = str(filename).strip('.txt') + "_equation.txt"
-    equation_file_type = str(str(filename).strip('.txt') +"_equation.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    equation_file_type = str(str(filename).strip('.txt') +"_equation.txt").replace(str(Path("/input_files")), str(Path("/output_files/{}/".format(folder))))
     print("We move the {} file: {}\nTo: {}\n".format(folder, equation_file, equation_file_type))
 
     parts_file = str(filename).strip('.txt') + "_parts.txt"
-    parts_file_type = str(str(filename).strip('.txt') + "_parts.txt").replace("/input_files", "/output_files/{}/".format(folder))
+    parts_file_type = str(str(filename).strip('.txt') + "_parts.txt").replace(str(Path("/input_files")), str(Path("/output_files/{}/".format(folder))))
     print("We move the {} file: {}\nTo: {}\n".format(folder, parts_file, parts_file_type))
 
     if homogeneous == False: #If the file is nonhomogeneous, create also an fn_part
         fn_file = str(filename).strip('.txt') + "_fn_parts.txt"
-        fn_file_type = str(str(filename).strip('.txt') + "_fn_parts.txt").replace("/input_files", "/output_files/{}/".format(folder))
+        fn_file_type = str(str(filename).strip('.txt') + "_fn_parts.txt").replace(str(Path("/input_files")), str(Path("/output_files/{}/".format(folder))))
         print("We move the {} file: {}\nTo: {}\n".format(folder, fn_file, fn_file_type))
         copyfile(fn_file, fn_file_type)
     #Copy the files to the homogeneous folder and remove from the input folder
@@ -141,45 +143,45 @@ def move_to_step(filename, homogeneous, step):
     folder = locate_folder(homogeneous=homogeneous)
     try:
         """Move the comass file to the given step folder."""
-        step1_comass_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+        step1_comass_file = str(filename).replace(str(Path("/{}/".format(folder))), str(Path("/{}/{}/".format(folder, step))))
         copyfile(filename, step1_comass_file)
 
         """Move the associated coefficients file to given step folder."""
-        step1_coef_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder,step))
+        step1_coef_file = str(filename).replace(str(Path("/{}/".format(folder))), str(Path("/{}/{}/".format(folder,step))))
         orinial_coef_file = str(filename).replace(".txt", "_coefficients.txt")
         step1_coef_file = step1_coef_file.replace(".txt", "_coefficients.txt")
         copyfile(orinial_coef_file, step1_coef_file)
 
 
         """Move the associated init file to the given step folder."""
-        step1_init_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder,step))
+        step1_init_file = str(filename).replace(str(Path("/{}/".format(folder))), str(Path("/{}/{}/".format(folder,step))))
         orinial_init_file = str(filename).replace(".txt", "_init.txt")
         step1_init_file = step1_init_file.replace(".txt", "_init.txt")
         copyfile(orinial_init_file, step1_init_file)
 
 
         """Move the associated equation file to the given step folder."""
-        step1_equation_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+        step1_equation_file = str(filename).replace(str(Path("/{}/".format(folder))), str(Path("/{}/{}/".format(folder, step))))
         orinial_equation_file = str(filename).replace(".txt", "_equation.txt")
         step1_equation_file = step1_equation_file.replace(".txt", "_equation.txt")
         copyfile(orinial_equation_file, step1_equation_file)
 
 
         """Move the associated degree file to the given step folder."""
-        step1_degree_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+        step1_degree_file = str(filename).replace(str(Path("/{}/".format(folder))), str(Path("/{}/{}/".format(folder, step))))
         orinial_degree_file = str(filename).replace(".txt", "_degree.txt")
         step1_degree_file = step1_degree_file.replace(".txt", "_degree.txt")
         copyfile(orinial_degree_file, step1_degree_file)
 
 
         """Move the associated parts file to the given step folder."""
-        step1_parts_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+        step1_parts_file = str(filename).replace(str(Path("/{}/".format(folder))), str(Path("/{}/{}/".format(folder, step))))
         orinial_parts_file = str(filename).replace(".txt", "_parts.txt")
         step1_parts_file = step1_parts_file.replace(".txt", "_parts.txt")
         copyfile(orinial_parts_file, step1_parts_file)
 
         if homogeneous == False:
-            step1_fn_file = str(filename).replace("/{}/".format(folder), "/{}/{}/".format(folder, step))
+            step1_fn_file = str(filename).replace(str(Path("/{}/".format(folder))), str(Path("/{}/{}/".format(folder, step))))
             orinial_fn_file = str(filename).replace(".txt", "_fn_parts.txt")
             step1_fn_file = step1_fn_file.replace(".txt", "_fn_parts.txt")
             copyfile(orinial_fn_file, step1_fn_file)
@@ -201,26 +203,26 @@ def move_to_step(filename, homogeneous, step):
 """Move nonhomogeneous files to the nonhomogeneous folder."""
 def move_nonhomogeneous_files(filename):
     #find commass files for that non-homogeneous equation
-    commass_file = filename
-    commass_file_nonhomogeneous = str(filename).replace("/input_files", "/output_files/nonhomogeneous/")
+    commass_file = str(Path(filename))
+    commass_file_nonhomogeneous = str(Path(str(filename).replace("/input_files", "/output_files/nonhomogeneous/")))
     print("We move the non-homogeneous file: {}\nTo: {}".format(commass_file, commass_file_nonhomogeneous))
 
-    coefficients_file = str(filename).strip('.txt') + "_coefficients.txt"
-    coefficients_file_nonhomogeneous = str(str(filename).strip('.txt') +"_coefficients.txt").replace("/input_files", "/output_files/nonhomogeneous/")
+    coefficients_file = str(Path(str(filename).strip('.txt') + "_coefficients.txt"))
+    coefficients_file_nonhomogeneous = str(Path(str(str(filename).strip('.txt') +"_coefficients.txt").replace("/input_files", "/output_files/nonhomogeneous/")))
     print("We move the non-homogeneous file: {}\nTo: {}".format(coefficients_file, coefficients_file_nonhomogeneous))
 
 
-    initial_file = str(filename).strip('.txt') + "_init.txt"
-    initial_file_nonhomogeneous = str(str(filename).strip('.txt') +"_init.txt").replace("/input_files", "/output_files/nonhomogeneous/")
+    initial_file = str(Path(str(filename).strip('.txt') + "_init.txt"))
+    initial_file_nonhomogeneous = str(Path(str(str(filename).strip('.txt') +"_init.txt").replace("/input_files", "/output_files/nonhomogeneous/")))
     print("We move the non-homogeneous file: {}\nTo: {}".format(initial_file, initial_file_nonhomogeneous))
 
 
-    degree_file = str(filename).strip('.txt') + "_degree.txt"
-    degree_file_nonhomogeneous = str(str(filename).strip('.txt') +"_degree.txt").replace("/input_files", "/output_files/nonhomogeneous/")
+    degree_file = str(Path(str(filename).strip('.txt') + "_degree.txt"))
+    degree_file_nonhomogeneous = str(Path(str(str(filename).strip('.txt') +"_degree.txt").replace("/input_files", "/output_files/nonhomogeneous/")))
     print("We move the nonhomogeneous file: {}\nTo: {}".format(degree_file, degree_file_nonhomogeneous))
 
-    equation_file = str(filename).strip('.txt') + "_equation.txt"
-    equation_file_nonhomogeneous = str(str(filename).strip('.txt') + "_equation.txt").replace("/input_files","/output_files/nonhomogeneous/")
+    equation_file = str(Path(str(filename).strip('.txt') + "_equation.txt"))
+    equation_file_nonhomogeneous = str(Path(str(str(filename).strip('.txt') + "_equation.txt").replace("/input_files","/output_files/nonhomogeneous/")))
     print("We move the nonhomogeneous file: {}\nTo: {}\n".format(equation_file, equation_file_nonhomogeneous))
 
     #Copy the files to the non-homogeneous folder
@@ -234,7 +236,7 @@ def move_nonhomogeneous_files(filename):
 def write_solution(filename, solution):
     try:
         commass_number = re.findall("comass[0-9][0-9].txt", str(filename))
-        path =  str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/solutions/")
+        path =  str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/solutions/")))
         solution_filename =  str(commass_number[0]).replace(".txt", "-dir.txt")
         solution_file = open((path + solution_filename), 'w')
         solution_file.write(str(solution))
@@ -255,7 +257,7 @@ def error_in_file(filename, homogeneous, step, error, automatic):
     error_file.close()
     """Specify the error folder"""
     error_folder = str(filename).replace("/{}/".format(folder),"/{}/error/".format(folder))
-    copyfile(filename, error_folder)
+    copyfile(str(Path(filename)), str(Path(error_folder)))
 
 
 

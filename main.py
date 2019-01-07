@@ -67,7 +67,7 @@ def menu():
             hom_comass_path = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/homogeneous/comass[0-9][0-9].txt")))
 
             print(color.CYAN + "\n\nAUTOMATC READING HOMOGENEOUS EQUATION.\n\n", color.RESET)
-            time.sleep(1)
+            # time.sleep(1)
 
             #Find every comass file in the /homogeneous/ folder. Then process the 5 steps for every file.
             for hom_comass_file in glob.glob(hom_comass_path):

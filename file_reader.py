@@ -8,6 +8,8 @@ import re
 from sympy.abc import a, n
 from sympy.solvers import solve
 from sympy.parsing.sympy_parser import parse_expr
+from pathlib import Path
+
 
 import sympy
 from sympy import Poly
@@ -506,19 +508,19 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
     """the folder will be the map where the files are located. If homogeneous is True and automatic is also true, the files will be
     in /output_files/homogeneous/automatic/"""
     if homogeneous == True and automatic == True:
-        filename = str(filename).replace("output_files/homogeneous/", "/output_files/homogeneous/automatic/")
+        filename = str(filename).replace(str(Path("output_files/homogeneous/")), str(Path("/output_files/homogeneous/automatic/")))
     elif homogeneous == False and automatic == True:
-        filename = str(filename).replace("output_files/nonhomogeneous/", "/output_files/nonhomogeneous/automatic/")
+        filename = str(filename).replace(str(Path("output_files/nonhomogeneous/")), str(Path("/output_files/nonhomogeneous/automatic/")))
     elif homogeneous == True and automatic == False:
         if step == None:
             print(color.RED + "Error: you must specify a step to read files manually!", color.RESET)
         else:
-            filename = str(filename).replace("output_files/homogeneous/", "/output_files/homogeneous/{}/".format(step))
+            filename = str(filename).replace(str(Path("output_files/homogeneous/")), str(Path("/output_files/homogeneous/{}/))".format(step))))
     elif homogeneous == False and automatic == False:
         if step == None:
             print(color.RED + "Error: you must specify a step to read files manually!", color.RESET)
         else:
-            filename = str(filename).replace("output_files/nonhomogeneous/", "/output_files/nonhomogeneous/{}/".format(step))
+            filename = str(filename).replace(str(Path("output_files/nonhomogeneous/")), str(Path("/output_files/nonhomogeneous/{}/".format(step))))
 
     # print(color.RED + "The requested folder is: {}\n".format(folder), color.RESET)
 
@@ -569,7 +571,7 @@ def read_lists_from_files(file_type, filename, homogeneous, automatic, step):
 
 def read_files():
         # def write_coefficents_to_file(filename, coefficients):
-    path = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9].txt")
+    path = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/input_files/comass[0-9][0-9].txt")))
     global filename #The filename needs to be available in every function.
     for filename in glob.glob(path):
         # print("File: " + filename)

@@ -1,5 +1,6 @@
 import os, file_writer, glob, os.path
 from colorama import Fore as color
+from pathlib import Path
 
 """This function removes al the files associated to the given comass file."""
 def remove_file(filename):# homogeneous, step):
@@ -35,52 +36,52 @@ def remove_file(filename):# homogeneous, step):
 
 """This function removes all files. This includes files in the non and homogeneous folder, error folders and step folders"""
 def remove_all():
-    homogeneous_folder = "/homogeneous/"
-    homogeneous_automatic = homogeneous_folder + "automatic/"
-    homogeneous_error = homogeneous_folder + "error/"
-    homogeneous_step1 = homogeneous_folder + "step1/"
-    homogeneous_step2 = homogeneous_folder + "step2/"
-    homogeneous_step3 = homogeneous_folder + "step3/"
-    homogeneous_step4 = homogeneous_folder + "step4/"
-    homogeneous_step5 = homogeneous_folder + "step5/"
+    homogeneous_folder = str(Path("/homogeneous/"))
+    homogeneous_automatic = homogeneous_folder + str(Path("automatic/"))
+    homogeneous_error = homogeneous_folder + str(Path("error/"))
+    homogeneous_step1 = homogeneous_folder + str(Path("step1/"))
+    homogeneous_step2 = homogeneous_folder + str(Path("step2/"))
+    homogeneous_step3 = homogeneous_folder + str(Path("step3/"))
+    homogeneous_step4 = homogeneous_folder + str(Path("step4/"))
+    homogeneous_step5 = homogeneous_folder + str(Path("step5/"))
 
-    nonhomogeneous_folder = "/nonhomogeneous/"
-    nonhomogeneous_automatic = homogeneous_folder + "automatic/"
-    nonhomogeneous_error = nonhomogeneous_folder + "error/"
-    nonhomogeneous_step1 = nonhomogeneous_folder + "step1/"
-    nonhomogeneous_step2 = nonhomogeneous_folder + "step2/"
-    nonhomogeneous_step3 = nonhomogeneous_folder + "step3/"
-    nonhomogeneous_step4 = nonhomogeneous_folder + "step4/"
-    nonhomogeneous_step5 = nonhomogeneous_folder + "step5/"
-    nonhomogeneous_step6 = nonhomogeneous_folder + "step6/"
-    nonhomogeneous_step7 = nonhomogeneous_folder + "step7/"
+    nonhomogeneous_folder = str(Path("/nonhomogeneous/"))
+    nonhomogeneous_automatic = homogeneous_folder + str(Path("automatic/"))
+    nonhomogeneous_error = nonhomogeneous_folder + str(Path("error/"))
+    nonhomogeneous_step1 = nonhomogeneous_folder + str(Path("step1/"))
+    nonhomogeneous_step2 = nonhomogeneous_folder + str(Path("step2/"))
+    nonhomogeneous_step3 = nonhomogeneous_folder + str(Path("step3/"))
+    nonhomogeneous_step4 = nonhomogeneous_folder + str(Path("step4/"))
+    nonhomogeneous_step5 = nonhomogeneous_folder + str(Path("step5/"))
+    nonhomogeneous_step6 = nonhomogeneous_folder + str(Path("step6/"))
+    nonhomogeneous_step7 = nonhomogeneous_folder + str(Path("step7/"))
 
-    solution_folder = "/solutions/"
+    solution_folder = str(Path("/solutions/"))
     folder_list = [homogeneous_folder, homogeneous_automatic, homogeneous_error, solution_folder, homogeneous_step1, homogeneous_step2, homogeneous_step3, homogeneous_step4, homogeneous_step5, nonhomogeneous_folder, nonhomogeneous_automatic, nonhomogeneous_error, nonhomogeneous_step1, nonhomogeneous_step2, nonhomogeneous_step3, nonhomogeneous_step4, nonhomogeneous_step5, nonhomogeneous_step6, nonhomogeneous_step7]
 
     for folder in folder_list:
-        path = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/{}/comass[0-9][0-9]*.txt".format(folder))
+        path = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/{}/comass[0-9][0-9]*.txt".format(folder))))
 
         for file in glob.glob(path):
             os.remove(file)
             print(color.GREEN +"File deleted: {}".format(file), color.RESET)
 
-    input_files = str(os.path.dirname(os.path.realpath(__file__)) + "/input_files/comass[0-9][0-9]_*.txt")
+    input_files = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/input_files/comass[0-9][0-9]_*.txt")))
     for file in glob.glob(input_files):
         os.remove(file)
         print(color.GREEN + "File deleted: {}".format(file), color.RESET)
 
 def remove_error():
-    homogeneous_folder = "/homogeneous/"
-    homogeneous_error = homogeneous_folder + "error/"
-    nonhomogeneous_folder = "/nonhomogeneous/"
-    nonhomogeneous_error = homogeneous_folder + "error/"
+    homogeneous_folder = str(Path("/homogeneous/"))
+    homogeneous_error = str(Path(homogeneous_folder + "error/"))
+    nonhomogeneous_folder = str(Path("/nonhomogeneous/"))
+    nonhomogeneous_error = str(Path(homogeneous_folder + "error/"))
 
 
     folder_list = [homogeneous_error, nonhomogeneous_error]
 
     for folder in folder_list:
-        path = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/{}/comass[0-9][0-9]*.txt".format(folder))
+        path = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/{}/comass[0-9][0-9]*.txt".format(folder))))
         for file in glob.glob(path):
 
             os.remove(file)
@@ -88,20 +89,20 @@ def remove_error():
 
 def remove_files_in_folder(homogeneous, folder):
     if homogeneous == True:
-        hom_folder = "/homogeneous/"
+        hom_folder = str(Path("/homogeneous/"))
     elif homogeneous == False:
-        hom_folder = "/nonhomogeneous/"
+        hom_folder = str(Path("/nonhomogeneous/"))
     else:
         print(color.RED + "ERROR: wrong homogeneous value\n", color.RESET)
 
     delete_folder = hom_folder + "{}".format(folder)
-    path = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/{}/comass[0-9][0-9]*.txt".format((delete_folder)))
+    path = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/{}/comass[0-9][0-9]*.txt".format((delete_folder)))))
     for file in glob.glob(path):
         os.remove(file)
         print(color.GREEN + "File deleted: {}\n".format(file), color.RESET)
 
 def remove_all_solutions():
-    input_files = str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/solutions/comass[0-9][0-9]*.txt")
+    input_files = str(os.path.dirname(os.path.realpath(__file__)) + str(Path("/output_files/solutions/comass[0-9][0-9]*.txt")))
     for file in glob.glob(input_files):
         os.remove(file)
         print(color.GREEN + "File deleted: {}".format(file), color.RESET)
