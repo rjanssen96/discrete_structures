@@ -124,12 +124,14 @@ def menu():
                     fn_parts_sn = file_reader.read_lists_from_files(file_type="fn_part_sn", filename=nonhom_comass_file,
                                                               homogeneous=False, automatic=True, step=None)
 
+                    ordered_relation = file_reader.read_lists_from_files(file_type="ordered_relation", filename=nonhom_comass_file,
+                                                              homogeneous=False, automatic=True, step=None)
                     print(
-                        color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\nfn_parts are: {}\nfn_parts_sn is: {}".format(
-                            degree, initial_terms, coefficients, parts, fn_parts, fn_parts_sn), color.RESET)
+                        color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\nfn_parts are: {}\nfn_parts_sn is: {}\nOrdered Realtion: {}\n".format(
+                            degree, initial_terms, coefficients, parts, fn_parts, fn_parts_sn, ordered_relation), color.RESET)
 
                     try:
-                        nonhom_calling_test.solve_nonhom_relations(fn_parts=fn_parts, fn_part_sn=fn_parts_sn, degree=degree, initial_terms=initial_terms, homogeneous_coeffs=coefficients)
+                        nonhom_calling_test.solve_nonhom_relations(fn_parts=fn_parts, fn_part_sn=fn_parts_sn, degree=degree, initial_terms=initial_terms, homogeneous_coeffs=coefficients, ordered_relation=ordered_relation)
 
                     except Exception as error:
                         print(color.RED + "Error in nonhom_calling_test, try manually!\nERROR: {}\n".format(error),

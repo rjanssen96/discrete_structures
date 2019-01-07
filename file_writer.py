@@ -60,12 +60,12 @@ def write_equation(filename, equation):
     except Exception as error:
         print(color.RED + "ERROR while write equation file: {}\nERROR: {}\n".format(filename, error), color.RESET)
 
-def write_fn_part_to_file(filename, fn_parts, fn_part_sn):
+def write_fn_part_to_file(filename, fn_parts, fn_part_sn, ordered_relation):
     try:
         print(color.CYAN + "FILENAME AND FN_PARTS: {}, {}\n".format(filename, fn_parts), color.RESET)
         file = str(str(filename).strip('.txt') +"_fn_parts.txt")
         equation_file = open(file, 'w')
-        equation_file.write("{} | {}".format((str(fn_parts)), (str(fn_part_sn))))
+        equation_file.write("{} | {} | {}".format((str(fn_parts)), (str(fn_part_sn)), (str(ordered_relation))))
         equation_file.close()
     except Exception as error:
         print(color.RED + "ERROR while writing FN_parts to file: {}\nERROR: {}\n".format(filename, error), color.RESET)

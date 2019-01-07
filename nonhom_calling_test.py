@@ -19,7 +19,7 @@ from nonhom_step5 import *
 from nonhom_step7 import *
 
 
-def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogeneous_coeffs):
+def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogeneous_coeffs, ordered_relation):
     # Step 1: rewrite the relation to its default form: a_n = homog + F(n)
     homogeneous_part = ""
     # fn_part = "3**2"  # Needs to be in the right order, so biggest power to lowest power
@@ -47,6 +47,8 @@ def solve_nonhom_relations(fn_parts, fn_part_sn, degree, initial_terms, homogene
     degree = int(degree[0])
     initial_terms = initial_terms
     homogeneous_coeffs = homogeneous_coeffs
+    ordered_relation = ordered_relation
+
     highest_power_fn_part = next(iter(fn_parts))  # represents the "t" in the particular solution of non-hom part (step 5)
 
 
