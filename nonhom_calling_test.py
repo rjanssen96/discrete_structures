@@ -43,7 +43,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
     except Exception as error:
         print("cannot read f_parts as dict.\nError: {}".format(error))
         fn_parts = fn_parts
-        print("We have the fn parts set to string: {}".format(type(fn_parts)))
+        print(color.RED + "We have the fn parts set to string: {}".format(type(fn_parts), color.RESET))
 
     fn_part_sn = fn_part_sn
     degree = int(degree[0])
@@ -59,7 +59,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         characteristic_equation = char_equation_2(homogeneous_coeffs)
         print("Step 2: The characteristic equation is: \n" + str(characteristic_equation) + "=0" + "\n")
     except Exception as error:
-        print("2 doesnt work, shocker dude: ERROR: {}".format(error))
+        print(color.RED + "2 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
 
     # Step 3: Obtain the roots  of the associated homog part
     try:
@@ -69,7 +69,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         print(r_and_m_found)  # root:multiplicity
         print()
     except Exception as error:
-        print("3 doesnt work, shocker dude: ERROR: {}".format(error))
+        print(color.RED + "3 doesnt work, shocker dude: ERROR: {}".format(error), color.RED)
 
     # Step 4: Obtain general solution of the associated homog part
     try:
@@ -78,7 +78,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         # general_solution = "Sup Nerd!"
         print("Step 4: The general solution of this equation is: \n" + str(general_solution) + "\n")
     except Exception as error:
-        print("4 doesnt work, shocker dude: ERROR: {}".format(error))
+        print(color.RED + "4 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
 
     # Step 5: Obtain the particular solution of the non-homog part
     try:

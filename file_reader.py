@@ -443,7 +443,7 @@ def find_type(homogeneous, path):
         fn_parts_dict = dict(zip(ordered_power_list, ordered_coeff_list))
         print(fn_parts_dict)
     except Exception as error:
-        print("there is a simplify error: {}".format(error))
+        print(color.RED + "there is a simplify error: {}".format(error), color.RESET)
         pass
 
     print(fn_parts_dict)
@@ -455,7 +455,7 @@ def find_type(homogeneous, path):
         if not fn_part_sn_string:
             fn_part_sn_string = -1
     except Exception as error:
-        print("Nonhom string wrong: {}".format(error))
+        print(color.RED + "Nonhom string wrong: {}".format(error), color.RESET)
 
     #print("fn_part_sn_string = " + str(fn_part_sn_string))
 
@@ -665,4 +665,4 @@ def read_files():
             #
             # debug_print("#################################\n")
     except Exception as error:
-        print("error in read_files: {}".format(error))
+        print(color.RED + "error in read_files: {}".format(error), color.RESET)
