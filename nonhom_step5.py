@@ -1,6 +1,6 @@
 # Find the particular solution of a non-homogeneous part
 
-def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree):
+def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree, ordered_relation):
     # print("Have a nice day!!!")
     # smile = fn_parts
     s_root_check = False
@@ -49,14 +49,25 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree)
     """
     RIK BEGIN HIER:
     """
-    an_replace = "s(n) = p0*5^n"
+    #ordered_relation = "s(n-3) = s(n-4) + 3*s(n-5)"
+    an_replace = "s(n) = " + str(particular_sol)
+
     degree = 6
     for d in range(degree):
         if d == 1:
             an_replace = an_replace.replace("n", "n-" + str(d))
+            an_equation = an_replace.split("=",1)
+            if "s(n-"+str(d) in ordered_relation:
+                ordered_relation.replace("s(n-"+str(d)+")","("+an_equation+")").replace(" ","")
         else:
             an_replace = an_replace.replace("n-" + (str(d - 1)), "n-" + str(d))
+            an_equation = an_replace.split("=")[1]
+            if "s(n-"+str(d) in ordered_relation:
+                ordered_relation = ordered_relation.replace("s(n-"+str(d)+")","("+an_equation+")").replace(" ","")
+                print("s(n-"+str(d)+")")
+
         print(an_replace)
+        print("oredered = " + ordered_relation)
 
 
 
