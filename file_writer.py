@@ -236,7 +236,7 @@ def write_solution(filename, solution):
         commass_number = re.findall("comass[0-9][0-9].txt", str(filename))
         path =  str(os.path.dirname(os.path.realpath(__file__)) + "/output_files/solutions/")
         solution_filename =  str(commass_number[0]).replace(".txt", "-dir.txt")
-        solution_file = open((path + str(commass_number[0])), 'w')
+        solution_file = open((path + solution_filename), 'w')
         solution_file.write(str(solution))
         solution_file.close()
     except Exception as error:
