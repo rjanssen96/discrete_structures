@@ -7,7 +7,8 @@ from hom_step4 import *
 from hom_step5 import *
 from nonhom_step5 import *
 from nonhom_step7 import *
-from file_writer import *
+# from file_writer import *
+import file_writer
 
 
 # Chosing homog or non-homog
@@ -463,7 +464,8 @@ def manual_mode_non_homog_4(coefficients, degree, initial_terms, fn_part, filena
 def manual_mode_non_homog_5(coefficients, degree, initial_terms, fn_parts, filename, sequence,
                                         highest_power_fn_part, general_solution, r_and_m_found, fn_part_sn):
     try:
-        particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found)
+        particular_solution = find_part_sol_non_homog(fn_parts, fn_part_sn, highest_power_fn_part, r_and_m_found,
+                                                      degree, ordered_relation)
         print(
             "Step 5: The particular solution of the non-homog part is: \n" + "s(n)=" + str(particular_solution) + "\n")
 

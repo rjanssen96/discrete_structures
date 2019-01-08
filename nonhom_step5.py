@@ -79,7 +79,7 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree,
     """
     RICO BEGIN HIER:
     """
-    ordered_relation = "s(n-3) = s(n-4) + 3*s(n-5)"
+    # ordered_relation = "s(n-3) = s(n-4) + 3*s(n-5)"
     # an_replace = "s(n) = " + str(particular_sol)
     an_replace = "p0+p1*n"
     an_symbols = ()
