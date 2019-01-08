@@ -135,6 +135,7 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
         specific_solution = gimme_specific_solution(general_solution, outcome)
         file_writer.write_solution(filename=filename, solution=specific_solution)
         print(color.BLUE +"\nStep 5.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n", color.RESET)
+        return specific_solution
     except Exception as error:
         print("5.2 doesnt work, shocker dude: ERROR: {}".format(error))
         print(color.RED + "Error occurs in file: {}".format(filename), color.RESET)

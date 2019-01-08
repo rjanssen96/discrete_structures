@@ -89,7 +89,7 @@ def menu():
                     hom_solution = hom_calling_test.solve_homog_relation(degree=degree, initial=initial_terms, parts=parts, coefficients=coefficients, filename=hom_comass_file)
                     try:
                         pass
-                        # answer_checker.automatic_check_full_automatic(degree=degree, initial_terms=initial_terms,all_coefficient=coefficients, fn_part=None,homogeneous=True,specific_solution=hom_solution)
+                        # answer_checker.automatic_check_full_automatic(filename=hom_comass_file, degree=degree, initial_terms=initial_terms,all_coefficient=coefficients, fn_part=None,homogeneous=True,specific_solution=hom_solution)
                     except IOError:
                         pass  # if there exist no comass file then continue because there are only few dir files.
                     except Exception as error:
@@ -142,7 +142,7 @@ def menu():
 
                         try:
                             pass
-                            # answer_checker.automatic_check_full_automatic(degree=degree, initial_terms=initial_terms, all_coefficient=coefficients, fn_part=fn_parts, homogeneous=False, specific_solution=nonhom_solution)
+                            # answer_checker.automatic_check_full_automatic(filename=nonhom_comass_file, degree=degree, initial_terms=initial_terms, all_coefficient=coefficients, fn_part=fn_parts, homogeneous=False, specific_solution=nonhom_solution)
                         except IOError:
                             pass #if there exist no comass file then continue because there are only few dir files.
                         except Exception as error:

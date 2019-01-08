@@ -119,6 +119,7 @@ def move_files_based_on_type(filename, homogeneous):
         fn_file_type = str(str(filename).strip('.txt') + "_fn_parts.txt").replace(str(Path("/input_files")), str(Path("/output_files/{}/".format(folder))))
         print("We move the {} file: {}\nTo: {}\n".format(folder, fn_file, fn_file_type))
         copyfile(fn_file, fn_file_type)
+
     #Copy the files to the homogeneous folder and remove from the input folder
     copyfile(commass_file, commass_file_homogeneous)
     #Do not remove commass file!

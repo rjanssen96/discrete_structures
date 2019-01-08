@@ -1,5 +1,7 @@
 from sympy.parsing.sympy_parser import parse_expr
-
+import time
+import file_writer
+from pathlib import Path
 
 # Checking if the user wants to automatically check every ccomma file or do one (or more) manually
 def answer_check_manual_or_auto():
@@ -145,10 +147,16 @@ def compare_results(my_answer_list, comma_answer_list):
 
 
 # rewrite the expression of the comma file relation to check before calculating and get our specific formula
-def automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution, fn_part):
-    comma_spec_sol = ""
+def automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution, fn_part, comma_spec_sol):
+    if str(comma_spec_sol) == "":
+        comma_spec_sol = ""
+        print("No comma specific solution received.")
+    else:
+        comma_spec_sol = str(comma_spec_sol)
+    print(str(comma_spec_sol))
     i = 1
     for coeff in all_coefficient:
+        print(coeff)
         # to prevent one to many + at the end
         if i != len(all_coefficient):
             comma_spec_sol = comma_spec_sol + str(coeff) + "*s(n-" + str(i) + ")+"
@@ -159,10 +167,10 @@ def automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, deg
     comma_spec_sol = comma_spec_sol + "+" + fn_part
 
     print("\nOur specific solution given:")
-    print(our_specific_solution)
+    print(str(our_specific_solution))
 #
     print("Comma relation given:")
-    print(comma_spec_sol)
+    print(str(comma_spec_sol))
 
     manual_check_values_comma_relation(comma_spec_sol, our_specific_solution, initial_terms, degree)
 
@@ -186,7 +194,7 @@ def automatic_check():
     # manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree)
     automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution, fn_part)
 
-def automatic_check_full_automatic(degree, initial_terms, all_coefficient, fn_part, homogeneous, specific_solution):
+def automatic_check_full_automatic(filename, degree, initial_terms, all_coefficient, fn_part, homogeneous, specific_solution):
     # type of relation
     # type = homog or non
 
@@ -195,6 +203,26 @@ def automatic_check_full_automatic(degree, initial_terms, all_coefficient, fn_pa
     # degree = 4
     # initial_terms = ['0', '1', '2', '3']
     # all_coefficient = ['0', '8', '0', '-16']
+    print("before file opening")
+
+    folder = file_writer.locate_folder(homogeneous=homogeneous)
+
+    filename = str(filename).replace("/output_files/{}".format(folder), "/input_files/")
+    filename = Path(filename.replace(".txt", "-dir.txt"))
+    print("The filename si: {}".format(filename))
+    comma_file = open(str(filename), 'r')
+    comma_specific_solution = comma_file.readlines()
+    print(comma_specific_solution)
+    comma_specific_solution = str(comma_specific_solution)[2:-2]
+    print(comma_specific_solution)
+    comma_file.close()
+    print("test")
+    time.sleep(5)
+    print("We have readed this specific solution: {}\nfrom commass file: {}".format(comma_specific_solution, filename))
+    degree = abs(int(degree[0])) #Take absolute value of the degree
+    initial_terms = list(initial_terms)
+    all_coefficient = list(all_coefficient)
+
 
     if homogeneous == True:
         fn_part = "0"
@@ -203,12 +231,13 @@ def automatic_check_full_automatic(degree, initial_terms, all_coefficient, fn_pa
 
     # fn_part = "0"  # if homog then put a 0 here
 
-    our_specific_solution = parse_expr(specific_solution)
-    # our_specific_solution = "((16/3)*(n)^(0))*(-1)^(n)+(+(-53/96)+(19/32)*n)*(2)^n+(+(-153/32)+(53/32)*n)*(-2)^n"
+    # our_specific_solution = parse_expr(str(specific_solution))
+
+    our_specific_solution = str(specific_solution)
 
     # different from manual... give spec sol
     # manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree)
-    automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution, fn_part)
+    automatic_check_rewrite_and_get_spec_sol(all_coefficient=all_coefficient, initial_terms=initial_terms, degree=degree, our_specific_solution=our_specific_solution, fn_part=fn_part, comma_spec_sol=comma_specific_solution)
 
 # answer_check_manual_or_auto()
 

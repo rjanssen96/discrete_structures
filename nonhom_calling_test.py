@@ -162,6 +162,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
         specific_solution = get_specific_solution(setup_spec_sol, outcome)
         file_writer.write_solution(filename=filename, solution=specific_solution)
         print(color.BLUE + "\nStep 7.2: The specific solution for this equation is: \n" + str(specific_solution) + "\n", color.RESET)
+        return  specific_solution
     except Exception as error:
         print(color.RED + "7.2 doesnt work, shocker dude: ERROR: {}".format(error), color.RESET)
         try:
