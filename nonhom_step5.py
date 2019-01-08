@@ -79,31 +79,63 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree,
     """
     RICO BEGIN HIER:
     """
+    ordered_relation = ordered_relation.replace("s(n)", "s(n)=")
+
+    print("Before ordered relation adjusted")
+    print(ordered_relation)
+
+    print("Particular solution after mine, before R&R")
+    print(particular_sol)
+
+    ordered_relation = str(ordered_relation.replace("^", "**"))
     # ordered_relation = "s(n-3) = s(n-4) + 3*s(n-5)"
     # an_replace = "s(n) = " + str(particular_sol)
-    an_replace = "p0+p1*n"
+    an_replace = str(particular_sol)
+    # an_replace = "p0+p1*n"
     an_symbols = ()
 
-    degree = 6
-    for d in range(degree):
+    # takes the absolute value of the degree
+    degree = abs(degree)
+
+    # print("Value of degree before loop")
+    # print(degree)
+
+    # degree = 6
+    for d in range(0, degree+1):
+        # print("Reached 1")
+        # print(" Value of d = " + str(d))
         an_symbols = an_symbols + ("p" + str(d),)
-        if d == 1:
+        if d != 0:
+            # print("Reached 2")
             an_replace = an_replace.replace("n", "n-" + str(d))
             an_equation = an_replace
             if "s(n-" + str(d) in ordered_relation:
-                ordered_relation.replace("s(n-" + str(d) + ")", "(" + an_equation + ")").replace(" ", "")
-        else:
+                ordered_relation = ordered_relation.replace("s(n-" + str(d) + ")", "(" + an_equation + ")").replace(" ", "")
+                # print("Reached 3")
+                # print(ordered_relation)
+                # print("s(n-" + str(d) + ")")
+        elif d == 0:
+            # print("Reached 4")
             an_replace = an_replace.replace("n-" + (str(d - 1)), "n-" + str(d))
             an_equation = an_replace
-            if "s(n-" + str(d) in ordered_relation:
-                ordered_relation = ordered_relation.replace("s(n-" + str(d) + ")", "(" + an_equation + ")").replace(" ",
+            if "s(n)" in ordered_relation:
+            # if "s(n-" + str(d) in ordered_relation:
+            #     print("Reached`44")
+                # ordered_relation = ordered_relation.replace("s(n-" + str(d) + ")", "(" + an_equation + ")").replace(" ",
+                ordered_relation = ordered_relation.replace("s(n)", "(" + an_equation + ")").replace(" ",
                                                                                                                     "")
+                # print(ordered_relation)
                 #print("s(n-" + str(d) + ")")
+        else:
+            print("Reached line 127 in step 4 non_homog, it should never get here!")
 
         #print(an_replace)
         #print("ordered = " + ordered_relation)
         #print(an_symbols)
 
+    # print("Reached 5")
+    print("After ordered relation adjusted 1")
+    print(ordered_relation)
 
     # p0, p1, p2, p3, p4 = symbols('p0 p1 p2 p3 p4')
     x, y, n = symbols('x y n')
@@ -122,11 +154,19 @@ def find_part_sol_non_homog(fn_parts, s, highest_power, roots_multiples, degree,
     # equation = solveset(Eq(part1, part2), *test)
     # equation = solve(Eq(part1, part2), *test)
 
+    # print("Reached 6")
+    equation = equation[0]  # removes the dictionary out of a list
+    # print(equation)
+
     # print(equation)
 
     for key in equation.keys():
         #print("The key is: {}".format(key))
         particular_sol = particular_sol.replace(str(key), str(equation.get(key)))
         #print("particular solution is: {}".format(particular_sol))
+
+    print("After ordered relation adjusted 2")
+    print(particular_sol)
+
     return particular_sol
 

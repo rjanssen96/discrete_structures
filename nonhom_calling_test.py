@@ -124,7 +124,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
                     filename, False, "Step 5", True, error), color.RESET)
             return
-    print("The particular solution is: {}".format(particular_solution))
+    # print("The particular solution is: {}".format(particular_solution))
 
     # Step 6: Obtain the solution a_n = a_n(p) + a_n(h)
     try:
