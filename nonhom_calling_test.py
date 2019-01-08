@@ -124,7 +124,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
                 color.RED + "Error during writing error file.\nHere is the data:\nFile: {}\nHomogeneous: {}\nStep: {}\nAutomatic: {}\nOrginal error: {}\n".format(
                     filename, False, "Step 5", True, error), color.RESET)
             return
-    print("The particular solution is: {}".format(particular_solution))
+    # print("The particular solution is: {}".format(particular_solution))
 
     # Step 6: Obtain the solution a_n = a_n(p) + a_n(h)
     try:
@@ -176,9 +176,9 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
 
 # solve_nonhom_relations()
 
-#
+
 # # Testing specific solutions:
-# my_spec_sol = "((16/3)*(n)^(0))*(-1)^(n)+(+(-53/96)+(19/32)*n)*(2)^n+(+(-153/32)+(53/32)*n)*(-2)^n"
+# my_spec_sol = "((3)*(n)^(0))*(3)^(n)+(-2)*(2)^n"
 # my_spec_sol = my_spec_sol.replace("^", "**")
 # my_answer_list = []
 #
@@ -189,7 +189,7 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
 #
 # print(my_answer_list)
 #
-# comma_spec_sol = "161/162*(-1)^(n+1)*2^n-47*2^(n-1)+1/648*(417*(-1)^n*n+3321*n)*2^n+1/9*n^3+16/9*n^2+32/3*n+1984/81"
+# comma_spec_sol = "-2*2^n+3^(n+1)"
 # comma_spec_sol = comma_spec_sol.replace("^", "**")
 # comma_answer_list = []
 #
@@ -205,5 +205,5 @@ def solve_nonhom_relations(filename, fn_parts, fn_part_sn, degree, initial_terms
 # commas16, (first 4 terms are correct, then its different... first 4 are initial terms)
 # commas33 (watch out for this one, put n-5 as a string in the coeff list),
 # commas36 doesnt work cuz key of dict will be str(n-4) :-/
-
+#
 # solve_nonhom_relations()
