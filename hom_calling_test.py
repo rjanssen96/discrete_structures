@@ -87,7 +87,6 @@ def solve_homog_relation(degree, initial, coefficients, parts, filename):
         r_and_m_found = roots(characteristic_equation, r)  # returns root:multiplicity
         print("Step 3:  The roots of this equation are:")
         print(r_and_m_found)  # root:multiplicity
-        print()
     except:
         print("3 doesnt work, shocker dude")
         print(color.RED + "Error occurs in file: {}".format(filename), color.RESET)

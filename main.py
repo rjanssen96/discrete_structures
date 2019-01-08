@@ -3,6 +3,7 @@ import os
 import function_type
 import file_reader, file_writer, file_remover
 import glob
+import answer_checker
 from pathlib import Path
 import hom_calling_test, nonhom_calling_test
 import hom_step1, hom_step2, hom_step3, hom_step4, hom_step5
@@ -85,8 +86,14 @@ def menu():
                 print(color.MAGENTA + "Degree is: {}\nInitial terms are: {}\nCoefficients are: {}\nParts are: {}\n".format(degree,initial_terms,coefficients,parts),color.RESET)
 
                 try:
-                    hom_calling_test.solve_homog_relation(degree=degree, initial=initial_terms, parts=parts, coefficients=coefficients, filename=hom_comass_file)
-
+                    hom_solution = hom_calling_test.solve_homog_relation(degree=degree, initial=initial_terms, parts=parts, coefficients=coefficients, filename=hom_comass_file)
+                    try:
+                        pass
+                        # answer_checker.automatic_check_full_automatic(degree=degree, initial_terms=initial_terms,all_coefficient=coefficients, fn_part=None,homogeneous=True,specific_solution=hom_solution)
+                    except IOError:
+                        pass  # if there exist no comass file then continue because there are only few dir files.
+                    except Exception as error:
+                        print(color.RED + "Cannot check if answer is correct!\nERROR: {}\n".format(error))
                 except Exception as error:
                     print(color.RED + "Error in hom_calling_test, try manually!\nERROR: {}\n".format(error), color.RESET)
                     try:
@@ -131,8 +138,15 @@ def menu():
                             degree, initial_terms, coefficients, parts, fn_parts, fn_parts_sn, ordered_relation), color.RESET)
 
                     try:
-                        nonhom_calling_test.solve_nonhom_relations(filename=nonhom_comass_file, fn_parts=fn_parts, fn_part_sn=fn_parts_sn, degree=degree, initial_terms=initial_terms, homogeneous_coeffs=coefficients, ordered_relation=ordered_relation)
+                        nonhom_solution = nonhom_calling_test.solve_nonhom_relations(filename=nonhom_comass_file, fn_parts=fn_parts, fn_part_sn=fn_parts_sn, degree=degree, initial_terms=initial_terms, homogeneous_coeffs=coefficients, ordered_relation=ordered_relation)
 
+                        try:
+                            pass
+                            # answer_checker.automatic_check_full_automatic(degree=degree, initial_terms=initial_terms, all_coefficient=coefficients, fn_part=fn_parts, homogeneous=False, specific_solution=nonhom_solution)
+                        except IOError:
+                            pass #if there exist no comass file then continue because there are only few dir files.
+                        except Exception as error:
+                            print(color.RED + "Cannot check if answer is correct!\nERROR: {}\n".format(error))
                     except Exception as error:
                         print(color.RED + "Error in nonhom_calling_test, try manually!\nERROR: {}\n".format(error),
                               color.RESET)

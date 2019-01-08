@@ -186,6 +186,29 @@ def automatic_check():
     # manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree)
     automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution, fn_part)
 
+def automatic_check_full_automatic(degree, initial_terms, all_coefficient, fn_part, homogeneous, specific_solution):
+    # type of relation
+    # type = homog or non
+
+    # given_comma_relation =
+    # automate this with existing functions from the relation above
+    # degree = 4
+    # initial_terms = ['0', '1', '2', '3']
+    # all_coefficient = ['0', '8', '0', '-16']
+
+    if homogeneous == True:
+        fn_part = "0"
+    else:
+        fn_part = str(fn_part)
+
+    # fn_part = "0"  # if homog then put a 0 here
+
+    our_specific_solution = parse_expr(specific_solution)
+    # our_specific_solution = "((16/3)*(n)^(0))*(-1)^(n)+(+(-53/96)+(19/32)*n)*(2)^n+(+(-153/32)+(53/32)*n)*(-2)^n"
+
+    # different from manual... give spec sol
+    # manual_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree)
+    automatic_check_rewrite_and_get_spec_sol(all_coefficient, initial_terms, degree, our_specific_solution, fn_part)
 
 # answer_check_manual_or_auto()
 

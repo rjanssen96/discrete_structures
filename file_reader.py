@@ -18,19 +18,6 @@ import numpy
 from sympy.abc import s, n
 
 
-"""First checks if debug printing is allowed.
-   Then checks the type of the input of the function.
-   Then prints the input based on the type of input."""
-# def debug_print(debug_information):
-#     global print_debug_information
-#     if print_debug_information:
-#         if type(debug_information) == dict:
-#             print_dict(debug_information)
-#         elif type(debug_information) == list:
-#             print_list(debug_information)
-#         else:
-#             print(str(debug_information))
-
 """Reads in all lines of the file except the first, second and last one.
     The lines are returned as list of strings."""
 def read_file(filename):
@@ -644,25 +631,6 @@ def read_files():
                 os.rename(filename, error_name)
                 print(color.RED + "Cannot determine the equation type, ERROR: {}\nFile renamed to: {}\n".format(error, error_name), color.RESET)
 
-            # # Print debugging information:
-            # debug_print(filename)
-            # debug_print("Initial conditions:")
-            # debug_print(init_conditions)
-            # debug_print("Associated homogeneous recurrence relation:")
-            # debug_print(associated)
-            # debug_print("F(n):")
-            # debug_print(f_n_list)
-            #
-            # output_filename = filename.replace(".txt", "-dir.txt")
-            # resulting_equ = ""
-            # # Check if the equation is a homogeneous relation
-            # if not f_n_list:  # The list is empty
-            #     resulting_equ = solve_homogeneous_equation(init_conditions, associated)
-            # else:
-            #     resulting_equ = solve_nonhomogeneous_equation(init_conditions, associated, f_n_list)
-            # resulting_equ = reformat_equation(resulting_equ)
-            # write_output_to_file(output_filename, resulting_equ)
-            #
-            # debug_print("#################################\n")
+
     except Exception as error:
         print(color.RED + "error in read_files: {}".format(error), color.RESET)
